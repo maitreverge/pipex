@@ -6,12 +6,12 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 14:41:08 by flverge           #+#    #+#             */
-/*   Updated: 2023/11/18 17:18:30 by flverge          ###   ########.fr       */
+/*   Updated: 2023/11/19 12:32:34 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
-# define PIPEX_H
+# define PIPEX_H 
 
 # include <unistd.h> // write, close, access, dup, dup2
 # include <fcntl.h> // open and options
