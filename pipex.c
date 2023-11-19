@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 17:12:36 by flverge           #+#    #+#             */
-/*   Updated: 2023/11/19 12:50:04 by flverge          ###   ########.fr       */
+/*   Updated: 2023/11/19 13:05:17 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@ int main(int ac, char **av)
 {
 	if (ac >= 5)
 	{
-		// execute pipex mdr  
+		// execute pipex mdr    
 	}
 	else
 	{
