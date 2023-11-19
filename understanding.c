@@ -130,9 +130,50 @@ int main() {
 
 /*
 
-dup :
+! dup :
+dup duplicates the file descriptor oldfd,
+returning a new file descriptor that refers to the same open file or socket.
+It uses the lowest-numbered unused file descriptor for the new descriptor.
 
-dup2 :
+*/
+
+#include <unistd.h>
+#include <fcntl.h>
+#include <stdio.h>
+
+int main() {
+    int file_descriptor = open("example.txt", O_WRONLY | O_CREAT | O_TRUNC, S_IRWXU);
+
+    // Duplicate the file descriptor
+    int new_descriptor = dup(file_descriptor);
+
+    // Now both file_descriptor and new_descriptor point to the same open file.
+
+    // Close the original descriptor
+    close(file_descriptor);
+
+    // Use the duplicated descriptor
+    write(new_descriptor, "Hello, dup!\n", 12);
+
+    // Close the duplicated descriptor
+    close(new_descriptor);
+
+    return 0;
+}
+
+/*
+
+!dup2 :
+
+int dup2(int oldfd, int newfd);
+
+
+dup2 duplicates the file descriptor oldfd to newfd. If newfd is already a valid open file descriptor, it is closed first.
+
+For example, if with dup we moved stdin to fd 3, we can put back stdin to the original place line
+
+dup2(newstdin, 0);
+
 
 execve :
 
@@ -147,5 +188,13 @@ unlink :
 wait : 
 
 waitpid :
+
+*/
+
+/*
+
+File descriptors :
+File descriptor 
+
 
 */
