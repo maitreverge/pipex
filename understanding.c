@@ -174,12 +174,56 @@ For example, if with dup we moved stdin to fd 3, we can put back stdin to the or
 
 dup2(newstdin, 0);
 
+? Other explanations :
 
-execve :
+dup2() makes newfd be the copy of oldfd, closing newfd first if necessary, but note the following:
+If oldfd is not a valid file descriptor, then the call fails, and newfd is not closed.
+If oldfd is a valid file descriptor, and newfd has the same value as oldfd, then dup2() does nothing, and returns newfd.
+After a successful return from dup2(), the old and new file descriptor may be used interchangeably.
 
-exit :
+They refer to the same open file description and thus share file offset and file status flags; for example, if the file offset is modified by using lseek() on one of the descriptors, the offset is also changed for the other.
+On error, the dup2() function returns -1.
 
-fork :
+! execve :
+
+int execve(const char *filename, char *const argv[], char *const envp[]);
+
+execve() executes the program pointed to by filename.
+execve() does not return on succes, the calling process is replaced by the executed filename.
+
+execve replaces the current process image with a new process image specified by the given filename.
+filename is the path to the executable file.
+argv is an array of strings representing the arguments to the program. The first element should be the program name itself.
+envp is an array of strings representing the environment variables. It typically follows the same format as the environ variable in the current process.
+
+*/
+
+#include <stdio.h>
+#include <unistd.h>
+
+int main() {
+    char *program_path = "/bin/ls";
+    char *const arguments[] = { "ls", "-l", NULL };
+    char *const environment[] = { "HOME=/usr/home", "PATH=/usr/bin", NULL };
+
+    // Execute the "ls" command with the specified arguments and environment variables
+    execve(program_path, arguments, environment);
+
+    // If execve returns, it means an error occurred
+    perror("execve");
+    return 1;
+}
+
+/*
+
+! exit : Exits a program
+
+exit (0) => Means that everything went okay
+exit (-1) => Means that everything went wrong
+
+! fork :
+
+
 
 pipe :
 
