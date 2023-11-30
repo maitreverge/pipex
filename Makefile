@@ -6,35 +6,29 @@
 #    By: flverge <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/18 17:11:27 by flverge           #+#    #+#              #
-#    Updated: 2023/11/30 11:23:51 by flverge          ###   ########.fr        #
+#    Updated: 2023/11/30 11:30:48 by flverge          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Program name
-NAME = fractol
+NAME = pipex
 
 # Compiler options
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g
+CC = cc
+CFLAGS = -Wall -Wextra -Werror
 
 # libft
 LIBFT_NAME = libmaster.a
 LIBFT_PATH = libft/
 LIBFT = $(LIBFT_PATH)$(LIBFT_NAME)
 
-# MiniLibX
-MLX_NAME = libmlx.a  
-MLX_PATH = minilibx-linux/
-MLX = $(MLX_PATH)$(MLX_NAME)
-
-# Fractols files
+# pipex files
 SRC_DIR := src
 SRC := $(wildcard $(SRC_DIR)/*.c)
 OBJ := ${SRC:.c=.o}
 
 # Includes
-INC =	-I ./includes/\
-		-I ./minilibx-linux/
+INC =	-I ./includes/
 
 # Colors
 RESET = \033[0m
@@ -46,7 +40,7 @@ ORANGE = \033[93m
 BLUE = \033[94m
 
 
-all: $(MLX) $(LIBFT) $(NAME)
+all: $(LIBFT) $(NAME)
 
 # remettre flags
 %.o: %.c
@@ -58,37 +52,24 @@ $(LIBFT):
 	@echo "$(BOLD)$(BLUE)-----------------------$(RESET)"
 	@echo "\n"	
 
-$(MLX):
-	@echo "$(BOLD)$(RED)🛠️      Compiling MiniLibX      🛠️$(RESET)"
-	@echo "\n"	
-	@make all -sC $(MLX_PATH)
-	@echo "\n"	
-	@echo "$(BOLD)$(GREEN)😎     MiniLibX Compiled    😎$(RESET)"
-	@echo "\n"
-	@echo "$(BOLD)$(BLUE)-----------------------$(RESET)"
-	@echo "\n"	
-
 # remettre flags
 $(NAME): $(OBJ)
-	@echo "$(BOLD)$(RED)🛠️      Compiling Fractol    🛠️$(RESET)"
+	@echo "$(BOLD)$(RED)🛠️      Compiling pipex    🛠️$(RESET)"
 	@echo "\n"
-	@$(CC) $(OBJ) $(MLX) $(LIBFT) $(INC) -lXext -lX11 -lm -lz -o $(NAME)
-	@echo "$(BOLD)$(GREEN)✅✅      Fractol fully compiled, ready to use       ✅✅$(RESET)"
+	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(INC) -o $(NAME)
+	@echo "$(BOLD)$(GREEN)✅✅      Pipex fully compiled, ready to use       ✅✅$(RESET)"
 	@echo "\n"
 
 clean:
 	@make clean -sC $(LIBFT_PATH)
 	@rm -f $(OBJ)
-	@echo "$(BOLD)$(ORANGE)🌀     Cleaned .o fractol's files   🌀$(RESET)"
-	@make clean -sC $(MLX_PATH)
-	@echo "$(BOLD)$(ORANGE)🌀     Cleaned .o MiniLibX's files  🌀$(RESET)"
-
+	@echo "$(BOLD)$(ORANGE)🌀     Cleaned .o pipex's files   🌀$(RESET)"
 
 fclean: clean
 	@make fclean -sC libft/
 	@rm -f $(NAME)
-	@echo "$(BOLD)$(ORANGE)🌀     Cleaned fractol exec       🌀$(RESET)"
+	@echo "$(BOLD)$(ORANGE)🌀     Cleaned pipex exec       🌀$(RESET)"
 
 bonus: all
 
-re: fclean all   
+re: fclean all
