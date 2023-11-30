@@ -6,29 +6,11 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 12:16:49 by flverge           #+#    #+#             */
-/*   Updated: 2023/10/31 12:38:46 by flverge          ###   ########.fr       */
+/*   Updated: 2023/11/30 12:54:57 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-void	*ft_memset(void *b, int c, size_t len)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < len)
-	{
-		((char *)b)[i] = c;
-		i++;
-	}
-	return (b);
-}
-
-void	ft_bzero(void *s, size_t n)
-{
-	ft_memset(s, 0, n);
-}
 
 void	*my_calloc(size_t count, size_t size)
 {
@@ -39,21 +21,4 @@ void	*my_calloc(size_t count, size_t size)
 		return (NULL);
 	ft_bzero(buffer, size * count);
 	return (buffer);
-}
-
-size_t	ft_strlen(const char *s)
-{
-	size_t	i;
-
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
-}
-
-int	ft_isdigit(int c)
-{
-	if (c >= '0' && c <= '9')
-		return (1);
-	return (0);
 }

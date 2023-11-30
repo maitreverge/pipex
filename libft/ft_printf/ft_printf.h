@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 17:22:30 by florianverg       #+#    #+#             */
-/*   Updated: 2023/11/01 08:59:46 by flverge          ###   ########.fr       */
+/*   Updated: 2023/11/30 12:55:11 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,10 +138,6 @@ int		print_real_width_2(int real_width, t_flags flags);
 int		zero_case(t_flags flags);
 
 // libft_functions.c
-void	ft_bzero(void *s, size_t n);
-size_t	ft_strlen(const char *s);
-void	*ft_memset(void *b, int c, size_t len);
-int		ft_isdigit(int c);
 void	*my_calloc(size_t count, size_t size);
 
 #endif

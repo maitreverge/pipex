@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 14:27:58 by flverge           #+#    #+#             */
-/*   Updated: 2023/10/17 15:23:18 by flverge          ###   ########.fr       */
+/*   Updated: 2023/11/30 12:43:43 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*big_chunk(int fd, char *stash)
 	original_buffer = malloc(BUFFER_SIZE + 1 * sizeof(char));
 	if (!original_buffer)
 		return (NULL);
-	while (return_value_read != 0 && ft_strchr(stash, '\n') == NULL)
+	while (return_value_read != 0 && ft_strchr_gnl(stash, '\n') == NULL)
 	{
 		return_value_read = read(fd, original_buffer, BUFFER_SIZE);
 		if (return_value_read == -1)
@@ -30,7 +30,7 @@ char	*big_chunk(int fd, char *stash)
 			return (NULL);
 		}
 		original_buffer[return_value_read] = '\0';
-		stash = ft_strjoin(stash, original_buffer);
+		stash = ft_strjoin_gnl(stash, original_buffer);
 	}
 	free(original_buffer);
 	return (stash);
@@ -78,7 +78,7 @@ char	*extract_after_n(char *stash)
 		free(stash);
 		return (NULL);
 	}
-	temp = (char *)malloc((ft_strlen(stash) - i + 1) * sizeof(char));
+	temp = (char *)malloc((ft_strlen_gnl(stash) - i + 1) * sizeof(char));
 	if (!temp)
 		return (NULL);
 	j = 0;
