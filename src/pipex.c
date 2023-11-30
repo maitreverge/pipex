@@ -6,18 +6,30 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 17:12:36 by flverge           #+#    #+#             */
-/*   Updated: 2023/11/22 21:38:13 by flverge          ###   ########.fr       */
+/*   Updated: 2023/11/30 10:34:35 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../include/pipex.h"
+
 void	pipex_madatory(void)
 {
-	// mdr je met quoi ici ?
+	
+	
 }
 
 void	pipex_bonus(void)
 {
-	// Ok Google, code pipex stp c tro dur :(
+	if (!ft_strcmp(av[2], "here_doc"))
+	{
+		// gerer le here_doc
+	}
+	else // multiple pipes handeling
+	{
+		
+	}
+	
+	
 }
 
 int	main(int ac, char **av, char **envp) // ! travailler sur les variables d'environement
@@ -25,9 +37,9 @@ int	main(int ac, char **av, char **envp) // ! travailler sur les variables d'env
 	if (ac >= 4)
 	{
 		if (ac == 4)
-			pipex_mandatory();
+			pipex_mandatory(ac, av, envp);
 		else
-			pipex_bonus(); 
+			pipex_bonus(ac, av, envp); 
 	}
 	else
 	{
