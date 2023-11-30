@@ -6,13 +6,13 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 10:53:42 by flverge           #+#    #+#             */
-/*   Updated: 2023/11/30 11:10:01 by flverge          ###   ########.fr       */
+/*   Updated: 2023/11/30 11:14:31 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
 
-void	pipex_bonus(void)
+void	pipex_bonus(int ac, char **av, char **env)
 {
 	// gerer l'ouverture des fd
 	// gerer les droits
