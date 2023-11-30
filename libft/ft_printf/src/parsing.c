@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 10:31:47 by flverge           #+#    #+#             */
-/*   Updated: 2023/10/31 17:07:33 by flverge          ###   ########.fr       */
+/*   Updated: 2023/11/30 14:23:20 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ t_flags	split_parsing(int *i, char const *format, t_flags current_flag)
 		current_flag.zero++;
 		(*i)++;
 	}
-	if (format[*i] != '.' && ft_isdigit(format[*i]))
+	if (format[*i] != '.' && ft_isdigit_pf(format[*i]))
 	{
 		while (format[*i] == '0')
 		{
@@ -80,7 +80,7 @@ t_flags	split_parsing(int *i, char const *format, t_flags current_flag)
 			(*i)++;
 		}
 		current_flag.width = width_or_precision(&format[*i]);
-		while (ft_isdigit(format[*i]))
+		while (ft_isdigit_pf(format[*i]))
 			(*i)++;
 	}
 	return (current_flag);
@@ -99,7 +99,7 @@ t_flags	turbo_parsing(const char *format)
 		current_flag.point++;
 		i++;
 	}
-	if (current_flag.point && ft_isdigit(format[i]))
+	if (current_flag.point && ft_isdigit_pf(format[i]))
 	{
 		while (format[i] == '0')
 		{
@@ -107,7 +107,7 @@ t_flags	turbo_parsing(const char *format)
 			i++;
 		}
 		current_flag.precision = width_or_precision(&format[i]);
-		while (ft_isdigit(format[i]))
+		while (ft_isdigit_pf(format[i]))
 			i++;
 	}
 	current_flag.placeholder = format[i];

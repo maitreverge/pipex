@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 14:01:58 by flverge           #+#    #+#             */
-/*   Updated: 2023/10/31 12:39:28 by flverge          ###   ########.fr       */
+/*   Updated: 2023/11/30 14:20:16 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	yes_width_hexa(char *prefix, t_flags flags, unsigned long nb)
 	int	len_nb;
 	int	total_len;
 
-	len_prefix = ft_strlen(prefix);
+	len_prefix = ft_strlen_pf(prefix);
 	len_nb = intlen_hexa(nb);
 	total_len = len_nb + len_prefix;
 	if (flags.minus_sign)
@@ -56,7 +56,7 @@ int	print_adress(unsigned long nb, t_flags flags)
 	{
 		ft_putstr(prefix);
 		putnbr_hexa(nb, 'x');
-		flags.lenght_print = (intlen_hexa(nb) + ft_strlen(prefix));
+		flags.lenght_print = (intlen_hexa(nb) + ft_strlen_pf(prefix));
 	}
 	else
 		flags.lenght_print = yes_width_hexa(prefix, flags, nb);

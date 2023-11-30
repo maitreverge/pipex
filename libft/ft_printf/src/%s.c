@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 11:36:59 by flverge           #+#    #+#             */
-/*   Updated: 2023/10/31 12:35:53 by flverge          ###   ########.fr       */
+/*   Updated: 2023/11/30 14:20:31 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	no_width(char *str)
 {
 	ft_putstr(str);
-	return (ft_strlen(str));
+	return (ft_strlen_pf(str));
 }
 
 int	yes_width(char *str, t_flags flags)
@@ -23,14 +23,14 @@ int	yes_width(char *str, t_flags flags)
 	if (flags.minus_sign)
 	{
 		ft_putstr(str);
-		print_width_space(flags.width - ft_strlen(str));
+		print_width_space(flags.width - ft_strlen_pf(str));
 	}
 	else
 	{
-		print_width_space(flags.width - ft_strlen(str));
+		print_width_space(flags.width - ft_strlen_pf(str));
 		ft_putstr(str);
 	}
-	return (ft_strlen(str) + pos_width(flags.width, ft_strlen(str)));
+	return (ft_strlen_pf(str) + pos_width(flags.width, ft_strlen_pf(str)));
 }
 
 int	empty_string(char *nul_str, t_flags flags)
@@ -67,7 +67,7 @@ int	print_string(char *str, t_flags flags)
 	need_free = 0;
 	if (!str)
 		return (empty_string("(null)", flags));
-	if (flags.point && (flags.precision < (int)ft_strlen(str)))
+	if (flags.point && (flags.precision < (int)ft_strlen_pf(str)))
 	{
 		str = ft_strndup(str, flags.precision);
 		need_free++;

@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 17:22:30 by florianverg       #+#    #+#             */
-/*   Updated: 2023/11/30 12:55:11 by flverge          ###   ########.fr       */
+/*   Updated: 2023/11/30 14:23:49 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,5 +139,11 @@ int		zero_case(t_flags flags);
 
 // libft_functions.c
 void	*my_calloc(size_t count, size_t size);
+int		ft_strlen_pf(char *s);
+void	ft_bzero_pf(void *s, size_t n);
+int	ft_isdigit_pf(int c);
+
+
+
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 14:37:35 by flverge           #+#    #+#             */
-/*   Updated: 2023/10/26 15:41:10 by flverge          ###   ########.fr       */
+/*   Updated: 2023/11/30 14:24:01 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	width_or_precision(const char *s)
 
 	result = 0;
 	i = 0;
-	while (ft_isdigit(s[i]))
+	while (ft_isdigit_pf(s[i]))
 	{
 		result = (10 * result) + (s[i] - 48);
 		i++;
