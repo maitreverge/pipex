@@ -6,11 +6,11 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 10:31:16 by flverge           #+#    #+#             */
-/*   Updated: 2023/11/30 10:32:45 by flverge          ###   ########.fr       */
+/*   Updated: 2023/11/30 12:51:42 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/pipex.h"
+#include "../includes/pipex.h"
 
 int	ft_strcmp(char *s1, char *s2)
 {
