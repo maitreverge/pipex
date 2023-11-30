@@ -6,7 +6,7 @@
 #    By: flverge <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/18 17:11:27 by flverge           #+#    #+#              #
-#    Updated: 2023/11/30 11:30:48 by flverge          ###   ########.fr        #
+#    Updated: 2023/11/30 12:13:53 by flverge          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,7 @@ BLUE = \033[94m
 
 all: $(LIBFT) $(NAME)
 
-# remettre flags
+# remettre les flags
 %.o: %.c
 	@$(CC) -c $< -o $@
 

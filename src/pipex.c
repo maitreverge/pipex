@@ -6,13 +6,13 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 17:12:36 by flverge           #+#    #+#             */
-/*   Updated: 2023/11/30 11:22:26 by flverge          ###   ########.fr       */
+/*   Updated: 2023/11/30 12:11:29 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-void	pipex_madatory(int ac, char **av, char **env)
+void	pipex_mandatory(int ac, char **av, char **env)
 {
 	if (!ft_strcmp(av[2], "here_doc")) // gestion bonus 2
 	{
@@ -23,8 +23,8 @@ void	pipex_madatory(int ac, char **av, char **env)
 		// gerer l'ouverture des fd
 		int fd[2];
 
-		fd[0] = open(av[1], ); // lecture seule
-		fd[1] = open(av[3], ); // lecture ET ecriture
+		fd[0] = open(av[1], O_RDONLY); // lecture seule
+		fd[1] = open(av[3], O_WRONLY); // lecture ET ecriture
 
 		// gestion si open a echoué
 		if (fd[0] < 0 || fd[1] < 0)
