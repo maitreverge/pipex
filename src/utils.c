@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 10:31:16 by flverge           #+#    #+#             */
-/*   Updated: 2023/11/30 12:51:42 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/10 08:49:10 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,10 @@ int	ft_strcmp(char *s1, char *s2)
 	while ((s1[i] || s2[i]) && (s1[i] == s2[i]))
 		i++;
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+}
+
+void	access_denied(void)
+{
+	perror("Error accessing file");
+	exit(EXIT_FAILURE);
 }

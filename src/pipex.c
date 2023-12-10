@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 17:12:36 by flverge           #+#    #+#             */
-/*   Updated: 2023/11/30 12:11:29 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/10 09:17:43 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,27 @@ void	pipex_mandatory(int ac, char **av, char **env)
 	}
 	else // mandatory part
 	{
-		// gerer l'ouverture des fd
 		int fd[2];
-
-		fd[0] = open(av[1], O_RDONLY); // lecture seule
-		fd[1] = open(av[3], O_WRONLY); // lecture ET ecriture
-
-		// gestion si open a echoué
-		if (fd[0] < 0 || fd[1] < 0)
-		{
-			ft_printf("Error number %d", errno);
-			perror("test");
-		}
 		
+		// ! check for infile
+		if (!(access(av[1], F_OK | R_OK))) // checks if infile exists and readable
+			fd[0] = open(av[1], O_RDONLY);
+		else
+			access_denied();
+		
+		// ! check for outfile
+		if (!(access(av[4], F_OK))) // checks if outfile exists
+		{
+			if (!(access(av[4], W_OK)))
+				fd[1] = open(av[4], O_WRONLY);
+			else
+				access_denied();
+		}
+		else // needs to create outfile
+			fd[1] = open(av[4], O_CREAT | O_TRUNC | O_WRONLY); // ? right syntax ?
+
+		if (fd[0] < 0 || fd[1] < 0)
+			access_denied();
 		// gerer les droits
 		// gerer les pipes
 		// gerer les forks
@@ -45,9 +53,9 @@ void	pipex_mandatory(int ac, char **av, char **env)
 
 int	main(int ac, char **av, char **envp)
 {
-	if (ac >= 4)
+	if (ac >= 5)
 	{
-		if (ac == 4)
+		if (ac == 5)
 			pipex_mandatory(ac, av, envp);
 		else
 			pipex_bonus(ac, av, envp);

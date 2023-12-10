@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 14:41:08 by flverge           #+#    #+#             */
-/*   Updated: 2023/11/30 12:14:48 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/10 08:49:29 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void	pipex_bonus(int ac, char **av, char **env);
 
 // utils.c
 int		ft_strcmp(char *s1, char *s2);
+void	access_denied(void);
+
 
 
 
