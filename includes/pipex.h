@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 14:41:08 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/10 08:49:29 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/11 12:08:47 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include "../libft/get_next_line/get_next_line_bonus.h"
 # include <unistd.h> // write, close, access, dup, dup2, execve
 # include <fcntl.h> // open and options
-# include <stdlib.h> // malloc and free
+# include <stdlib.h> // malloc and free and EXIT_SUCCESS / EXIT_FAILURE
 # include <stdio.h> // perror
 # include <errno.h> // makes errno a global variable usable with strerror(errno)
 
