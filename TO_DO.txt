@@ -1,1 +1,5 @@
 Can the infile be the outfile ?
+
+Need to close all unused duplicateds FD, otherwise we risk
+processes getting stuck in a waiting mode
+

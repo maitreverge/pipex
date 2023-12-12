@@ -5,6 +5,34 @@
 #include <sys/wait.h>
 
 
+
+
+
+int main(void)
+{
+	int fd[2]; // pipe fds
+
+	pid_t pid; // fork return value
+	char buf; // stock char value by value
+
+	// creating a pipe
+	if (pipe(fd) == -1)
+	{
+		perror("Piping failure");
+		exit(EXIT_FAILURE);
+	}
+
+	// ! creating 
+	pid = fork();
+	if (pid == -1)
+	{
+		perror("Fork failure");
+		exit(EXIT_FAILURE);
+	}
+	
+}
+
+/*
 int main(void) // understanding dup and dup2
 {
 	int fd;
@@ -51,7 +79,6 @@ while (1)
 
 }
 
-/*
 int main()
 {
     pid_t child_pid = fork();

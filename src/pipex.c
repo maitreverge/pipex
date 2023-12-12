@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 17:12:36 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/10 09:22:44 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/12 11:08:38 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	check_args_mandatory(char **av, int *fd)
 			access_denied();
 	}
 	else // needs to create outfile
-		*fd[1] = open(av[4], O_CREAT | O_TRUNC | O_WRONLY); // ? right syntax ?
+		*fd[1] = open(av[4], O_CREAT | O_TRUNC | O_WRONLY); // ? right syntax
 
 	if (*fd[0] < 0 || *fd[1] < 0)
 		access_denied();
@@ -37,36 +37,36 @@ static void	check_args_mandatory(char **av, int *fd)
 void	pipex_mandatory(int ac, char **av, char **env)
 {
 	int fd[2];
-
-	if (!ft_strcmp(av[2], "here_doc")) // gestion bonus 2
+	
+	// ! part du principe qu'il n'y a que des arguments simples
+	check_args_mandatory(av, &fd);
+	if (pipe(fd) == -1) // 0 = ok, -1 = error
 	{
-		
+		perror("Piping failure");
+		exit(EXIT_FAILURE);
 	}
-	else // mandatory part
-	{
-		check_args_mandatory(av, &fd);
-		
-		
-		
-		// gerer les pipes
+	
+
+	
 		// gerer les forks
 		// gerer les execve
 		// gerer les waitpid
 		// gerer les close
 		// gerer les free
-	}
+
+
+		
+	close(fd[0]); // closing in file
+	close(fd[1]); // closing outfile
+		
+		
+		
 }
 
 int	main(int ac, char **av, char **envp)
 {
 	if (ac >= 5)
-	{
-		if (ac == 5)
-			pipex_mandatory(ac, av, envp);
-		else
-			pipex_bonus(ac, av, envp);
-		return (0);
-	}
+		pipex_mandatory(ac, av, envp);
 	else
 	{
 		ft_printf("Not enough arguments.\nUsage : ./pipex  <file1>  <command_1>  <command_2>  ...  <file2>"); // needs better cases handling
