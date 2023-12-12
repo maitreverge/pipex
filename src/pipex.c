@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 17:12:36 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/12 11:08:38 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/12 12:38:51 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,11 @@ static void	check_args_mandatory(char **av, int *fd)
 void	pipex_mandatory(int ac, char **av, char **env)
 {
 	int fd[2];
+	pid_t pid;
+	int	tmp_fd;
+	int status;
+
+	tmp_fd = 42;
 	
 	// ! part du principe qu'il n'y a que des arguments simples
 	check_args_mandatory(av, &fd);
@@ -45,19 +50,30 @@ void	pipex_mandatory(int ac, char **av, char **env)
 		perror("Piping failure");
 		exit(EXIT_FAILURE);
 	}
+	pid = fork();
+	if (pid == -1)
+	{
+		perror("Forking failure");
+		exit(EXIT_FAILURE);
+	}
 	
-
-	
-		// gerer les forks
-		// gerer les execve
-		// gerer les waitpid
-		// gerer les close
-		// gerer les free
-
-
-		
-	close(fd[0]); // closing in file
-	close(fd[1]); // closing outfile
+	else if (pid == 0) // child process
+	{
+		waitpid(pid, &status);
+		// inverser I/O
+		dup2(fd[0], fd[1]);
+		dup2(fd[1], STDOUT_FILENO);
+		execve("/bin/ls/grep", "shell", env);
+	}
+	else // parent process
+	{
+		close(fd[1]);
+		dup2(STDIN_FILENO, fd[0]);
+		dup2(STDOUT_FILENO, fd[1]);
+		execve("/bin/ls/cat", "alpha.txt", env);
+	}		
+	// close(fd[0]); // closing in file
+	// close(fd[1]); // closing outfile
 		
 		
 		

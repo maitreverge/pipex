@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
@@ -6,7 +7,11 @@
 
 
 
-
+// parent process always comes first
+void	writestr(int fd, const char *str)
+{
+	write(fd, str, strlen(str));
+}
 
 int main(void)
 {
@@ -22,14 +27,45 @@ int main(void)
 		exit(EXIT_FAILURE);
 	}
 
-	// ! creating 
+	// ! creating child process
 	pid = fork();
 	if (pid == -1)
 	{
 		perror("Fork failure");
 		exit(EXIT_FAILURE);
 	}
-	
+	else (pid == 0) // child process
+	{
+		close(fd[1]); // closing the write end
+		writestr(STDOUT_FILENO, "Child : What is the secret in this pipe ?\n");
+		writestr(STDOUT_FILENO, "Child : \"");
+
+		// read from the pipe one char by one
+		while (read(fd[0], &buf, 1) > 0)
+			write(STDOUT_FILENO, &buf, 1);
+		
+		writestr(STDOUT_FILENO, "\"\n");
+		writestr(STDOUT_FILENO, "Child : wow ! I must go see my father.\n");
+
+		close(fd[0]); // closing read end
+		exit(EXIT_SUCCESS);
+	}
+	else // parent process
+	{
+		close(fd[0]);
+		writestr(STDOUT_FILENO, "PArent : I'm writting a secret in this pipe...\n");
+
+		// write into the pipe
+		writestr(fd[1], "\e[33mI am your father mwahahaha!\e[0m");
+
+		// closing writting end
+		close(fd[1]);
+
+		// wait for child
+		wait(NULL);
+		writestr(STDOUT_FILENO, "Parent, Hello child!\n");
+		exit(EXIT_SUCCESS);
+	}
 }
 
 /*
