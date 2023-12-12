@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 17:12:36 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/12 14:27:00 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/12 14:42:39 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,15 @@ void	pipex_mandatory(int ac, char **av, char **env)
 	
 	else if (pid == 0) // child process
 	{
-		waitpid(pid, &status, 0);
-		// inverser I/O
+		// waitpid(pid, &status, 0); // ? unsure about this
+		
+		// I/O reversing
 		dup2(fd[0], fd[1]);
+		char *args[] = {"grep", "shell"};
 		dup2(fd[1], STDOUT_FILENO);
-		if (execve("/bin/grep", "shell", env) == -1)
+		if (execve("/bin/grep", args, env) == -1)
 		{
-			perror("Failed shell command execution");
+			perror("Failed grep command execution");
 			exit(EXIT_FAILURE);
 		}
 	}
@@ -74,9 +76,10 @@ void	pipex_mandatory(int ac, char **av, char **env)
 		close(fd[1]);
 		dup2(STDIN_FILENO, fd[0]);
 		dup2(STDOUT_FILENO, fd[1]);
-		if (execve("/bin/cat", "-e", env) == -1)
+		char *args2[] = {"cat", "-e"};
+		if (execve("/bin/cat", args2, env) == -1)
 		{
-			perror("Failed shell command execution");
+			perror("Failed cat command execution");
 			exit(EXIT_FAILURE);
 		}
 		exit(EXIT_SUCCESS);
@@ -90,7 +93,7 @@ void	pipex_mandatory(int ac, char **av, char **env)
 
 int	main(int ac, char **av, char **envp)
 {
-	if (ac >= 1)
+	if (ac >= 5)
 		pipex_mandatory(ac, av, envp);
 	else
 	{
