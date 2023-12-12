@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 17:12:36 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/12 12:42:54 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/12 14:27:00 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,23 @@ void	pipex_mandatory(int ac, char **av, char **env)
 		// inverser I/O
 		dup2(fd[0], fd[1]);
 		dup2(fd[1], STDOUT_FILENO);
-		execve("/bin/ls/grep", "shell", env);
+		if (execve("/bin/grep", "shell", env) == -1)
+		{
+			perror("Failed shell command execution");
+			exit(EXIT_FAILURE);
+		}
 	}
 	else // parent process
 	{
 		close(fd[1]);
 		dup2(STDIN_FILENO, fd[0]);
 		dup2(STDOUT_FILENO, fd[1]);
-		execve("/bin/ls/cat", "alpha.txt", env);
+		if (execve("/bin/cat", "-e", env) == -1)
+		{
+			perror("Failed shell command execution");
+			exit(EXIT_FAILURE);
+		}
+		exit(EXIT_SUCCESS);
 	}		
 	// close(fd[0]); // closing in file
 	// close(fd[1]); // closing outfile
@@ -81,7 +90,7 @@ void	pipex_mandatory(int ac, char **av, char **env)
 
 int	main(int ac, char **av, char **envp)
 {
-	if (ac >= 5)
+	if (ac >= 1)
 		pipex_mandatory(ac, av, envp);
 	else
 	{

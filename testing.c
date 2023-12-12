@@ -34,7 +34,7 @@ int main(void)
 		perror("Fork failure");
 		exit(EXIT_FAILURE);
 	}
-	else (pid == 0) // child process
+	else if (pid == 0) // child process
 	{
 		close(fd[1]); // closing the write end
 		writestr(STDOUT_FILENO, "Child : What is the secret in this pipe ?\n");
@@ -53,7 +53,7 @@ int main(void)
 	else // parent process
 	{
 		close(fd[0]);
-		writestr(STDOUT_FILENO, "PArent : I'm writting a secret in this pipe...\n");
+		writestr(STDOUT_FILENO, "Parent : I'm writting a secret in this pipe...\n");
 
 		// write into the pipe
 		writestr(fd[1], "\e[33mI am your father mwahahaha!\e[0m");
