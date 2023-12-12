@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 17:12:36 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/12 12:38:51 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/12 12:42:54 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	check_args_mandatory(char **av, int *fd)
 {
 	if (!(access(av[1], F_OK | R_OK))) // checks if infile exists and readable
-		*fd[0] = open(av[1], O_RDONLY);
+		fd[0] = open(av[1], O_RDONLY);
 	else
 		access_denied();
 	
@@ -23,14 +23,14 @@ static void	check_args_mandatory(char **av, int *fd)
 	if (!(access(av[4], F_OK))) // checks if outfile exists
 	{
 		if (!(access(av[4], W_OK)))
-			*fd[1] = open(av[4], O_WRONLY);
+			fd[1] = open(av[4], O_WRONLY);
 		else
 			access_denied();
 	}
 	else // needs to create outfile
-		*fd[1] = open(av[4], O_CREAT | O_TRUNC | O_WRONLY); // ? right syntax
+		fd[1] = open(av[4], O_CREAT | O_TRUNC | O_WRONLY); // ? right syntax
 
-	if (*fd[0] < 0 || *fd[1] < 0)
+	if (fd[0] < 0 || fd[1] < 0)
 		access_denied();
 }
 
@@ -44,7 +44,7 @@ void	pipex_mandatory(int ac, char **av, char **env)
 	tmp_fd = 42;
 	
 	// ! part du principe qu'il n'y a que des arguments simples
-	check_args_mandatory(av, &fd);
+	check_args_mandatory(av, fd);
 	if (pipe(fd) == -1) // 0 = ok, -1 = error
 	{
 		perror("Piping failure");
@@ -59,7 +59,7 @@ void	pipex_mandatory(int ac, char **av, char **env)
 	
 	else if (pid == 0) // child process
 	{
-		waitpid(pid, &status);
+		waitpid(pid, &status, 0);
 		// inverser I/O
 		dup2(fd[0], fd[1]);
 		dup2(fd[1], STDOUT_FILENO);
