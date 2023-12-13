@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 17:12:36 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/13 12:33:49 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/13 15:48:58 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,16 +65,24 @@ void	pipex_mandatory(int ac, char **av, char **env)
 	// ! 3 - piping
 	else if (pid == 0) // child process, aka cmd 1
 	{
-		dup2(stdin, fd[0]); // stdin == infile
-		dup2(stdout, pipe_fd[1]); // stdout of cmd 1 == stdin of pipe
-		// close ??
-		execve("/bin/cat", "-e", 0);
+		// ! ADD PROTECTION FOR DUP2
+		dup2(fd[0], STDIN_FILENO); // stdin == infile
+		dup2(pipe_fd[1], STDOUT_FILENO); // stdout of cmd 1 == stdin of pipe
+		// ? clos
+		char *args1[] = {"grep", "img", NULL};
+		execve("/bin/grep", args1, 0);
+		exit(EXIT_SUCCESS);
 	}
 	else // parent process, aka cmd 2
 	{
-		dup2(fd[0], pipe_fd[0]); // stdin cmd2 == stdout of pipe
-		dup2(pipe_fd[1], fd[1]) // stdout cmd2 == outfile
-		
+		waitpid(-1, &status, 0);
+		// ! ADD PROTECTION FOR DUP2
+		dup2(pipe_fd[0], fd[0]); // stdin cmd2 == stdout of pipe
+		dup2(fd[1], pipe_fd[1]); // stdout cmd2 == outfile
+		// ? close
+		char *args[] = {"ls", "-l", "-s", NULL};
+		execve("/bin/ls", args, 0);
+		exit(EXIT_SUCCESS);
 	}		
 
 		
