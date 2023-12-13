@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 17:12:36 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/12 14:42:39 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/13 12:33:49 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,20 +36,25 @@ static void	check_args_mandatory(char **av, int *fd)
 
 void	pipex_mandatory(int ac, char **av, char **env)
 {
-	int fd[2];
+	int fd[2]; // files descriptors for infile and outfile
+
+	int pipe_fd[2]; // fd for pipe
+	
 	pid_t pid;
-	int	tmp_fd;
-	int status;
+	int	tmp_fd; // tmp fd for switching things up
+	int status; // status int for waitpid function
 
 	tmp_fd = 42;
 	
-	// ! part du principe qu'il n'y a que des arguments simples
+	// ! 1 - parsing
 	check_args_mandatory(av, fd);
-	if (pipe(fd) == -1) // 0 = ok, -1 = error
+	if (pipe(pipe_fd) == -1) // 0 = ok, -1 = error
 	{
 		perror("Piping failure");
 		exit(EXIT_FAILURE);
 	}
+	
+	// ! 2 - fork
 	pid = fork();
 	if (pid == -1)
 	{
@@ -57,35 +62,21 @@ void	pipex_mandatory(int ac, char **av, char **env)
 		exit(EXIT_FAILURE);
 	}
 	
-	else if (pid == 0) // child process
+	// ! 3 - piping
+	else if (pid == 0) // child process, aka cmd 1
 	{
-		// waitpid(pid, &status, 0); // ? unsure about this
-		
-		// I/O reversing
-		dup2(fd[0], fd[1]);
-		char *args[] = {"grep", "shell"};
-		dup2(fd[1], STDOUT_FILENO);
-		if (execve("/bin/grep", args, env) == -1)
-		{
-			perror("Failed grep command execution");
-			exit(EXIT_FAILURE);
-		}
+		dup2(stdin, fd[0]); // stdin == infile
+		dup2(stdout, pipe_fd[1]); // stdout of cmd 1 == stdin of pipe
+		// close ??
+		execve("/bin/cat", "-e", 0);
 	}
-	else // parent process
+	else // parent process, aka cmd 2
 	{
-		close(fd[1]);
-		dup2(STDIN_FILENO, fd[0]);
-		dup2(STDOUT_FILENO, fd[1]);
-		char *args2[] = {"cat", "-e"};
-		if (execve("/bin/cat", args2, env) == -1)
-		{
-			perror("Failed cat command execution");
-			exit(EXIT_FAILURE);
-		}
-		exit(EXIT_SUCCESS);
+		dup2(fd[0], pipe_fd[0]); // stdin cmd2 == stdout of pipe
+		dup2(pipe_fd[1], fd[1]) // stdout cmd2 == outfile
+		
 	}		
-	// close(fd[0]); // closing in file
-	// close(fd[1]); // closing outfile
+
 		
 		
 		
@@ -101,6 +92,26 @@ int	main(int ac, char **av, char **envp)
 		return (1);
 	}
 }
+
+/*
+
+each cmd needs a stdin (input) and returns an output (to stdout)
+   
+    infile                                             outfile
+as stdin for cmd1                                 as stdout for cmd2            
+       |                        PIPE                        ↑
+       |           |---------------------------|            |
+       ↓             |                       |              |
+      cmd1   -->    end[1]       ↔       end[0]   -->     cmd2           
+                     |                       |
+            cmd1   |---------------------------|  end[0]
+           output                             reads end[1]
+         is written                          and sends cmd1
+          to end[1]                          output to cmd2
+       (end[1] becomes                      (end[0] becomes 
+        cmd1 stdout)                           cmd2 stdin)
+
+*/
 
 /*
 Reminder fd

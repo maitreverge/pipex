@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 10:31:16 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/10 08:49:10 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/13 12:18:58 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	ft_strcmp(char *s1, char *s2)
 
 void	access_denied(void)
 {
+	// ft_printf("%i", errno);
 	perror("Error accessing file");
 	exit(EXIT_FAILURE);
 }
