@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 17:12:36 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/14 09:47:06 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/14 11:40:38 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,18 @@
 
 static void	check_args_mandatory(char **av, int *fd)
 {
-	if (!(access(av[1], F_OK | R_OK))) // checks if infile exists and readable
-		fd[0] = open(av[1], O_RDONLY);
-	else
-		access_denied();
-	
-	// ! check for outfile
-	if (!(access(av[4], F_OK))) // checks if outfile exists
+	fd[0] = open(av[1], O_RDONLY);
+	if (fd[0] == -1)
 	{
-		if (!(access(av[4], W_OK)))
-			fd[1] = open(av[4], O_WRONLY);
-		else
-			access_denied();
+		perror("Opening infile failed");
+		exit(EXIT_FAILURE);
 	}
-	else // needs to create outfile
-		fd[1] = open(av[4], O_CREAT | O_TRUNC | O_WRONLY); // ? right syntax
-
-	if (fd[0] < 0 || fd[1] < 0)
-		access_denied();
+	fd[1] = open(av[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (fd[1] == -1)
+	{
+		perror("Opening outfile failed");
+		exit(EXIT_FAILURE);
+	}
 }
 
 void	pipex_mandatory(char **av, t_vars *vars)
@@ -53,27 +47,28 @@ void	pipex_mandatory(char **av, t_vars *vars)
 	}
 	
 	// ! 3 - piping
-	else if (vars->pid == 0) // child process, aka cmd 1
+	else if (!vars->pid) // child process, aka cmd 1
 	{
 		// ! ADD PROTECTION FOR DUP2
 		dup2(vars->fd[0], STDIN_FILENO); // stdin == infile
 		dup2(vars->pipe_fd[1], STDOUT_FILENO); // stdout of cmd 1 == stdin of pipe
-		close(vars->pipe_fd[0]);
 		close(vars->fd[0]);
-		char *args1[] = {"grep", "img", NULL};
-		execve("/bin/grep", args1, 0);
+		close(vars->pipe_fd[0]);
+		char *args[] = {"ls", "-l", "-a", NULL};
+		execve("/bin/ls", args, 0);
 		exit(EXIT_SUCCESS);
 	}
 	else // parent process, aka cmd 2
 	{
-		waitpid(-1, &vars->status, 0);
+		waitpid(vars->pid, &vars->status, 0);
 		// ! ADD PROTECTION FOR DUP2
-		dup2(vars->pipe_fd[0], vars->fd[0]); // stdin cmd2 == stdout of pipe
-		dup2(vars->fd[1], vars->pipe_fd[1]); // stdout cmd2 == outfile
+		dup2(vars->pipe_fd[0], STDIN_FILENO); // stdin cmd2 == stdout of pipe
+		close(vars->pipe_fd[0]);
 		close(vars->pipe_fd[1]);
+		dup2(vars->fd[1], STDOUT_FILENO); // stdout cmd2 == outfile
 		close(vars->fd[1]);
-		char *args[] = {"ls", "-l", "-s", NULL};
-		execve("/bin/ls", args, 0);
+		char *args1[] = {"grep", "img", NULL};
+		execve("/bin/grep", args1, 0);
 		exit(EXIT_SUCCESS);
 	}		
 }
