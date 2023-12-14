@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 17:12:36 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/14 12:00:52 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/14 14:22:31 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	pipex_mandatory(char **av, t_vars *vars)
 	}		
 }
 
-t_vars	init_struct(void)
+t_vars	init_struct(char **av, char **envp)
 {
 	t_vars init;
 
@@ -71,18 +71,18 @@ t_vars	init_struct(void)
 	init.pipe_fd[1] = 0;
 	init.pid = 0;
 	init.status = 0;
+	init.parsing.path = path_parsing(av, envp);
+	
 	return (init);
 }
 
 int	main(int ac, char **av, char **envp)
 {
-	char **path;
-	char **args;
 	t_vars vars;
 	if (ac >= 5)
 	{
-		vars = init_struct();	
-		pipex_mandatory(av, &vars);
+		vars = init_struct(av, envp);
+		// pipex_mandatory(av, &vars);
 	}
 	else
 		error_quit("Not enough arguments");

@@ -6,13 +6,37 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 13:00:02 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/13 13:14:04 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/14 14:27:16 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
+char	**path_parsing(char **av, char **envp)
+{
+	char **env;
+	char **result;
+	char *path;
 
+	env = envp;
+	while (ft_strncmp(*env, "PATH=", 5) && *env) // ! STEP 1 : looping through env for looking path
+		env++;
+	if (*env) // check if PATH has been found, if not exit
+		path = ft_strtrim(*env, "PATH="); // trim path 5 char from the left
+	else
+		error_quit("PATH envp couldn't be found");
+	result = ft_split(path, ':');
+	if (!result)
+		error_quit("Split path failed");
+		
+	// testing the path splitting
+	for (int i = 0; result[i]; i++)
+		ft_printf("Path number %i = %s", i+1, result[i]);
+	ft_printf("\n\n-------\n\nend parsing path");	
+	
+	free(path);
+	return (result); // needs freeing
+}
 // ! parser 
 /*
 
