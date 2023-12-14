@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 17:12:36 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/14 09:42:04 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/14 09:47:06 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,27 +66,29 @@ void	pipex_mandatory(char **av, t_vars *vars)
 	}
 	else // parent process, aka cmd 2
 	{
-		waitpid(-1, &status, 0);
+		waitpid(-1, &vars->status, 0);
 		// ! ADD PROTECTION FOR DUP2
 		dup2(vars->pipe_fd[0], vars->fd[0]); // stdin cmd2 == stdout of pipe
 		dup2(vars->fd[1], vars->pipe_fd[1]); // stdout cmd2 == outfile
 		close(vars->pipe_fd[1]);
 		close(vars->fd[1]);
-		// ? close
 		char *args[] = {"ls", "-l", "-s", NULL};
 		execve("/bin/ls", args, 0);
 		exit(EXIT_SUCCESS);
 	}		
 }
 
-t_vars	init_struct(t_vars *vars)
+t_vars	init_struct(void)
 {
-	fd[0] = 0;
-	fd[1] = 0;
-	pipe_fd[0] = 0;
-	pipe_fd[1] = 0;
-	pid = 0;
-	status = 0;
+	t_vars init;
+
+	init.fd[0] = 0;
+	init.fd[1] = 0;
+	init.pipe_fd[0] = 0;
+	init.pipe_fd[1] = 0;
+	init.pid = 0;
+	init.status = 0;
+	return (init);
 }
 
 int	main(int ac, char **av, char **envp)
@@ -96,7 +98,7 @@ int	main(int ac, char **av, char **envp)
 	t_vars vars;
 	if (ac >= 5)
 	{
-		vars = init_struct(&vars);	
+		vars = init_struct();	
 		pipex_mandatory(av, &vars);
 		
 	}

@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 14:41:08 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/14 09:40:35 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/14 09:46:43 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef struct s_vars
 
 
 // pipex.c
-void	pipex_mandatory(int ac, char **av, char **env);
+void	pipex_mandatory(char **av, t_vars *vars);
 
 // pipex_bonus.c
 void	pipex_bonus(int ac, char **av, char **env);
