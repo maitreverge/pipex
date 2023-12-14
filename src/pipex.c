@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 17:12:36 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/14 11:45:39 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/14 12:00:52 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ void	pipex_mandatory(char **av, t_vars *vars)
 		dup2(vars->pipe_fd[1], STDOUT_FILENO); // stdout of cmd 1 == stdin of pipe
 		close(vars->fd[0]);
 		close(vars->pipe_fd[0]);
-		char *args[] = {"ls", "-l", "-a", NULL};
-		execve("/bin/ls", args, 0);
+		char *args[] = {"cat", NULL};
+		execve("/bin/cat", args, 0);
 		exit(EXIT_SUCCESS);
 	}
 	else // parent process, aka cmd 2
@@ -55,8 +55,8 @@ void	pipex_mandatory(char **av, t_vars *vars)
 		close(vars->pipe_fd[1]);
 		dup2(vars->fd[1], STDOUT_FILENO); // stdout cmd2 == outfile
 		close(vars->fd[1]);
-		char *args1[] = {"grep", "img", NULL};
-		execve("/bin/grep", args1, 0);
+		char *args1[] = {"grep", "ceci", NULL};
+		execve("/usr/bin/grep", args1, 0);
 		exit(EXIT_SUCCESS);
 	}		
 }
@@ -83,7 +83,6 @@ int	main(int ac, char **av, char **envp)
 	{
 		vars = init_struct();	
 		pipex_mandatory(av, &vars);
-		
 	}
 	else
 		error_quit("Not enough arguments");
