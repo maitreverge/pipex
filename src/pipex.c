@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 17:12:36 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/14 14:22:31 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/14 14:41:55 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	check_args_mandatory(char **av, int *fd)
 
 void	pipex_mandatory(char **av, t_vars *vars)
 {
-	// ! 1 - parsing
+	// ! 1 - parsing 
 	check_args_mandatory(av, vars->fd);
 	if (pipe(vars->pipe_fd) == -1) // 0 = ok, -1 = error
 		error_quit("Piping failure");
@@ -63,7 +63,7 @@ void	pipex_mandatory(char **av, t_vars *vars)
 
 t_vars	init_struct(char **av, char **envp)
 {
-	t_vars init;
+	t_vars	init;
 
 	init.fd[0] = 0;
 	init.fd[1] = 0;
@@ -72,13 +72,13 @@ t_vars	init_struct(char **av, char **envp)
 	init.pid = 0;
 	init.status = 0;
 	init.parsing.path = path_parsing(av, envp);
-	
 	return (init);
 }
 
 int	main(int ac, char **av, char **envp)
 {
-	t_vars vars;
+	t_vars	vars;
+
 	if (ac >= 5)
 	{
 		vars = init_struct(av, envp);

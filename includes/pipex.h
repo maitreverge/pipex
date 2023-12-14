@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 14:41:08 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/14 14:24:02 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/14 14:42:19 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ typedef struct s_vars
 	t_parsing	parsing;
 }			t_vars;
 
-
-
 // pipex.c
 void	pipex_mandatory(char **av, t_vars *vars);
 
@@ -53,6 +51,5 @@ void	error_quit(char *str);
 
 // parsing.c
 char	**path_parsing(char **av, char **envp);
-
 
 #endif
