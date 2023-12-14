@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 17:12:36 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/13 15:48:58 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/14 09:42:04 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,41 +34,32 @@ static void	check_args_mandatory(char **av, int *fd)
 		access_denied();
 }
 
-void	pipex_mandatory(int ac, char **av, char **env)
+void	pipex_mandatory(char **av, t_vars *vars)
 {
-	int fd[2]; // files descriptors for infile and outfile
-
-	int pipe_fd[2]; // fd for pipe
-	
-	pid_t pid;
-	int	tmp_fd; // tmp fd for switching things up
-	int status; // status int for waitpid function
-
-	tmp_fd = 42;
-	
 	// ! 1 - parsing
-	check_args_mandatory(av, fd);
-	if (pipe(pipe_fd) == -1) // 0 = ok, -1 = error
+	check_args_mandatory(av, vars->fd);
+	if (pipe(vars->pipe_fd) == -1) // 0 = ok, -1 = error
 	{
 		perror("Piping failure");
 		exit(EXIT_FAILURE);
 	}
 	
 	// ! 2 - fork
-	pid = fork();
-	if (pid == -1)
+	vars->pid = fork();
+	if (vars->pid == -1)
 	{
 		perror("Forking failure");
 		exit(EXIT_FAILURE);
 	}
 	
 	// ! 3 - piping
-	else if (pid == 0) // child process, aka cmd 1
+	else if (vars->pid == 0) // child process, aka cmd 1
 	{
 		// ! ADD PROTECTION FOR DUP2
-		dup2(fd[0], STDIN_FILENO); // stdin == infile
-		dup2(pipe_fd[1], STDOUT_FILENO); // stdout of cmd 1 == stdin of pipe
-		// ? clos
+		dup2(vars->fd[0], STDIN_FILENO); // stdin == infile
+		dup2(vars->pipe_fd[1], STDOUT_FILENO); // stdout of cmd 1 == stdin of pipe
+		close(vars->pipe_fd[0]);
+		close(vars->fd[0]);
 		char *args1[] = {"grep", "img", NULL};
 		execve("/bin/grep", args1, 0);
 		exit(EXIT_SUCCESS);
@@ -77,23 +68,38 @@ void	pipex_mandatory(int ac, char **av, char **env)
 	{
 		waitpid(-1, &status, 0);
 		// ! ADD PROTECTION FOR DUP2
-		dup2(pipe_fd[0], fd[0]); // stdin cmd2 == stdout of pipe
-		dup2(fd[1], pipe_fd[1]); // stdout cmd2 == outfile
+		dup2(vars->pipe_fd[0], vars->fd[0]); // stdin cmd2 == stdout of pipe
+		dup2(vars->fd[1], vars->pipe_fd[1]); // stdout cmd2 == outfile
+		close(vars->pipe_fd[1]);
+		close(vars->fd[1]);
 		// ? close
 		char *args[] = {"ls", "-l", "-s", NULL};
 		execve("/bin/ls", args, 0);
 		exit(EXIT_SUCCESS);
 	}		
+}
 
-		
-		
-		
+t_vars	init_struct(t_vars *vars)
+{
+	fd[0] = 0;
+	fd[1] = 0;
+	pipe_fd[0] = 0;
+	pipe_fd[1] = 0;
+	pid = 0;
+	status = 0;
 }
 
 int	main(int ac, char **av, char **envp)
 {
+	char **path;
+	char **args;
+	t_vars vars;
 	if (ac >= 5)
-		pipex_mandatory(ac, av, envp);
+	{
+		vars = init_struct(&vars);	
+		pipex_mandatory(av, &vars);
+		
+	}
 	else
 	{
 		ft_printf("Not enough arguments.\nUsage : ./pipex  <file1>  <command_1>  <command_2>  ...  <file2>"); // needs better cases handling

@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 14:41:08 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/13 11:56:26 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/14 09:40:35 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,15 @@
 # include <errno.h> // makes errno a global variable usable with strerror(errno)
 # include <string.h>
 # include <sys/wait.h>
+
+typedef struct s_vars
+{
+	int		fd[2];
+	int		pipe_fd[2];
+	pid_t	pid;
+	int		status;
+}			t_vars;
+
 
 // pipex.c
 void	pipex_mandatory(int ac, char **av, char **env);
