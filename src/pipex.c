@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 17:12:36 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/14 11:44:26 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/14 11:45:39 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ static void	check_args_mandatory(char **av, int *fd)
 {
 	fd[0] = open(av[1], O_RDONLY);
 	if (fd[0] == -1)
-		access_denied("Opening infile failed");
+		error_quit("Opening infile failed");
 	fd[1] = open(av[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd[1] == -1)
-		access_denied("Opening outfile failed");
+		error_quit("Opening outfile failed");
 }
 
 void	pipex_mandatory(char **av, t_vars *vars)
@@ -27,12 +27,12 @@ void	pipex_mandatory(char **av, t_vars *vars)
 	// ! 1 - parsing
 	check_args_mandatory(av, vars->fd);
 	if (pipe(vars->pipe_fd) == -1) // 0 = ok, -1 = error
-		access_denied("Piping failure");
+		error_quit("Piping failure");
 	
 	// ! 2 - fork
 	vars->pid = fork();
 	if (vars->pid == -1)
-		access_denied("Forking failure");
+		error_quit("Forking failure");
 	
 	// ! 3 - piping
 	else if (!vars->pid) // child process, aka cmd 1
@@ -86,7 +86,7 @@ int	main(int ac, char **av, char **envp)
 		
 	}
 	else
-		access_denied("Not enough arguments");
+		error_quit("Not enough arguments");
 }
 
 /*

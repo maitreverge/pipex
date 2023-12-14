@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 10:31:16 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/14 11:42:41 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/14 11:45:53 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,8 @@ int	ft_strcmp(char *s1, char *s2)
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
 
-void	access_denied(char *str)
+void	error_quit(char *str)
 {
-	// ft_printf("%i", errno);
 	perror(str);
 	exit(EXIT_FAILURE);
 }
