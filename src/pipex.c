@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 17:12:36 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/15 12:11:45 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/15 17:21:53 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	pipex_mandatory(char **av, t_vars *vars)
 	}		
 }
 
-t_vars	init_struct(char **av, char **envp)
+t_vars	init_struct(char **av, char **envp, t_vars *vars)
 {
 	t_vars	init;
 
@@ -88,7 +88,7 @@ int	main(int ac, char **av, char **envp)
 
 	if (ac >= 5)
 	{
-		vars = init_struct(ac, av, envp);
+		vars = init_struct(ac, av, envp, &vars);
 		pipex_mandatory(av, &vars);
 		free_vars(&vars);
 	}

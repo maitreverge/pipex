@@ -6,15 +6,51 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 13:00:02 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/15 12:15:04 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/15 18:01:29 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-char	**args_parsing(int ac, char **av)
+int		nb_args(char *av)
+{
+	char	space;
+	char	quote;
+	int		i;
+
+	i = 0;
+	space = 32; // space ascii
+	quote = 39; // simple quote ' ascii
+	
+	while ()
+	
+}
+
+char	***args_parsing(int ac, char **av)
 {
 	// ! IMPORTANT : each av == 1 command
+	char	***result;
+	int 	index_current;
+	int 	index_last_arg;
+	int		i;
+
+	index_current = 2;
+	index_last_arg = ac - 2;
+	i = 0;
+	result = (char ***)malloc(sizeof(char ***) * (ac - 3) + 1); // extra spot for NULL
+	if (!result)
+		error_quit("Malloc failed");
+	while (index_current <= index_last_arg)
+	{
+		// counting the correct number or argument, including the simple quotes
+		result[i] = (char **)malloc(sizeof(char **) * (nb_args(av[i]) + 1))
+		
+		// ! TO DO : add null at the end of char**
+		i++;
+		index_current++;
+	}
+
+	// ! TO DO : add null and the end of char***
 	
 }
 
