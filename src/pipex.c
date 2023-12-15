@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 17:12:36 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/15 11:47:13 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/15 12:11:45 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,14 @@ t_vars	init_struct(char **av, char **envp)
 	init.pid = 0;
 	init.status = 0;
 	init.parsing.path = path_parsing(av, envp);
+	init.parsing.args = args_parsing(ac, av);
 	return (init);
 }
 
 void	free_vars(t_vars *vars)
 {
 	free(vars->parsing.path);
+	free(vars->parsing.args);
 }
 
 int	main(int ac, char **av, char **envp)
@@ -86,7 +88,7 @@ int	main(int ac, char **av, char **envp)
 
 	if (ac >= 5)
 	{
-		vars = init_struct(av, envp);
+		vars = init_struct(ac, av, envp);
 		pipex_mandatory(av, &vars);
 		free_vars(&vars);
 	}

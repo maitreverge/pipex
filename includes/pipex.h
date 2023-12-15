@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 14:41:08 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/14 14:42:19 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/15 12:11:13 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 typedef struct s_parsing
 {
 	char	**path;
-	char	***args;
+	char	**args;
 }			t_parsing;
 
 typedef struct s_vars

@@ -6,11 +6,17 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 13:00:02 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/15 11:43:32 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/15 12:15:04 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
+
+char	**args_parsing(int ac, char **av)
+{
+	// ! IMPORTANT : each av == 1 command
+	
+}
 
 char	**path_parsing(char **av, char **envp)
 {
