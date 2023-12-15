@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 17:12:36 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/14 14:41:55 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/15 11:05:46 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ t_vars	init_struct(char **av, char **envp)
 	init.pipe_fd[1] = 0;
 	init.pid = 0;
 	init.status = 0;
-	init.parsing.path = path_parsing(av, envp);
+	// init.parsing.path = path_parsing(av, envp);
 	return (init);
 }
 
@@ -82,6 +82,7 @@ int	main(int ac, char **av, char **envp)
 	if (ac >= 5)
 	{
 		vars = init_struct(av, envp);
+		vars.parsing.path = path_parsing(av, envp);
 		// pipex_mandatory(av, &vars);
 	}
 	else

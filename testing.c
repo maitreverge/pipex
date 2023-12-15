@@ -1,12 +1,58 @@
 #include <stdio.h>
 #include <string.h>
+#include <strings.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/wait.h>
+#include "libft/libft/libft.h"
+#include "libft/ft_printf/ft_printf.h"
+#include "libft/get_next_line/get_next_line_bonus.h"
+
+static size_t	ft_countwords(char const *str, char c)
+{
+	size_t	result;
+	int		i;
+
+	result = 0;
+	i = 0;
+	if (!str)
+		return (0);
+	while (str[i])
+	{
+		while (str[i] == c && str[i])
+			i++;
+		if (str[i] != c && str[i])
+		{
+			result++;
+			while (str[i] != c && str[i])
+				i++;
+		}
+	}
+	return (result);
+}
+
+int main(void)
+{
+	char **result_2;
+	char *result;
+	char path[] = "PATH=/nfs/homes/flverge/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin";
+
+	result = ft_strtrim(path, "PATH=");
+
+	// int words = ft_countwords(result, ':');
+
+	printf("Strimed string = %s\n", result);
+
+	result_2 = ft_split(result, ':');
+
+	for (int i = 0; result_2[i] != NULL; i++)
+		ft_printf("Split buffer %i = %s\n", i + 1, result_2[i]);
+	
+}
 
 
-
+/*
 // parent process always comes first
 void	writestr(int fd, const char *str)
 {
@@ -68,7 +114,6 @@ int main(void)
 	}
 }
 
-/*
 int main(void) // understanding dup and dup2
 {
 	int fd;

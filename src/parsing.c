@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 13:00:02 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/15 10:45:06 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/15 11:39:20 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,29 +19,35 @@ char	**path_parsing(char **av, char **envp)
 	char *path;
 
 	env = envp;
-	while (*env != NULL)
+	while (*env != NULL) // Loop through envp array
 	{
-		while (ft_strncmp(*env, "PATH=", 5))
+		if (ft_strncmp(*env, "PATH=", 5) == 0) // Check if the string starts with "PATH="
 			break;
 		env++;
 	}
-	if (*env) // check if PATH has been found, if not exit
+	// printf("Untrimed string = %s\n\n", *env);
+	if (*env) // Check if PATH has been found, if not exit
 	{
-		path = ft_substr(*env, 5, ft_strlen(*env)); // get the substring after "PATH=""
+		path = ft_strtrim(*env, "PATH=");
+		if (!path)
+			error_quit("Strtrim path failed");
 	}
 	else
 		error_quit("PATH envp couldn't be found");
+	// ! checked trimed string
+	// printf("Strimmed string = %s\n\n", path);
+	
 	result = ft_split(path, ':');
 	if (!result)
 		error_quit("Split path failed");
-		
-	// testing the path spliting
-	for (int i = 0; result[i]; i++)
-		ft_printf("Path number %i = %s", i+1, result[i]);
-	ft_printf("\n\n-------\n\nend parsing path");	
+
+	// Testing the path splitting
+	// for (int i = 0; result[i] != NULL; i++)
+	// 	printf("Path number %i = %s\n", i + 1, result[i]);
+	// ft_printf("\n\n-------\n\nend parsing path");	
 	
 	free(path);
-	return (result); // needs freeing
+	return (result); // Needs freeing
 }
 // ! parser 
 /*
