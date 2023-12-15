@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 13:00:02 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/14 14:35:01 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/15 10:45:06 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,16 @@ char	**path_parsing(char **av, char **envp)
 	char *path;
 
 	env = envp;
-	// * TO DO = Maybe not the right function, maybe other evnp are named PATH=
-	while (ft_strncmp(*env, "PATH=", 5) && *env) // ! STEP 1 : looping through env for looking path
+	while (*env != NULL)
+	{
+		while (ft_strncmp(*env, "PATH=", 5))
+			break;
 		env++;
+	}
 	if (*env) // check if PATH has been found, if not exit
-		path = ft_strtrim(*env, "PATH="); // trim path 5 char from the left,
+	{
+		path = ft_substr(*env, 5, ft_strlen(*env)); // get the substring after "PATH=""
+	}
 	else
 		error_quit("PATH envp couldn't be found");
 	result = ft_split(path, ':');
