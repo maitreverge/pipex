@@ -9,7 +9,64 @@
 #include "libft/ft_printf/ft_printf.h"
 #include "libft/get_next_line/get_next_line_bonus.h"
 
-static size_t	ft_countwords(char const *str, char c)
+char	*ft_strncpy(char *dest, char const *src, size_t n)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < n && src[i] != '\0')
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	while (i < n)
+	{
+		dest[i] = '\0';
+		i++;
+	}
+	return (dest);
+}
+
+void	arg_sub_check(char const *s, char c, size_t *i, size_t *start)
+{
+	while (s[*i] == c)
+		(*i)++;
+	if (s[*i] != c && s[*i])
+	{
+		*start = *i;
+		while (s[*i] != c && s[*i])
+			(*i)++;
+	}
+}
+
+void	arg_allocation(char **buffer, char const *s, char c, size_t len_s)
+{
+	size_t	i;
+	size_t	j;
+	size_t	start;
+
+	i = 0;
+	j = 0;
+	start = 0;
+	if (!s)
+		return ;
+	while (s[i])
+	{
+		arg_sub_check(s, c, &i, &start);
+		if (j < len_s)
+		{
+			buffer[j] = ft_calloc(sizeof(char), (i - start + 1));
+			if (!buffer[j])
+				return ;
+			ft_strncpy(buffer[j], &s[start], i - start);
+			j++;
+		}
+		while (s[i] == c && s[i])
+			i++;
+	}
+}
+
+size_t	ft_arg_countwords(char const *str, char space, char quote)
 {
 	size_t	result;
 	int		i;
@@ -20,35 +77,60 @@ static size_t	ft_countwords(char const *str, char c)
 		return (0);
 	while (str[i])
 	{
-		while (str[i] == c && str[i])
+		while (str[i] == space && str[i])
 			i++;
-		if (str[i] != c && str[i])
+		if (str[i] == quote)
+		{
+			i++;
+			while (str[i] != quote && str[i])
+				i++;
+			if (str[i] == quote)
+			{
+				result++;
+				i++;
+			}
+			else
+				exit (-1);
+		}
+		if (str[i] != space && str[i])
 		{
 			result++;
-			while (str[i] != c && str[i])
+			while (str[i] != space && str[i])
 				i++;
 		}
 	}
 	return (result);
 }
 
-int main(void)
+char	**ft_arg_split(char const *s, char space, char quote)
 {
-	char **result_2;
-	char *result;
-	char path[] = "PATH=/nfs/homes/flverge/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin";
+	char	**buffer;
+	size_t	len_s;
 
-	result = ft_strtrim(path, "PATH=");
+	len_s = ft_arg_countwords(s, space, quote);
+	buffer = (char **)ft_calloc(sizeof(char *), (len_s + 1));
+	if (!buffer)
+		return (NULL);
+	arg_allocation(buffer, s, space, len_s);
+	return (buffer);
+}
 
-	// int words = ft_countwords(result, ':');
+int main(int ac, char **av)
+{
+	char **result;
+	char space = 32;
+	char quote = 39;
 
-	printf("Strimed string = %s\n", result);
+	int nb_args = ft_arg_countwords(av[1], space, quote);
 
-	result_2 = ft_split(result, ':');
+	printf("Nb of args = %i\n", nb_args);
+	int i = 0;
 
-	for (int i = 0; result_2[i] != NULL; i++)
-		ft_printf("Split buffer %i = %s\n", i + 1, result_2[i]);
-	
+
+
+
+
+
 }
 
 
