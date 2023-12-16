@@ -30,7 +30,9 @@ char	*ft_strncpy(char *dest, char const *src, size_t n)
 void	arg_sub_check(char const *s, char c, size_t *i, size_t *start)
 {
 	char quote = 39;
-	// ! ORIGINAL IMPLEMENTATIOn
+
+
+	// ! ORIGINAL IMPLEMENTATION
 	while (s[*i] == c)
 		(*i)++;
 	if (s[*i] == quote && s[*i])

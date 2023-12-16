@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 13:00:02 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/15 18:01:29 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/16 10:28:54 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int		nb_args(char *av)
 	quote = 39; // simple quote ' ascii
 	
 	while ()
+
+
 	
 }
 
@@ -37,7 +39,7 @@ char	***args_parsing(int ac, char **av)
 	index_current = 2;
 	index_last_arg = ac - 2;
 	i = 0;
-	result = (char ***)malloc(sizeof(char ***) * (ac - 3) + 1); // extra spot for NULL
+	result = (char ***)malloc(sizeof(char **) * (ac - 3) + 1); // extra spot for NULL
 	if (!result)
 		error_quit("Malloc failed");
 	while (index_current <= index_last_arg)
