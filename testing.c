@@ -135,7 +135,7 @@ int main(int ac, char **av)
 
 	int nb_args = ft_arg_countwords(av[1], space);
 
-	printf("Nb of args = %i\n", nb_args);
+	printf("Nb of args = %i\n\n", nb_args);
 
 	result = ft_arg_split(av[1], space);
 
