@@ -29,9 +29,20 @@ char	*ft_strncpy(char *dest, char const *src, size_t n)
 
 void	arg_sub_check(char const *s, char c, size_t *i, size_t *start)
 {
+	char quote = 39;
+	// ! ORIGINAL IMPLEMENTATIOn
 	while (s[*i] == c)
 		(*i)++;
-	if (s[*i] != c && s[*i])
+	if (s[*i] == quote && s[*i])
+	{
+		(*i)++;
+		*start = *i;
+		while (s[*i] != quote && s[*i])
+			(*i)++;
+		// ??
+		// (*i)++;
+	}
+	else if (s[*i] != c && s[*i] != quote && s[*i])
 	{
 		*start = *i;
 		while (s[*i] != c && s[*i])
@@ -61,17 +72,19 @@ void	arg_allocation(char **buffer, char const *s, char c, size_t len_s)
 			ft_strncpy(buffer[j], &s[start], i - start);
 			j++;
 		}
-		while (s[i] == c && s[i])
-			i++;
+		// while (s[i] == c && s[i])
+		i++;
 	}
 }
 
-size_t	ft_arg_countwords(char const *str, char space, char quote)
+size_t	ft_arg_countwords(char const *str, char space)
 {
 	size_t	result;
 	int		i;
+	char	quote;
 
 	result = 0;
+	quote = 39;
 	i = 0;
 	if (!str)
 		return (0);
@@ -92,7 +105,7 @@ size_t	ft_arg_countwords(char const *str, char space, char quote)
 			else
 				exit (-1);
 		}
-		if (str[i] != space && str[i])
+		else if (str[i] != space && str[i])
 		{
 			result++;
 			while (str[i] != space && str[i])
@@ -102,12 +115,12 @@ size_t	ft_arg_countwords(char const *str, char space, char quote)
 	return (result);
 }
 
-char	**ft_arg_split(char const *s, char space, char quote)
+char	**ft_arg_split(char const *s, char space)
 {
 	char	**buffer;
 	size_t	len_s;
 
-	len_s = ft_arg_countwords(s, space, quote);
+	len_s = ft_arg_countwords(s, space);
 	buffer = (char **)ft_calloc(sizeof(char *), (len_s + 1));
 	if (!buffer)
 		return (NULL);
@@ -119,17 +132,15 @@ int main(int ac, char **av)
 {
 	char **result;
 	char space = 32;
-	char quote = 39;
 
-	int nb_args = ft_arg_countwords(av[1], space, quote);
+	int nb_args = ft_arg_countwords(av[1], space);
 
 	printf("Nb of args = %i\n", nb_args);
-	int i = 0;
 
+	result = ft_arg_split(av[1], space);
 
-
-
-
+	for (int i = 0; i <= nb_args; i++)
+		printf("Token %i = %s\n", i + 1, result[i]);
 
 }
 
