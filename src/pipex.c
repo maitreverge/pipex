@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 17:12:36 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/17 11:59:01 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/17 12:02:11 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	print_arg(t_vars *vars, int ac)
 	{
 		printf("Arg %i\n\n", j);
 		for(int k = 0; vars->parsing.args[j][k] != NULL; k++)
-			printf("Token %i from av[%i] = %s\n", k, i, vars->parsing.args[j][k]);
+			printf("Token %i from av[%i] = %s\n", k, j, vars->parsing.args[j][k]);
 		j++;	
 	}	
 }

@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 11:15:17 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/17 11:15:34 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/17 12:12:22 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,11 @@ char	*ft_strncpy(char *dest, char const *src, size_t n)
 
 void	arg_sub_check(char const *s, char c, size_t *i, size_t *start)
 {
-	char quote = 39;
-	int inside_quotes = 0;
+	char	quote;
+	int		inside_quotes;
 
+	quote = 39;
+	inside_quotes = 0;
 	while (s[*i] == c)
 		(*i)++;
 	*start = *i;
@@ -66,15 +68,15 @@ void	arg_allocation(char **buffer, char const *s, char c, size_t len_s)
 		if (j < len_s)
 		{
 			len = i - start;
-			if (s[start] == 39) // if the word starts with a quote
+			if (s[start] == 39)
 			{
-				start++; // skip the first quote
-				len--; // decrease the length to skip the quote
+				start++;
+				len--;
 				inside_quotes = 1;
 			}
-			if (inside_quotes && s[i - 1] == 39) // if the word ends with a quote
+			if (inside_quotes && s[i - 1] == 39)
 			{
-				len--; // decrease the length to skip the quote
+				len--;
 				inside_quotes = 0;
 			}
 			buffer[j] = ft_calloc(sizeof(char), (len + 1));
@@ -87,7 +89,7 @@ void	arg_allocation(char **buffer, char const *s, char c, size_t len_s)
 	}
 }
 
-size_t	ft_arg_countwords(char const *str, char space)
+size_t	ft_arg_ctw(char const *str, char space)
 {
 	size_t	result;
 	int		i;
@@ -120,14 +122,14 @@ size_t	ft_arg_countwords(char const *str, char space)
 			while (str[i])
 			{
 				if (str[i] == space)
-					break;
+					break ;
 				else if (str[i] == quote)
 				{
 					i++;
 					while (str[i] != quote && str[i])
 						i++;
 					i++;
-					break;
+					break ;
 				}
 				i++;
 			}
@@ -142,7 +144,7 @@ char	**ft_arg_split(char const *s, char space)
 	char	**buffer;
 	size_t	len_s;
 
-	len_s = ft_arg_countwords(s, space);
+	len_s = ft_arg_ctw(s, space);
 	buffer = (char **)ft_calloc(sizeof(char *), (len_s + 1));
 	if (!buffer)
 		return (NULL);
