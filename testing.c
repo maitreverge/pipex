@@ -49,10 +49,12 @@ void	arg_allocation(char **buffer, char const *s, char c, size_t len_s)
 	size_t	j;
 	size_t	start;
 	size_t	len;
+	int		inside_quotes;
 
 	i = 0;
 	j = 0;
 	start = 0;
+	inside_quotes = 0;
 	if (!s)
 		return ;
 	while (s[i])
@@ -61,10 +63,16 @@ void	arg_allocation(char **buffer, char const *s, char c, size_t len_s)
 		if (j < len_s)
 		{
 			len = i - start;
-			if (s[start] == 39 && s[i - 1] == 39) // if the word starts and ends with a quote
+			if (s[start] == 39) // if the word starts with a quote
 			{
 				start++; // skip the first quote
-				len -= 2; // decrease the length to skip the last quote
+				len--; // decrease the length to skip the quote
+				inside_quotes = 1;
+			}
+			if (inside_quotes && s[i - 1] == 39) // if the word ends with a quote
+			{
+				len--; // decrease the length to skip the quote
+				inside_quotes = 0;
 			}
 			buffer[j] = ft_calloc(sizeof(char), (len + 1));
 			if (!buffer[j])
