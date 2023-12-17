@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 17:12:36 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/17 18:44:06 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/17 18:55:47 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@ static void	check_args_mandatory(char **av, int *fd)
 
 void	pipex_mandatory(char **av, t_vars *vars)
 {
+	int return_execve;
+
+	return_execve = 0;
+	
 	// ! 1 - parsing 
 	check_args_mandatory(av, vars->fd);
 	if (pipe(vars->pipe_fd) == -1) // 0 = ok, -1 = error
@@ -44,8 +48,15 @@ void	pipex_mandatory(char **av, t_vars *vars)
 		close(vars->pipe_fd[0]);
 		// char *args[] = {"cat", NULL};
 		// * if execve fails, return value == -1
-		while(execve(*vars->parsing.path, vars->parsing.args[0], 0) == -1)
-			vars->parsing.path++;
+		while(*vars->parsing.path != NULL)
+		{
+			return_execve = execve(*vars->parsing.path, vars->parsing.args[0], 0);
+			if (!return_execve)
+				vars->parsing.path++;
+			else
+				break ;
+		}
+			// vars->parsing.path++;
 		 
 		// execve("/bin/cat", vars->parsing.args[0], 0);
 		exit(EXIT_SUCCESS); // ! read execve man for really understanding the ins and out
@@ -59,9 +70,18 @@ void	pipex_mandatory(char **av, t_vars *vars)
 		close(vars->pipe_fd[1]);
 		dup2(vars->fd[1], STDOUT_FILENO); // stdout cmd2 == outfile
 		close(vars->fd[1]);
+
+		while(*vars->parsing.path != NULL)
+		{
+			return_execve = execve(*vars->parsing.path, vars->parsing.args[1], 0);
+			if (!return_execve)
+				vars->parsing.path++;
+			else
+				break ;
+		}
 		
-		while(execve(*vars->parsing.path, vars->parsing.args[0], 0) == -1)
-			vars->parsing.path++;
+		// while(execve(*vars->parsing.path, vars->parsing.args[1], 0) == -1)
+		// 	vars->parsing.path++;
 			
 		// execve("/usr/bin/grep", vars->parsing.args, 0);
 		exit(EXIT_SUCCESS);
@@ -109,9 +129,9 @@ int	main(int ac, char **av, char **envp)
 	if (ac >= 5)
 	{
 		vars = init_struct(ac, av, envp, &vars);
-		// print_arg(&vars, ac);
-		pipex_mandatory(av, &vars);
-		free_vars(&vars);
+		print_arg(&vars, ac);
+		// pipex_mandatory(av, &vars);
+		// free_vars(&vars);
 	}
 	else
 		error_quit("Not enough arguments");
