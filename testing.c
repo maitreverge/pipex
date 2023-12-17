@@ -30,32 +30,16 @@ char	*ft_strncpy(char *dest, char const *src, size_t n)
 void	arg_sub_check(char const *s, char c, size_t *i, size_t *start)
 {
 	char quote = 39;
+	int inside_quotes = 0;
 
 	while (s[*i] == c)
 		(*i)++;
-	if (s[*i] == quote && s[*i])
+	*start = *i;
+	while (s[*i] && (inside_quotes || s[*i] != c))
 	{
-		// Check if the character before the quote is a space or the start of the string
-		if (*i == 0 || s[*i - 1] == c)
-		{
-			(*i)++;
-			*start = *i;
-			while (s[*i] != quote && s[*i])
-				(*i)++;
-		}
-		else
-		{
-			// If the character before the quote is not a space, treat the number and the quoted string as separate arguments
-			*start = *i - 1;
-			while (s[*i] != c && s[*i])
-				(*i)++;
-		}
-	}
-	else if (s[*i] != c && s[*i] != quote && s[*i])
-	{
-		*start = *i;
-		while (s[*i] != c && s[*i])
-			(*i)++;
+		if (s[*i] == quote)
+			inside_quotes = !inside_quotes;
+		(*i)++;
 	}
 }
 
@@ -122,6 +106,22 @@ size_t	ft_arg_countwords(char const *str, char space)
 		}
 	}
 	return (result);
+
+	/*
+	char quote = 39;
+	int inside_quotes = 0;
+
+	while (s[*i] == c)
+		(*i)++;
+	*start = *i;
+	while (s[*i] && (inside_quotes || s[*i] != c))
+	{
+		if (s[*i] == quote)
+			inside_quotes = !inside_quotes;
+		(*i)++;
+	}
+	
+	*/
 }
 
 char	**ft_arg_split(char const *s, char space)
