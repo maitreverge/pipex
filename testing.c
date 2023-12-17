@@ -114,28 +114,24 @@ size_t	ft_arg_countwords(char const *str, char space)
 		}
 		else if (str[i] != space && str[i])
 		{
-			result++;
-			while (str[i] != space && str[i])
+			while (str[i])
+			{
+				if (str[i] == space)
+					break;
+				else if (str[i] == quote)
+				{
+					i++;
+					while (str[i] != quote && str[i])
+						i++;
+					i++;
+					break;
+				}
 				i++;
+			}
+			result++;
 		}
 	}
 	return (result);
-
-	/*
-	char quote = 39;
-	int inside_quotes = 0;
-
-	while (s[*i] == c)
-		(*i)++;
-	*start = *i;
-	while (s[*i] && (inside_quotes || s[*i] != c))
-	{
-		if (s[*i] == quote)
-			inside_quotes = !inside_quotes;
-		(*i)++;
-	}
-	
-	*/
 }
 
 char	**ft_arg_split(char const *s, char space)
