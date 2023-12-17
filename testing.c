@@ -48,6 +48,7 @@ void	arg_allocation(char **buffer, char const *s, char c, size_t len_s)
 	size_t	i;
 	size_t	j;
 	size_t	start;
+	size_t	len;
 
 	i = 0;
 	j = 0;
@@ -59,13 +60,18 @@ void	arg_allocation(char **buffer, char const *s, char c, size_t len_s)
 		arg_sub_check(s, c, &i, &start);
 		if (j < len_s)
 		{
-			buffer[j] = ft_calloc(sizeof(char), (i - start + 1));
+			len = i - start;
+			if (s[start] == 39 && s[i - 1] == 39) // if the word starts and ends with a quote
+			{
+				start++; // skip the first quote
+				len -= 2; // decrease the length to skip the last quote
+			}
+			buffer[j] = ft_calloc(sizeof(char), (len + 1));
 			if (!buffer[j])
 				return ;
-			ft_strncpy(buffer[j], &s[start], i - start);
+			ft_strncpy(buffer[j], &s[start], len);
 			j++;
 		}
-		// while (s[i] == c && s[i])
 		i++;
 	}
 }
