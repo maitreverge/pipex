@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 17:12:36 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/17 18:58:03 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/17 19:31:23 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,10 @@ static void	check_args_mandatory(char **av, int *fd)
 void	pipex_mandatory(char **av, t_vars *vars)
 {
 	int return_execve;
+	char *joined_path;
 
 	return_execve = 0;
+	// joined_path = NULL;
 	
 	// ! 1 - parsing 
 	check_args_mandatory(av, vars->fd);
@@ -50,14 +52,21 @@ void	pipex_mandatory(char **av, t_vars *vars)
 		// * if execve fails, return value == -1
 		while(*vars->parsing.path != NULL)
 		{
-			return_execve = execve(*vars->parsing.path, vars->parsing.args[0], 0);
+			joined_path = ft_strjoin(*vars->parsing.path, *vars->parsing.args[0]);
+			printf("Joined path = %s\n", joined_path);
+			return_execve = execve(joined_path, vars->parsing.args[0], 0);
 			if (return_execve == -1)
-				vars->parsing.path++;
+			{
+				*vars->parsing.path++;
+				free(joined_path);
+			}
 			else
 				break ;
 		}
+		// if (joined_path)
+		// 	free(joined_path);
 		if (return_execve == -1)
-			error_quit("execve failed");
+			error_quit("execve child failed");
 			
 		
 			// vars->parsing.path++;
@@ -77,14 +86,21 @@ void	pipex_mandatory(char **av, t_vars *vars)
 
 		while(*vars->parsing.path != NULL)
 		{
-			return_execve = execve(*vars->parsing.path, vars->parsing.args[1], 0);
+			joined_path = ft_strjoin(*vars->parsing.path, *vars->parsing.args[1]);
+			printf("Joined path = %s\n", joined_path);
+			return_execve = execve(joined_path, vars->parsing.args[1], 0);
 			if (return_execve == -1)
-				vars->parsing.path++;
+			{
+				*vars->parsing.path++;
+				free(joined_path);
+			}
 			else
 				break ;
 		}
+		// if (joined_path)
+		// 	free(joined_path);
 		if (return_execve == -1)
-			error_quit("execve failed");
+			error_quit("execve parent failed");
 		
 		// while(execve(*vars->parsing.path, vars->parsing.args[1], 0) == -1)
 		// 	vars->parsing.path++;
@@ -106,6 +122,7 @@ t_vars	init_struct(int ac, char **av, char **envp, t_vars *vars)
 	init.status = 0;
 	init.parsing.path = path_parsing(av, envp);
 	init.parsing.args = args_parsing(ac, av);
+	// init.parsing.path = join_path_cmd(&init); // ! beware of freeing 
 	return (init);
 }
 
