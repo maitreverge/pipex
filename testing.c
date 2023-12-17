@@ -31,18 +31,25 @@ void	arg_sub_check(char const *s, char c, size_t *i, size_t *start)
 {
 	char quote = 39;
 
-
-	// ! ORIGINAL IMPLEMENTATION
 	while (s[*i] == c)
 		(*i)++;
 	if (s[*i] == quote && s[*i])
 	{
-		(*i)++;
-		*start = *i;
-		while (s[*i] != quote && s[*i])
+		// Check if the character before the quote is a space or the start of the string
+		if (*i == 0 || s[*i - 1] == c)
+		{
 			(*i)++;
-		// ??
-		// (*i)++;
+			*start = *i;
+			while (s[*i] != quote && s[*i])
+				(*i)++;
+		}
+		else
+		{
+			// If the character before the quote is not a space, treat the number and the quoted string as separate arguments
+			*start = *i - 1;
+			while (s[*i] != c && s[*i])
+				(*i)++;
+		}
 	}
 	else if (s[*i] != c && s[*i] != quote && s[*i])
 	{
