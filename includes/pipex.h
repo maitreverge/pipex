@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 14:41:08 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/17 11:17:03 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/17 11:30:16 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,16 @@ int		ft_strcmp(char *s1, char *s2);
 void	error_quit(char *str);
 
 // parsing_1.c
+char	***args_parsing(int ac, char **av);
 char	**path_parsing(char **av, char **envp);
 
+
 // parsing_1.c
-char	*ft_strncpy(char *dest, char const *src, size_t n)
-void	arg_sub_check(char const *s, char c, size_t *i, size_t *start)
-void	arg_allocation(char **buffer, char const *s, char c, size_t len_s)
-size_t	ft_arg_countwords(char const *str, char space)
-char	**ft_arg_split(char const *s, char space)
+char	*ft_strncpy(char *dest, char const *src, size_t n);
+void	arg_sub_check(char const *s, char c, size_t *i, size_t *start);
+void	arg_allocation(char **buffer, char const *s, char c, size_t len_s);
+size_t	ft_arg_countwords(char const *str, char space);
+char	**ft_arg_split(char const *s, char space);
 
 
 #endif

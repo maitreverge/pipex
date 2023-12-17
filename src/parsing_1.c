@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 13:00:02 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/17 11:24:32 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/17 11:48:54 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,26 +18,28 @@ char	***args_parsing(int ac, char **av)
 	char	***result;
 	int		i; // index de arg
 	int		j; // index de result
-	int 	index_current;
+	char	space;
 	// int 	index_last_arg;
 
 	i = 2;
 	j = 0;
+	space = 32;
 	// index_last_arg = ac - 2;
 	// i = 0;
 	result = (char ***)malloc(sizeof(char **) * (ac - 3) + 1); // extra spot for NULL
 	if (!result)
 		error_quit("Malloc failed");
-	while (index_current <= (ac - 2))
+	while ((i + j) <= (ac - 2))
 	{
-		result[j] = (char **)malloc(sizeof(char **) * (ft_arg_countwords(av[i + j]) + 1))
-		if (!result[i])
+		result[j] = (char **)malloc(sizeof(char *) * (ft_arg_countwords(av[i + j], 32)) + 1);
+		if (!result[j])
 			error_quit("Malloc failed");
-		result[j] = ft_arg_split(av[i])
+		result[j] = ft_arg_split(av[i + j], space);
 		j++;
 	}
 	// null terminating char ***
 	result[j] = NULL;
+	return (result);
 }
 
 char	**path_parsing(char **av, char **envp)

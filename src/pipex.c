@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 17:12:36 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/15 17:21:53 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/17 11:55:23 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	pipex_mandatory(char **av, t_vars *vars)
 	}		
 }
 
-t_vars	init_struct(char **av, char **envp, t_vars *vars)
+t_vars	init_struct(int ac, char **av, char **envp, t_vars *vars)
 {
 	t_vars	init;
 
@@ -74,6 +74,19 @@ t_vars	init_struct(char **av, char **envp, t_vars *vars)
 	init.parsing.path = path_parsing(av, envp);
 	init.parsing.args = args_parsing(ac, av);
 	return (init);
+}
+
+void	print_arg(t_vars *vars, int ac)
+{
+	int j = 0;
+	int i = 2;
+	while ((i+j) <= ac - 2)
+	{
+		printf("Arg %i\n\n", i);
+		for(int k = 0; vars->parsing.args != NULL; k++)
+			printf("Token %i from av[%i] = %s", i, i, *vars->parsing.args[k]);
+		j++;	
+	}	
 }
 
 void	free_vars(t_vars *vars)
@@ -89,8 +102,9 @@ int	main(int ac, char **av, char **envp)
 	if (ac >= 5)
 	{
 		vars = init_struct(ac, av, envp, &vars);
-		pipex_mandatory(av, &vars);
-		free_vars(&vars);
+		print_arg(&vars, ac);
+		// pipex_mandatory(av, &vars);
+		// free_vars(&vars);
 	}
 	else
 		error_quit("Not enough arguments");
