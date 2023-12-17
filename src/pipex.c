@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 17:12:36 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/17 18:55:47 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/17 18:58:03 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,15 @@ void	pipex_mandatory(char **av, t_vars *vars)
 		while(*vars->parsing.path != NULL)
 		{
 			return_execve = execve(*vars->parsing.path, vars->parsing.args[0], 0);
-			if (!return_execve)
+			if (return_execve == -1)
 				vars->parsing.path++;
 			else
 				break ;
 		}
+		if (return_execve == -1)
+			error_quit("execve failed");
+			
+		
 			// vars->parsing.path++;
 		 
 		// execve("/bin/cat", vars->parsing.args[0], 0);
@@ -74,11 +78,13 @@ void	pipex_mandatory(char **av, t_vars *vars)
 		while(*vars->parsing.path != NULL)
 		{
 			return_execve = execve(*vars->parsing.path, vars->parsing.args[1], 0);
-			if (!return_execve)
+			if (return_execve == -1)
 				vars->parsing.path++;
 			else
 				break ;
 		}
+		if (return_execve == -1)
+			error_quit("execve failed");
 		
 		// while(execve(*vars->parsing.path, vars->parsing.args[1], 0) == -1)
 		// 	vars->parsing.path++;
@@ -129,9 +135,9 @@ int	main(int ac, char **av, char **envp)
 	if (ac >= 5)
 	{
 		vars = init_struct(ac, av, envp, &vars);
-		print_arg(&vars, ac);
-		// pipex_mandatory(av, &vars);
-		// free_vars(&vars);
+		// print_arg(&vars, ac);
+		pipex_mandatory(av, &vars);
+		free_vars(&vars);
 	}
 	else
 		error_quit("Not enough arguments");
