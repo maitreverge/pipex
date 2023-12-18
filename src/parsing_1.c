@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 13:00:02 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/18 12:51:00 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/18 14:08:28 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,24 +44,32 @@ char	**joined_path(char **path) // joining path and / char
 	int i = 0;
 	int k = 0;
 	// lenght total char ** for rellallocating path + /
-	while (*path[i] != NULL)
+	while (path[i] != NULL)
 		i++;
 	
-	result = malloc(sizeof(char *) * i + 1); // another space
+	result = malloc(sizeof(char *) * (i + 1)); // another space
 	if (!result)
 		error_quit("Failled malloc");
 	i = 0;
 	
-	while (*path[i] != NULL)
+	while (path[i] != NULL)
 	{
-		result[k] = malloc(ft_strlen(path[i]) + 2); // +1 for '\0' and + 1 for '/' char
-		if (!result[k])
-			error_quit("malloc Failed");
+		// result[k] = malloc(ft_strlen(path[i]) + 2); // +1 for '\0' and + 1 for '/' char
+		// if (!result[k])
+		// 	error_quit("malloc Failed");
 		result[k] = ft_strjoin(path[i], "/");
-		k++
 		i++;
+		k++;
 	}
 	result[i] = NULL;
+
+	i = 0;
+	while (path[i] != NULL)
+	{
+		free(path[i]);
+		i++;
+	}
+	free(path[i]);
 	return (result);
 	
 
@@ -132,12 +140,14 @@ char	**path_parsing(char **av, char **envp)
 	unjoined_result = ft_split(path, ':');
 	if (!unjoined_result)
 		error_quit("Split function failed");
-	free(path);
 	joined_result = joined_path(unjoined_result); // ! final joining path
 
 	for (int i = 0; unjoined_result[i] != NULL; i++)
+	{
 		free(unjoined_result[i]);
-	free(unjoined_result);
+	}
+
+	free(path);
 	
 	// // ! checking
 	// for (size_t i = 0; result[i] != NULL; i++)

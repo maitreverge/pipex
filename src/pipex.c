@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 17:12:36 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/18 12:36:13 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/18 14:04:33 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,22 +144,33 @@ void	print_arg(t_vars *vars, int ac)
 void	free_vars(t_vars *vars)
 {
 	// ! free paths
-	for (size_t i = 0; vars->parsing.path[i] != NULL; i++)
+	int i;
+	int k;
+
+	i = 0;
+	k = 0;
+	while (vars->parsing.path[i] != NULL)
 	{
 		free(vars->parsing.path[i]);
+		i++;
 	}
-	// free(vars->parsing.path);
-	// ! Free args
+	// free(vars->parsing.path[i]);
 	
-	for (size_t i = 0; vars->parsing.args[i] != NULL; i++)
+	// ! Free args
+	i = 0;
+	while (vars->parsing.args[i] != NULL)
 	{
-		for (size_t k = 0; vars->parsing.args[i][k] != NULL; k++)
+		k = 0;
+		while (vars->parsing.args[i][k] != NULL)
 		{
 			free(vars->parsing.args[i][k]);
+			k++;
 		}
-		// free(vars->parsing.args[i]);
-		
+		// free(vars->parsing.args[i][k]);
+		i++;
 	}
+	// free(vars->parsing.args[i]);
+	// free(vars->parsing.args[i]);
 	// free(vars->parsing.args);
 }
 
@@ -172,7 +183,7 @@ int	main(int ac, char **av, char **envp)
 		vars = init_struct(ac, av, envp, &vars);
 		// print_arg(&vars, ac);
 		// pipex_mandatory(av, &vars);
-		// free_vars(&vars);
+		free_vars(&vars);
 	}
 	else
 		error_quit("Not enough arguments");
