@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 13:00:02 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/18 11:41:05 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/18 11:54:35 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,25 +41,21 @@ char	**joined_path(char **path) // joining path and / char
 {
 	char	*final_path;
 	char	*to_free;
+	int i = 0;
 
-	while (*path != NULL)
+	while (path[i] != NULL)
 	{
-		to_free = *path; // for freeing later
-		final_path = ft_strjoin(*path, "/");
-		*path = final_path;
+		to_free = path[i]; // for freeing later
+		final_path = ft_strjoin(path[i], "/");
+		path[i] = final_path;
 		free(to_free);
-		path++;
+		i++;
 	}
 	// ? free the last token to free and final path
 
-	// ! checking
-	for (size_t i = 0; *path != NULL; i++)
-	{
-		printf("Final path = %s\n", path[i]);
-	}
 	return (path);
-	
 }
+
 
 char	**path_parsing(char **av, char **envp)
 {
@@ -85,7 +81,12 @@ char	**path_parsing(char **av, char **envp)
 	result = ft_split(path, ':');
 	if (!result)
 		error_quit("Split function failed");
-	free(path);
+	free (path);
 	result = joined_path(result); // ! final joining path
+	
+	// ! checking
+	for (size_t i = 0; result[i] != NULL; i++)
+		printf("Final path = %s\n", result[i]);
+	
 	return (result);
 }
