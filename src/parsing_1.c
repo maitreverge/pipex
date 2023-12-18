@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 13:00:02 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/18 12:17:39 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/18 12:51:00 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,19 +39,49 @@ char	***args_parsing(int ac, char **av)
 
 char	**joined_path(char **path) // joining path and / char
 {
+	int len_path;
+	char **result;
+	int i = 0;
+	int k = 0;
+	// lenght total char ** for rellallocating path + /
+	while (*path[i] != NULL)
+		i++;
+	
+	result = malloc(sizeof(char *) * i + 1); // another space
+	if (!result)
+		error_quit("Failled malloc");
+	i = 0;
+	
+	while (*path[i] != NULL)
+	{
+		result[k] = malloc(ft_strlen(path[i]) + 2); // +1 for '\0' and + 1 for '/' char
+		if (!result[k])
+			error_quit("malloc Failed");
+		result[k] = ft_strjoin(path[i], "/");
+		k++
+		i++;
+	}
+	result[i] = NULL;
+	return (result);
+	
+
+	/*
 	char	*final_path;
+	char *to_free;
 	int i = 0;
 
 	while (path[i] != NULL)
 	{
+		to_free = path[i];
 		final_path = ft_strjoin(path[i], "/");
-		free(path[i]); // free old path[i]
 		path[i] = final_path;
+		free(to_free);
 		free(final_path);
 		i++;
 	}
-
 	return (path);
+	*/
+
 	/*
 	char	*final_path;
 	char	*to_free;
@@ -80,7 +110,8 @@ char	**joined_path(char **path) // joining path and / char
 char	**path_parsing(char **av, char **envp)
 {
 	char	**env;
-	char	**result;
+	char	**unjoined_result;
+	char	**joined_result;
 	char	*path;
 
 	env = envp;
@@ -98,15 +129,19 @@ char	**path_parsing(char **av, char **envp)
 	}
 	else
 		error_quit("PATH envp couldn't be found");
-	result = ft_split(path, ':');
-	if (!result)
+	unjoined_result = ft_split(path, ':');
+	if (!unjoined_result)
 		error_quit("Split function failed");
-	free (path);
-	result = joined_path(result); // ! final joining path
+	free(path);
+	joined_result = joined_path(unjoined_result); // ! final joining path
+
+	for (int i = 0; unjoined_result[i] != NULL; i++)
+		free(unjoined_result[i]);
+	free(unjoined_result);
 	
-	// ! checking
-	for (size_t i = 0; result[i] != NULL; i++)
-		printf("Final path = %s\n", result[i]);
+	// // ! checking
+	// for (size_t i = 0; result[i] != NULL; i++)
+	// 	printf("Final path = %s\n", result[i]);
 	
-	return (result);
+	return (joined_result);
 }

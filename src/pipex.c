@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 17:12:36 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/18 12:26:46 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/18 12:36:13 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ void	free_vars(t_vars *vars)
 	// free(vars->parsing.path);
 	// ! Free args
 	
-	for (size_t i = 0; *vars->parsing.args[i] != NULL; i++)
+	for (size_t i = 0; vars->parsing.args[i] != NULL; i++)
 	{
 		for (size_t k = 0; vars->parsing.args[i][k] != NULL; k++)
 		{
@@ -172,7 +172,7 @@ int	main(int ac, char **av, char **envp)
 		vars = init_struct(ac, av, envp, &vars);
 		// print_arg(&vars, ac);
 		// pipex_mandatory(av, &vars);
-		free_vars(&vars);
+		// free_vars(&vars);
 	}
 	else
 		error_quit("Not enough arguments");
