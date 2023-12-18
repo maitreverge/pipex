@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 17:12:36 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/18 14:04:33 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/18 14:55:20 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,6 @@ t_vars	init_struct(int ac, char **av, char **envp, t_vars *vars)
 	init.status = 0;
 	init.parsing.path = path_parsing(av, envp);
 	init.parsing.args = args_parsing(ac, av);
-	// init.parsing.path = join_path_cmd(&init); // ! beware of freeing 
 	return (init);
 }
 
@@ -148,16 +147,16 @@ void	free_vars(t_vars *vars)
 	int k;
 
 	i = 0;
-	k = 0;
 	while (vars->parsing.path[i] != NULL)
 	{
 		free(vars->parsing.path[i]);
 		i++;
 	}
-	// free(vars->parsing.path[i]);
+	free(vars->parsing.path[i]);
 	
 	// ! Free args
 	i = 0;
+	k = 0;
 	while (vars->parsing.args[i] != NULL)
 	{
 		k = 0;
@@ -166,12 +165,11 @@ void	free_vars(t_vars *vars)
 			free(vars->parsing.args[i][k]);
 			k++;
 		}
-		// free(vars->parsing.args[i][k]);
+		free(vars->parsing.args[i][k]);
 		i++;
 	}
-	// free(vars->parsing.args[i]);
-	// free(vars->parsing.args[i]);
-	// free(vars->parsing.args);
+	free(vars->parsing.args[i]);
+	free(vars->parsing.args);
 }
 
 int	main(int ac, char **av, char **envp)

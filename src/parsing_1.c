@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 13:00:02 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/18 14:30:21 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/18 14:44:27 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,15 @@ char	***args_parsing(int ac, char **av)
 	i = 2;
 	j = 0;
 	space = 32;
-	buffer = (char ***)malloc(sizeof(char **) * (ac - 3) + 1);
+	buffer = (char ***)malloc(sizeof(char **) * (ac - 3 + 1));
 	if (!buffer)
 		error_quit("Malloc failed");
 	while ((i + j) <= (ac - 2))
 	{
-		buffer[j] = malloc(sizeof(char *) * (ft_arg_ctw(av[i + j], 32)) + 1);
-		if (!buffer[j])
-			error_quit("Malloc failed");
+		// ! create a char ** buffer ready to welcome splitted args
+		// buffer[j] = malloc(sizeof(char *) * (ft_arg_ctw(av[i + j], space)) + 1);
+		// if (!buffer[j])
+		// 	error_quit("Malloc failed");
 		buffer[j] = ft_arg_split(av[i + j], space);
 		j++;
 	}
@@ -37,7 +38,8 @@ char	***args_parsing(int ac, char **av)
 	return (buffer);
 }
 
-char	**joined_path(char **path) // joining path and / char
+// ! UNSUSED FT because custom split implemented
+char	**joined_path(char **path)
 {
 	int len_path;
 	char **result;
