@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 13:00:02 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/18 14:25:45 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/18 14:30:21 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,10 +150,10 @@ char	**path_parsing(char **av, char **envp)
 	// 	free(unresult[i]);
 	// }
 	
-	// ! checking
+	// // ! checking
 	
-	for (size_t i = 0; result[i] != NULL; i++)
-		printf("Final path = %s\n", result[i]);
+	// for (size_t i = 0; result[i] != NULL; i++)
+	// 	printf("Final path = %s\n", result[i]);
 
 	free(path);
 	
