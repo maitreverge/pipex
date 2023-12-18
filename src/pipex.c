@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 17:12:36 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/17 19:31:23 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/18 11:35:39 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	pipex_mandatory(char **av, t_vars *vars)
 			return_execve = execve(joined_path, vars->parsing.args[0], 0);
 			if (return_execve == -1)
 			{
-				*vars->parsing.path++;
+				vars->parsing.path++;
 				free(joined_path);
 			}
 			else
@@ -84,6 +84,8 @@ void	pipex_mandatory(char **av, t_vars *vars)
 		dup2(vars->fd[1], STDOUT_FILENO); // stdout cmd2 == outfile
 		close(vars->fd[1]);
 
+		// joined_path  = ft_strjoin(*vars->parsing.path, *vars->parsing.args[1]);
+		// printf("Joined path = %s\n", joined_path);
 		while(*vars->parsing.path != NULL)
 		{
 			joined_path = ft_strjoin(*vars->parsing.path, *vars->parsing.args[1]);
@@ -91,7 +93,7 @@ void	pipex_mandatory(char **av, t_vars *vars)
 			return_execve = execve(joined_path, vars->parsing.args[1], 0);
 			if (return_execve == -1)
 			{
-				*vars->parsing.path++;
+				vars->parsing.path++;
 				free(joined_path);
 			}
 			else
@@ -153,8 +155,8 @@ int	main(int ac, char **av, char **envp)
 	{
 		vars = init_struct(ac, av, envp, &vars);
 		// print_arg(&vars, ac);
-		pipex_mandatory(av, &vars);
-		free_vars(&vars);
+		// pipex_mandatory(av, &vars);
+		// free_vars(&vars);
 	}
 	else
 		error_quit("Not enough arguments");

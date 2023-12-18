@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 13:00:02 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/17 12:09:50 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/18 11:41:05 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,30 @@ char	***args_parsing(int ac, char **av)
 	return (buffer);
 }
 
+char	**joined_path(char **path) // joining path and / char
+{
+	char	*final_path;
+	char	*to_free;
+
+	while (*path != NULL)
+	{
+		to_free = *path; // for freeing later
+		final_path = ft_strjoin(*path, "/");
+		*path = final_path;
+		free(to_free);
+		path++;
+	}
+	// ? free the last token to free and final path
+
+	// ! checking
+	for (size_t i = 0; *path != NULL; i++)
+	{
+		printf("Final path = %s\n", path[i]);
+	}
+	return (path);
+	
+}
+
 char	**path_parsing(char **av, char **envp)
 {
 	char	**env;
@@ -62,5 +86,6 @@ char	**path_parsing(char **av, char **envp)
 	if (!result)
 		error_quit("Split function failed");
 	free(path);
+	result = joined_path(result); // ! final joining path
 	return (result);
 }
