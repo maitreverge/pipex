@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 17:12:36 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/18 11:35:39 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/18 12:26:46 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,8 +143,24 @@ void	print_arg(t_vars *vars, int ac)
 
 void	free_vars(t_vars *vars)
 {
-	free(vars->parsing.path);
-	free(vars->parsing.args);
+	// ! free paths
+	for (size_t i = 0; vars->parsing.path[i] != NULL; i++)
+	{
+		free(vars->parsing.path[i]);
+	}
+	// free(vars->parsing.path);
+	// ! Free args
+	
+	for (size_t i = 0; *vars->parsing.args[i] != NULL; i++)
+	{
+		for (size_t k = 0; vars->parsing.args[i][k] != NULL; k++)
+		{
+			free(vars->parsing.args[i][k]);
+		}
+		// free(vars->parsing.args[i]);
+		
+	}
+	// free(vars->parsing.args);
 }
 
 int	main(int ac, char **av, char **envp)
@@ -156,7 +172,7 @@ int	main(int ac, char **av, char **envp)
 		vars = init_struct(ac, av, envp, &vars);
 		// print_arg(&vars, ac);
 		// pipex_mandatory(av, &vars);
-		// free_vars(&vars);
+		free_vars(&vars);
 	}
 	else
 		error_quit("Not enough arguments");
