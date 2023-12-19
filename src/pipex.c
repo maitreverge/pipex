@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 17:12:36 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/18 14:55:20 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/19 10:55:13 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	pipex_mandatory(char **av, t_vars *vars)
 	int return_execve;
 	char *joined_path;
 
-	return_execve = 0;
+	// return_execve = 0;
 	// joined_path = NULL;
 	
 	// ! 1 - parsing 
@@ -50,21 +50,43 @@ void	pipex_mandatory(char **av, t_vars *vars)
 		close(vars->pipe_fd[0]);
 		// char *args[] = {"cat", NULL};
 		// * if execve fails, return value == -1
-		while(*vars->parsing.path != NULL)
+
+
+		// ! NEW EXECVE IMPLEMENTATION
+		while (*vars->parsing.path)
 		{
 			joined_path = ft_strjoin(*vars->parsing.path, *vars->parsing.args[0]);
-			printf("Joined path = %s\n", joined_path);
-			return_execve = execve(joined_path, vars->parsing.args[0], 0);
-			if (return_execve == -1)
+			if (access(joined_path, F_OK) == 0)
 			{
-				vars->parsing.path++;
-				free(joined_path);
+				if (execve(joined_path, vars->parsing.args[0], 0) == -1)
+				{
+					free(joined_path);
+					error_quit("Execve Failed");
+				}
 			}
 			else
-				break ;
+			{
+				free(joined_path);
+				vars->parsing.path++;
+			}
 		}
+		// while(*vars->parsing.path != NULL)
+		// {
+		// 	joined_path = ft_strjoin(*vars->parsing.path, *vars->parsing.args[0]);
+		// 	printf("Joined path = %s\n", joined_path);
+		// 	return_execve = execve(joined_path, vars->parsing.args[0], 0);
+		// 	if (return_execve == -1)
+		// 	{
+		// 		vars->parsing.path++;
+		// 		free(joined_path);
+		// 	}
+		// 	else
+		// 		break ;
+		// }
 		// if (joined_path)
 		// 	free(joined_path);
+
+		
 		if (return_execve == -1)
 			error_quit("execve child failed");
 			
@@ -86,19 +108,42 @@ void	pipex_mandatory(char **av, t_vars *vars)
 
 		// joined_path  = ft_strjoin(*vars->parsing.path, *vars->parsing.args[1]);
 		// printf("Joined path = %s\n", joined_path);
-		while(*vars->parsing.path != NULL)
+
+		// ! NEW EXECVE IMPLEMENTATION
+		while (*vars->parsing.path)
 		{
 			joined_path = ft_strjoin(*vars->parsing.path, *vars->parsing.args[1]);
-			printf("Joined path = %s\n", joined_path);
-			return_execve = execve(joined_path, vars->parsing.args[1], 0);
-			if (return_execve == -1)
+			if (access(joined_path, F_OK) == 0)
 			{
-				vars->parsing.path++;
-				free(joined_path);
+				if (execve(joined_path, vars->parsing.args[1], 0) == -1)
+				{
+					free(joined_path);
+					error_quit("Execve Failed");
+				}
 			}
 			else
-				break ;
+			{
+				free(joined_path);
+				vars->parsing.path++;
+			}
 		}
+
+		
+		// while(*vars->parsing.path != NULL)
+		// {
+		// 	joined_path = ft_strjoin(*vars->parsing.path, *vars->parsing.args[1]);
+		// 	printf("Joined path = %s\n", joined_path);
+		// 	// ! apres un execve, un renvoie d'erreur puis exit, car l'execve consomme
+		// 	// ! un process a lui seul
+		// 	return_execve = execve(joined_path, vars->parsing.args[1], 0);
+		// 	if (return_execve == -1)
+		// 	{
+		// 		vars->parsing.path++;
+		// 		free(joined_path);
+		// 	}
+		// 	else
+		// 		break ;
+		// }
 		// if (joined_path)
 		// 	free(joined_path);
 		if (return_execve == -1)
@@ -180,7 +225,7 @@ int	main(int ac, char **av, char **envp)
 	{
 		vars = init_struct(ac, av, envp, &vars);
 		// print_arg(&vars, ac);
-		// pipex_mandatory(av, &vars);
+		pipex_mandatory(av, &vars);
 		free_vars(&vars);
 	}
 	else
