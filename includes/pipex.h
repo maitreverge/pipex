@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 14:41:08 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/18 14:18:25 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/19 12:46:46 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,16 @@ typedef struct s_vars
 }				t_vars;
 
 // pipex.c
+static void	check_args_mandatory(char **av, int *fd, t_vars *vars);
+
 void	pipex_mandatory(char **av, t_vars *vars);
+t_vars	init_struct(int ac, char **av, char **envp, t_vars *vars);
+void	print_arg(t_vars *vars, int ac);
+void	free_vars(t_vars *vars);
+
+
+
+
 
 // pipex_bonus.c
 void	pipex_bonus(int ac, char **av, char **env);

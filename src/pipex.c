@@ -6,20 +6,26 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 17:12:36 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/19 11:47:39 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/19 13:12:19 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-static void	check_args_mandatory(char **av, int *fd)
+static void	check_args_mandatory(char **av, int *fd, t_vars *vars)
 {
 	fd[0] = open(av[1], O_RDONLY);
 	if (fd[0] == -1)
+	{
+		free_vars(vars);
 		error_quit("Opening infile failed");
+	}
 	fd[1] = open(av[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd[1] == -1)
+	{
+		free_vars(vars);
 		error_quit("Opening outfile failed");
+	}
 }
 
 void	pipex_mandatory(char **av, t_vars *vars)
@@ -31,7 +37,7 @@ void	pipex_mandatory(char **av, t_vars *vars)
 	// joined_path = NULL;
 	
 	// ! 1 - parsing 
-	check_args_mandatory(av, vars->fd);
+	check_args_mandatory(av, vars->fd, vars);
 	if (pipe(vars->pipe_fd) == -1) // 0 = ok, -1 = error
 		error_quit("Piping failure");
 	
@@ -57,7 +63,7 @@ void	pipex_mandatory(char **av, t_vars *vars)
 			if (access(joined_path, F_OK) == 0) // access == 0 == success
 			{
 				if (execve(joined_path, vars->parsing.args[0], 0) == -1)
-					error_quit("Execve failed");
+					error_quit("command not found");
 				else
 				{
 					free(joined_path);
@@ -101,7 +107,7 @@ void	pipex_mandatory(char **av, t_vars *vars)
 			if (access(joined_path, F_OK) == 0) // access == 0 == success
 			{
 				if (execve(joined_path, vars->parsing.args[1], 0) == -1)
-					error_quit("Execve failed");
+					error_quit("command not found");
 				else
 				{
 					free(joined_path);
@@ -167,7 +173,7 @@ void	free_vars(t_vars *vars)
 		free(vars->parsing.path[i]);
 		i++;
 	}
-	free(vars->parsing.path[i]);
+	free(vars->parsing.path);
 	
 	// ! Free args
 	i = 0;
@@ -180,10 +186,10 @@ void	free_vars(t_vars *vars)
 			free(vars->parsing.args[i][k]);
 			k++;
 		}
-		free(vars->parsing.args[i][k]);
+		free(vars->parsing.args[i]);
 		i++;
 	}
-	free(vars->parsing.args[i]);
+	// free(vars->parsing.args[i]);
 	free(vars->parsing.args);
 }
 

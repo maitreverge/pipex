@@ -1,5 +1,3 @@
-Can the infile be the outfile ?
-
-Need to close all unused duplicateds FD, otherwise we risk
-processes getting stuck in a waiting mode
+Program needs to output Command not found When it is the case
+when access function keeps getting wrong paths
 

@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 13:00:02 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/18 14:44:27 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/19 13:09:04 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,56 +71,15 @@ char	**joined_path(char **path)
 		free(path[i]);
 		i++;
 	}
-	// free(path);
 	return (result);
-	
 
-	/*
-	char	*final_path;
-	char *to_free;
-	int i = 0;
 
-	while (path[i] != NULL)
-	{
-		to_free = path[i];
-		final_path = ft_strjoin(path[i], "/");
-		path[i] = final_path;
-		free(to_free);
-		free(final_path);
-		i++;
-	}
-	return (path);
-	*/
-
-	/*
-	char	*final_path;
-	char	*to_free;
-	int i = 0;
-
-	while (path[i] != NULL)
-	{
-		to_free = path[i]; // for freeing later
-		final_path = ft_strjoin(path[i], "/");
-		path[i] = final_path;
-		free(to_free);
-		i++;
-	}
-	
-	// if (to_free)
-	// 	free(to_free);
-	if (final_path)
-		free(final_path);
-
-	return (path);
-	
-	*/
 }
 
 
 char	**path_parsing(char **av, char **envp)
 {
 	char	**env;
-	// char	**unresult;
 	char	**result;
 	char	*path;
 
@@ -142,23 +101,9 @@ char	**path_parsing(char **av, char **envp)
 		
 	// ! custom split that adds a ending / char	
 	result = ft_pipex_split(path, ':');
-	
 	if (!result)
 		error_quit("Split function failed");
-	// result = joined_path(unresult); // ! final joining path
-
-	// for (int i = 0; unresult[i] != NULL; i++)
-	// {
-	// 	free(unresult[i]);
-	// }
-	
-	// // ! checking
-	
-	// for (size_t i = 0; result[i] != NULL; i++)
-	// 	printf("Final path = %s\n", result[i]);
 
 	free(path);
-	
-	
 	return (result);
 }
