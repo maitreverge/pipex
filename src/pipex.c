@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 17:12:36 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/19 13:12:19 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/19 13:48:33 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,26 @@
 static void	check_args_mandatory(char **av, int *fd, t_vars *vars)
 {
 	fd[0] = open(av[1], O_RDONLY);
-	if (fd[0] == -1)
+	if (fd[0] == -1) // if the file doesn't exist
 	{
 		free_vars(vars);
 		error_quit("Opening infile failed");
 	}
-	fd[1] = open(av[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	// ! check if outfile is writable
+	if (access(av[4], F_OK) == 0) // if the file exists
+	{
+		if (access(av[4], W_OK) == -1)
+		{
+			free_vars(vars);
+			error_quit("Outfile is not writable");
+		}
+		else
+			fd[1] = open(av[4], O_WRONLY | O_TRUNC);
+
+	}
+	else // if the file doesn't exist, create it
+		fd[1] = open(av[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	
 	if (fd[1] == -1)
 	{
 		free_vars(vars);
@@ -59,34 +73,31 @@ void	pipex_mandatory(char **av, t_vars *vars)
 		while(*vars->parsing.path)
 		{
 			joined_path = ft_strjoin(*vars->parsing.path, *vars->parsing.args[0]);
-			printf("Joined path = %s\n", joined_path);
+			// printf("Joined path = %s\n", joined_path);
 			if (access(joined_path, F_OK) == 0) // access == 0 == success
 			{
 				if (execve(joined_path, vars->parsing.args[0], 0) == -1)
-					error_quit("command not found");
-				else
+				{
+					// free_vars(vars);
+					free(joined_path);
+					// error_quit("");
+				}
+				else // if exexve executed proprely
 				{
 					free(joined_path);
-					exit(EXIT_SUCCESS);
+					exit(EXIT_SUCCESS);			
 				}
-				
 			}
-			else
+			else // if correct path hasn't been found
 			{
 				free(joined_path);
 				vars->parsing.path++;
 			}
 		}
-		// if (joined_path)
-		// 	free(joined_path);
-		// if (return_execve == -1)
-		// 	error_quit("execve child failed");
-			
-		
-			// vars->parsing.path++;
-		 
-		// execve("/bin/cat", vars->parsing.args[0], 0);
-		// exit(EXIT_SUCCESS); // ! read execve man for really understanding the ins and out
+		if (joined_path)
+			free(joined_path);
+		free_vars(vars);
+		error_quit("Path could't be found");
 	}
 	else // parent process, aka cmd 2
 	{
@@ -103,33 +114,31 @@ void	pipex_mandatory(char **av, t_vars *vars)
 		while(*vars->parsing.path)
 		{
 			joined_path = ft_strjoin(*vars->parsing.path, *vars->parsing.args[1]);
-			printf("Joined path = %s\n", joined_path);
+			// printf("Joined path = %s\n", joined_path);
 			if (access(joined_path, F_OK) == 0) // access == 0 == success
 			{
 				if (execve(joined_path, vars->parsing.args[1], 0) == -1)
-					error_quit("command not found");
-				else
+				{
+					// free_vars(vars);
+					free(joined_path);
+					// error_quit("");
+				}
+				else // if exexve executed proprely
 				{
 					free(joined_path);
 					exit(EXIT_SUCCESS);			
 				}
 			}
-			else
+			else // if correct path hasn't been found
 			{
 				free(joined_path);
 				vars->parsing.path++;
 			}
 		}
-		// if (joined_path)
-		// 	free(joined_path);
-		// if (return_execve == -1)
-			// error_quit("execve parent failed");
-		
-		// while(execve(*vars->parsing.path, vars->parsing.args[1], 0) == -1)
-		// 	vars->parsing.path++;
-			
-		// execve("/usr/bin/grep", vars->parsing.args, 0);
-		// exit(EXIT_SUCCESS);
+		if (joined_path)
+			free(joined_path);
+		free_vars(vars);
+		error_quit("Path could't be found");
 	}		
 }
 
