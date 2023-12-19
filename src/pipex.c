@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 17:12:36 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/19 11:00:39 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/19 11:09:29 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,30 +70,6 @@ void	pipex_mandatory(char **av, t_vars *vars)
 				vars->parsing.path++;
 			}
 		}
-		// while(*vars->parsing.path != NULL)
-		// {
-		// 	joined_path = ft_strjoin(*vars->parsing.path, *vars->parsing.args[0]);
-		// 	printf("Joined path = %s\n", joined_path);
-		// 	return_execve = execve(joined_path, vars->parsing.args[0], 0);
-		// 	if (return_execve == -1)
-		// 	{
-		// 		vars->parsing.path++;
-		// 		free(joined_path);
-		// 	}
-		// 	else
-		// 		break ;
-		// }
-		// if (joined_path)
-		// 	free(joined_path);
-
-		
-		if (return_execve == -1)
-			error_quit("execve child failed");
-			
-		
-			// vars->parsing.path++;
-		 
-		// execve("/bin/cat", vars->parsing.args[0], 0);
 		exit(EXIT_SUCCESS); // ! read execve man for really understanding the ins and out
 	}
 	else // parent process, aka cmd 2
@@ -113,7 +89,7 @@ void	pipex_mandatory(char **av, t_vars *vars)
 		while (*vars->parsing.path)
 		{
 			joined_path = ft_strjoin(*vars->parsing.path, *vars->parsing.args[1]);
-			if (access(joined_path, F_OK) == 0)
+			if (access(joined_path, F_OK) == 0) // access succed
 			{
 				if (execve(joined_path, vars->parsing.args[1], 0) == -1)
 				{
@@ -126,9 +102,7 @@ void	pipex_mandatory(char **av, t_vars *vars)
 				free(joined_path);
 				vars->parsing.path++;
 			}
-		}
-		if (return_execve == -1)
-		
+		}		
 		exit(EXIT_SUCCESS);
 	}		
 }
@@ -200,7 +174,7 @@ int	main(int ac, char **av, char **envp)
 	if (ac >= 5)
 	{
 		vars = init_struct(ac, av, envp, &vars);
-		// print_arg(&vars, ac);
+		print_arg(&vars, ac);
 		pipex_mandatory(av, &vars);
 		free_vars(&vars);
 	}
