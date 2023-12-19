@@ -62,3 +62,5 @@ dkms.conf
 Makefile copy
 test
 pipex
+outfile.txt
+infile.txt
