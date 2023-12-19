@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 17:12:36 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/19 11:09:29 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/19 11:21:42 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	pipex_mandatory(char **av, t_vars *vars)
 	int return_execve;
 	char *joined_path;
 
-	// return_execve = 0;
+	return_execve = 0;
 	// joined_path = NULL;
 	
 	// ! 1 - parsing 
@@ -50,25 +50,18 @@ void	pipex_mandatory(char **av, t_vars *vars)
 		close(vars->pipe_fd[0]);
 		// char *args[] = {"cat", NULL};
 		// * if execve fails, return value == -1
-
-
-		// ! NEW EXECVE IMPLEMENTATION
-		while (*vars->parsing.path)
+		while(*vars->parsing.path != NULL)
 		{
 			joined_path = ft_strjoin(*vars->parsing.path, *vars->parsing.args[0]);
-			if (access(joined_path, F_OK) == 0)
+			printf("Joined path = %s\n", joined_path);
+			return_execve = execve(joined_path, vars->parsing.args[0], 0);
+			if (return_execve == -1)
 			{
-				if (execve(joined_path, vars->parsing.args[0], 0) == -1)
-				{
-					free(joined_path);
-					error_quit("Execve Failed");
-				}
+				vars->parsing.path++;
+				free(joined_path);
 			}
 			else
-			{
-				free(joined_path);
-				vars->parsing.path++;
-			}
+				break ;
 		}
 		exit(EXIT_SUCCESS); // ! read execve man for really understanding the ins and out
 	}
@@ -84,9 +77,7 @@ void	pipex_mandatory(char **av, t_vars *vars)
 
 		// joined_path  = ft_strjoin(*vars->parsing.path, *vars->parsing.args[1]);
 		// printf("Joined path = %s\n", joined_path);
-
-		// ! NEW EXECVE IMPLEMENTATION
-		while (*vars->parsing.path)
+		while(*vars->parsing.path != NULL)
 		{
 			joined_path = ft_strjoin(*vars->parsing.path, *vars->parsing.args[1]);
 			if (access(joined_path, F_OK) == 0) // access succed
@@ -101,6 +92,7 @@ void	pipex_mandatory(char **av, t_vars *vars)
 			{
 				free(joined_path);
 				vars->parsing.path++;
+				free(joined_path);
 			}
 		}		
 		exit(EXIT_SUCCESS);
