@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 17:12:36 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/19 13:48:33 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/19 14:30:23 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,15 @@ void	pipex_mandatory(char **av, t_vars *vars)
 			{
 				if (execve(joined_path, vars->parsing.args[0], 0) == -1)
 				{
-					// free_vars(vars);
+					free_vars(vars);
 					free(joined_path);
-					// error_quit("");
+					error_quit("Execve failed");
+					// vars->parsing.path++;
 				}
 				else // if exexve executed proprely
 				{
 					free(joined_path);
-					exit(EXIT_SUCCESS);			
+					// exit(EXIT_SUCCESS);			
 				}
 			}
 			else // if correct path hasn't been found
@@ -94,10 +95,10 @@ void	pipex_mandatory(char **av, t_vars *vars)
 				vars->parsing.path++;
 			}
 		}
-		if (joined_path)
-			free(joined_path);
-		free_vars(vars);
-		error_quit("Path could't be found");
+		// if (joined_path)
+		// 	free(joined_path);
+		// free_vars(vars);
+		// error_quit("Path could't be found");
 	}
 	else // parent process, aka cmd 2
 	{
@@ -119,14 +120,15 @@ void	pipex_mandatory(char **av, t_vars *vars)
 			{
 				if (execve(joined_path, vars->parsing.args[1], 0) == -1)
 				{
-					// free_vars(vars);
+					free_vars(vars);
 					free(joined_path);
-					// error_quit("");
+					error_quit("execve failed");
+					// vars->parsing.path++;
 				}
 				else // if exexve executed proprely
 				{
 					free(joined_path);
-					exit(EXIT_SUCCESS);			
+					// exit(EXIT_SUCCESS);			
 				}
 			}
 			else // if correct path hasn't been found
@@ -135,10 +137,10 @@ void	pipex_mandatory(char **av, t_vars *vars)
 				vars->parsing.path++;
 			}
 		}
-		if (joined_path)
-			free(joined_path);
-		free_vars(vars);
-		error_quit("Path could't be found");
+		// if (joined_path)
+		// 	free(joined_path);
+		// free_vars(vars);
+		// error_quit("Path could't be found");
 	}		
 }
 
