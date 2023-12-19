@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 17:12:36 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/19 10:55:13 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/19 11:00:39 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ void	pipex_mandatory(char **av, t_vars *vars)
 				if (execve(joined_path, vars->parsing.args[1], 0) == -1)
 				{
 					free(joined_path);
-					error_quit("Execve Failed");
+					error_quit("execve parent failed");
 				}
 			}
 			else
@@ -127,32 +127,8 @@ void	pipex_mandatory(char **av, t_vars *vars)
 				vars->parsing.path++;
 			}
 		}
-
-		
-		// while(*vars->parsing.path != NULL)
-		// {
-		// 	joined_path = ft_strjoin(*vars->parsing.path, *vars->parsing.args[1]);
-		// 	printf("Joined path = %s\n", joined_path);
-		// 	// ! apres un execve, un renvoie d'erreur puis exit, car l'execve consomme
-		// 	// ! un process a lui seul
-		// 	return_execve = execve(joined_path, vars->parsing.args[1], 0);
-		// 	if (return_execve == -1)
-		// 	{
-		// 		vars->parsing.path++;
-		// 		free(joined_path);
-		// 	}
-		// 	else
-		// 		break ;
-		// }
-		// if (joined_path)
-		// 	free(joined_path);
 		if (return_execve == -1)
-			error_quit("execve parent failed");
 		
-		// while(execve(*vars->parsing.path, vars->parsing.args[1], 0) == -1)
-		// 	vars->parsing.path++;
-			
-		// execve("/usr/bin/grep", vars->parsing.args, 0);
 		exit(EXIT_SUCCESS);
 	}		
 }
