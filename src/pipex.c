@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 17:12:36 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/19 14:30:23 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/20 10:11:45 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,15 @@ void	pipex_mandatory(char **av, t_vars *vars)
 				{
 					free_vars(vars);
 					free(joined_path);
+					joined_path = NULL;
+					// break;
 					error_quit("Execve failed");
 					// vars->parsing.path++;
 				}
 				else // if exexve executed proprely
 				{
 					free(joined_path);
+					joined_path = NULL;
 					// exit(EXIT_SUCCESS);			
 				}
 			}
@@ -122,12 +125,15 @@ void	pipex_mandatory(char **av, t_vars *vars)
 				{
 					free_vars(vars);
 					free(joined_path);
-					error_quit("execve failed");
+					joined_path = NULL;
+					// break;
+					 error_quit("execve failed");
 					// vars->parsing.path++;
 				}
 				else // if exexve executed proprely
 				{
 					free(joined_path);
+					joined_path = NULL;
 					// exit(EXIT_SUCCESS);			
 				}
 			}

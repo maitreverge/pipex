@@ -6,7 +6,7 @@
 #    By: flverge <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/18 17:11:27 by flverge           #+#    #+#              #
-#    Updated: 2023/12/18 11:56:01 by flverge          ###   ########.fr        #
+#    Updated: 2023/12/20 09:33:53 by flverge          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,12 @@ NAME = pipex
 
 # Compiler options
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+
+# Valgrind flag
+# CFLAGS = -Wall -Wextra -Werror -g
+
+# Asan flag
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address
 
 # libft
 LIBFT_NAME = libmaster.a
