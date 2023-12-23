@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 17:12:36 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/20 10:11:45 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/23 16:57:05 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	pipex_mandatory(char **av, t_vars *vars)
 {
 	int return_execve;
 	char *joined_path;
+	int i;
 
 	// return_execve = 0;
 	// joined_path = NULL;
@@ -70,9 +71,10 @@ void	pipex_mandatory(char **av, t_vars *vars)
 		close(vars->pipe_fd[0]);
 		// char *args[] = {"cat", NULL};
 		// * if execve fails, return value == -1
-		while(*vars->parsing.path)
+		i = 0;
+		while(*vars->parsing.path[i])
 		{
-			joined_path = ft_strjoin(*vars->parsing.path, *vars->parsing.args[0]);
+			joined_path = ft_strjoin(vars->parsing.path[i], *vars->parsing.args[0]);
 			// printf("Joined path = %s\n", joined_path);
 			if (access(joined_path, F_OK) == 0) // access == 0 == success
 			{
@@ -95,7 +97,7 @@ void	pipex_mandatory(char **av, t_vars *vars)
 			else // if correct path hasn't been found
 			{
 				free(joined_path);
-				vars->parsing.path++;
+				i++;
 			}
 		}
 		// if (joined_path)
@@ -115,9 +117,10 @@ void	pipex_mandatory(char **av, t_vars *vars)
 
 		// joined_path  = ft_strjoin(*vars->parsing.path, *vars->parsing.args[1]);
 		// printf("Joined path = %s\n", joined_path);
-		while(*vars->parsing.path)
+		i = 0;
+		while(vars->parsing.path[i])
 		{
-			joined_path = ft_strjoin(*vars->parsing.path, *vars->parsing.args[1]);
+			joined_path = ft_strjoin(vars->parsing.path[i], *vars->parsing.args[1]);
 			// printf("Joined path = %s\n", joined_path);
 			if (access(joined_path, F_OK) == 0) // access == 0 == success
 			{
@@ -140,7 +143,7 @@ void	pipex_mandatory(char **av, t_vars *vars)
 			else // if correct path hasn't been found
 			{
 				free(joined_path);
-				vars->parsing.path++;
+				i++;
 			}
 		}
 		// if (joined_path)
