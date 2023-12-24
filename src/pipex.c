@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 17:12:36 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/24 23:15:07 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/24 23:19:38 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,19 @@ void	child_process(t_vars *vars)
 	ft_execve(vars, 0, 0);
 }
 
-void	pipex_mandatory(char **av, t_vars *vars)
+void	parent_process(t_vars *vars)
 {
-	int		return_execve;
-	// char	*joined_path;
-	// int		i;
+	waitpid(vars->pid, &vars->status, 0);
+	dup2(vars->pipe_fd[0], STDIN_FILENO);
+	close(vars->pipe_fd[0]);
+	close(vars->pipe_fd[1]);
+	dup2(vars->fd[1], STDOUT_FILENO);
+	close(vars->fd[1]);
+	ft_execve(vars, 1, 0);
+}
 
+void	pipex(char **av, t_vars *vars)
+{
 	if (pipe(vars->pipe_fd) == -1)
 		error_quit("Piping failure");
 	vars->pid = fork();
@@ -58,49 +65,8 @@ void	pipex_mandatory(char **av, t_vars *vars)
 		error_quit("Forking failure");
 	else if (vars->pid == 0)
 		child_process(vars);
-	else // parent process, aka cmd 2
-	{
-		waitpid(vars->pid, &vars->status, 0);
-		// ! ADD PROTECTION FOR DUP2
-		dup2(vars->pipe_fd[0], STDIN_FILENO); // stdin cmd2 == stdout of pipe
-		close(vars->pipe_fd[0]);
-		close(vars->pipe_fd[1]);
-		dup2(vars->fd[1], STDOUT_FILENO); // stdout cmd2 == outfile
-		close(vars->fd[1]);
-
-		i = 0;
-		while(vars->parsing.path[i] != NULL)
-		{
-			joined_path = ft_strjoin(vars->parsing.path[i], *vars->parsing.args[1]);
-			// printf("Joined path = %s\n", joined_path);
-			if (access(joined_path, F_OK) == 0) // access == 0 == success
-			{
-				if (execve(joined_path, vars->parsing.args[1], 0) == -1)
-				{
-					free_vars(vars);
-					free(joined_path);
-					joined_path = NULL;
-					// break;
-					 error_quit("execve failed");
-					// vars->parsing.path++;
-				}
-				else // if exexve executed proprely
-				{
-					free(joined_path);
-					joined_path = NULL;
-					// exit(EXIT_SUCCESS);			
-				}
-			}
-			else // if correct path hasn't been found
-			{
-				free(joined_path);
-				i++;
-			}
-		}
-		
-		free_vars(vars);
-		error_quit("Command not found");
-	}		
+	else
+		parent_process(vars);
 }
 
 int	main(int ac, char **av, char **envp)
@@ -111,7 +77,7 @@ int	main(int ac, char **av, char **envp)
 	{
 		vars = init_struct(ac, av, envp, &vars);
 		check_args_mandatory(av, vars.fd, &vars);
-		pipex_mandatory(av, &vars);
+		pipex(av, &vars);
 		free_vars(&vars);
 	}
 	else

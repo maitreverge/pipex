@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 14:41:08 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/24 23:08:37 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/24 23:20:44 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,9 @@ void			free_vars(t_vars *vars);
 t_vars			init_struct(int ac, char **av, char **envp, t_vars *vars);
 
 // pipex
-void			pipex_mandatory(char **av, t_vars *vars);
+void			ft_execve(t_vars *vars, int arg, int i);
+void			child_process(t_vars *vars);
+void			parent_process(t_vars *vars);
+void			pipex(char **av, t_vars *vars);
 
 #endif
