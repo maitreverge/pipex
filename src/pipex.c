@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 17:12:36 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/23 16:57:05 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/23 17:23:42 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,10 +100,8 @@ void	pipex_mandatory(char **av, t_vars *vars)
 				i++;
 			}
 		}
-		// if (joined_path)
-		// 	free(joined_path);
-		// free_vars(vars);
-		// error_quit("Path could't be found");
+		free_vars(vars);
+		error_quit("Command not found");
 	}
 	else // parent process, aka cmd 2
 	{
@@ -146,10 +144,9 @@ void	pipex_mandatory(char **av, t_vars *vars)
 				i++;
 			}
 		}
-		// if (joined_path)
-		// 	free(joined_path);
-		// free_vars(vars);
-		// error_quit("Path could't be found");
+		
+		free_vars(vars);
+		error_quit("Command not found");
 	}		
 }
 
