@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 14:41:08 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/24 22:34:39 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/24 23:08:37 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # include <errno.h> // makes errno a global variable usable with strerror(errno)
 # include <string.h>
 # include <sys/wait.h>
+
+# define EX execve
 
 typedef struct s_parsing
 {
