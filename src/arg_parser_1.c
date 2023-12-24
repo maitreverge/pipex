@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_2.c                                        :+:      :+:    :+:   */
+/*   arg_parser_1.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 11:15:17 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/24 22:10:09 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/24 22:21:30 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,40 +28,6 @@ char	*ft_strncpy(char *dest, char const *src, size_t n)
 		i++;
 	}
 	return (dest);
-}
-
-void	arg_sub_check(char const *s, char c, t_arg_split *vars)
-{
-	char	quote;
-	int		inside_quotes;
-
-	quote = 39;
-	inside_quotes = 0;
-	while (s[vars->i] == c)
-		vars->i++;
-	vars->start = vars->i;
-	while (s[vars->i] && (inside_quotes || s[vars->i] != c))
-	{
-		if (s[vars->i] == quote)
-			inside_quotes = !inside_quotes;
-		vars->i++;
-	}
-}
-
-void	arg_sub_check2(t_arg_split *vars, char const *s)
-{
-	vars->len = vars->i - vars->start;
-	if (s[vars->start] == 39)
-	{
-		vars->start++;
-		vars->len--;
-		vars->inside_quotes = 1;
-	}
-	if (vars->inside_quotes && s[vars->i - 1] == 39)
-	{
-		vars->len--;
-		vars->inside_quotes = 0;
-	}
 }
 
 void	arg_allocation(char **buffer, char const *s, char c, size_t len_s)
@@ -93,9 +59,6 @@ void	arg_allocation(char **buffer, char const *s, char c, size_t len_s)
 size_t	ft_arg_ctw(char const *str, char space)
 {
 	t_arg_split	vars;
-	// size_t	result;
-	// int		i;
-	// char	quote;
 
 	vars.result = 0;
 	vars.quote = 39;
@@ -107,36 +70,9 @@ size_t	ft_arg_ctw(char const *str, char space)
 		while (str[vars.i] == space && str[vars.i])
 			vars.i++;
 		if (str[vars.i] == vars.quote)
-		{
-			vars.i++;
-			while (str[vars.i] != vars.quote && str[vars.i])
-				vars.i++;
-			if (str[vars.i] == vars.quote)
-			{
-				vars.result++;
-				vars.i++;
-			}
-			else
-				exit (-1);
-		}
+			sub_ctw1(&vars, str);
 		else if (str[vars.i] != space && str[vars.i])
-		{
-			while (str[vars.i])
-			{
-				if (str[vars.i] == space)
-					break ;
-				else if (str[vars.i] == vars.quote)
-				{
-					vars.i++;
-					while (str[vars.i] != vars.quote && str[vars.i])
-						vars.i++;
-					vars.i++;
-					break ;
-				}
-				vars.i++;
-			}
-			vars.result++;
-		}
+			sub_ctw2(&vars, str, space);
 	}
 	return (vars.result);
 }
