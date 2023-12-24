@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 13:00:02 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/19 13:09:04 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/24 21:38:19 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,55 +27,12 @@ char	***args_parsing(int ac, char **av)
 		error_quit("Malloc failed");
 	while ((i + j) <= (ac - 2))
 	{
-		// ! create a char ** buffer ready to welcome splitted args
-		// buffer[j] = malloc(sizeof(char *) * (ft_arg_ctw(av[i + j], space)) + 1);
-		// if (!buffer[j])
-		// 	error_quit("Malloc failed");
 		buffer[j] = ft_arg_split(av[i + j], space);
 		j++;
 	}
 	buffer[j] = NULL;
 	return (buffer);
 }
-
-// ! UNSUSED FT because custom split implemented
-char	**joined_path(char **path)
-{
-	int len_path;
-	char **result;
-	int i = 0;
-	int k = 0;
-	// lenght total char ** for rellallocating path + /
-	while (path[i] != NULL)
-		i++;
-	
-	result = malloc(sizeof(char *) * (i + 1)); // another space
-	if (!result)
-		error_quit("Failled malloc");
-	i = 0;
-	
-	while (path[i] != NULL)
-	{
-		// result[k] = malloc(ft_strlen(path[i]) + 2); // +1 for '\0' and + 1 for '/' char
-		// if (!result[k])
-		// 	error_quit("malloc Failed");
-		result[k] = ft_strjoin(path[i], "/");
-		i++;
-		k++;
-	}
-	result[i] = NULL;
-
-	i = 0;
-	while (path[i] != NULL)
-	{
-		free(path[i]);
-		i++;
-	}
-	return (result);
-
-
-}
-
 
 char	**path_parsing(char **av, char **envp)
 {
@@ -98,12 +55,37 @@ char	**path_parsing(char **av, char **envp)
 	}
 	else
 		error_quit("PATH envp couldn't be found");
-		
-	// ! custom split that adds a ending / char	
 	result = ft_pipex_split(path, ':');
 	if (!result)
 		error_quit("Split function failed");
 
 	free(path);
 	return (result);
+}
+
+void	check_args_mandatory(char **av, int *fd, t_vars *vars)
+{
+	fd[0] = open(av[1], O_RDONLY);
+	if (fd[0] == -1)
+	{
+		free_vars(vars);
+		error_quit("Opening infile failed");
+	}
+	if (access(av[4], F_OK) == 0)
+	{
+		if (access(av[4], W_OK) == -1)
+		{
+			free_vars(vars);
+			error_quit("Outfile is not writable");
+		}
+		else
+			fd[1] = open(av[4], O_WRONLY | O_TRUNC);
+	}
+	else
+		fd[1] = open(av[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (fd[1] == -1)
+	{
+		free_vars(vars);
+		error_quit("Opening outfile failed");
+	}
 }

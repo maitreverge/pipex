@@ -6,38 +6,11 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 17:12:36 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/24 20:50:40 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/24 21:38:06 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
-
-static void	check_args_mandatory(char **av, int *fd, t_vars *vars)
-{
-	fd[0] = open(av[1], O_RDONLY);
-	if (fd[0] == -1)
-	{
-		free_vars(vars);
-		error_quit("Opening infile failed");
-	}
-	if (access(av[4], F_OK) == 0)
-	{
-		if (access(av[4], W_OK) == -1)
-		{
-			free_vars(vars);
-			error_quit("Outfile is not writable");
-		}
-		else
-			fd[1] = open(av[4], O_WRONLY | O_TRUNC);
-	}
-	else
-		fd[1] = open(av[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (fd[1] == -1)
-	{
-		free_vars(vars);
-		error_quit("Opening outfile failed");
-	}
-}
 
 void	pipex_mandatory(char **av, t_vars *vars)
 {
@@ -45,8 +18,6 @@ void	pipex_mandatory(char **av, t_vars *vars)
 	char *joined_path;
 	int i;
 
-	// return_execve = 0;
-	// joined_path = NULL;
 	
 	// ! 1 - parsing 
 	if (pipe(vars->pipe_fd) == -1) // 0 = ok, -1 = error
@@ -65,8 +36,7 @@ void	pipex_mandatory(char **av, t_vars *vars)
 		dup2(vars->pipe_fd[1], STDOUT_FILENO); // stdout of cmd 1 == stdin of pipe
 		close(vars->fd[0]);
 		close(vars->pipe_fd[0]);
-		// char *args[] = {"cat", NULL};
-		// * if execve fails, return value == -1
+		
 		i = 0;
 		while(vars->parsing.path[i] != NULL)
 		{
@@ -109,8 +79,6 @@ void	pipex_mandatory(char **av, t_vars *vars)
 		dup2(vars->fd[1], STDOUT_FILENO); // stdout cmd2 == outfile
 		close(vars->fd[1]);
 
-		// joined_path  = ft_strjoin(*vars->parsing.path, *vars->parsing.args[1]);
-		// printf("Joined path = %s\n", joined_path);
 		i = 0;
 		while(vars->parsing.path[i] != NULL)
 		{
@@ -161,19 +129,6 @@ t_vars	init_struct(int ac, char **av, char **envp, t_vars *vars)
 	return (init);
 }
 
-void	print_arg(t_vars *vars, int ac)
-{
-	int j = 0;
-	int i = 2;
-	while ((i+j) <= ac - 2)
-	{
-		printf("Arg %i\n\n", j);
-		for(int k = 0; vars->parsing.args[j][k] != NULL; k++)
-			printf("Token %i from av[%i] = %s\n", k, j, vars->parsing.args[j][k]);
-		j++;	
-	}	
-}
-
 void	free_vars(t_vars *vars)
 {
 	int	i;
@@ -209,8 +164,7 @@ int	main(int ac, char **av, char **envp)
 	if (ac >= 5)
 	{
 		vars = init_struct(ac, av, envp, &vars);
-		check_args_mandatory(av, vars->fd, vars);
-		// print_arg(&vars, ac);
+		check_args_mandatory(av, vars.fd, &vars);
 		pipex_mandatory(av, &vars);
 		free_vars(&vars);
 	}

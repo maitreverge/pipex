@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 11:15:17 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/17 12:12:22 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/24 21:55:55 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,62 +30,58 @@ char	*ft_strncpy(char *dest, char const *src, size_t n)
 	return (dest);
 }
 
-void	arg_sub_check(char const *s, char c, size_t *i, size_t *start)
+void	arg_sub_check(char const *s, char c, t_arg_split *vars)
 {
 	char	quote;
 	int		inside_quotes;
 
 	quote = 39;
 	inside_quotes = 0;
-	while (s[*i] == c)
-		(*i)++;
-	*start = *i;
-	while (s[*i] && (inside_quotes || s[*i] != c))
+	while (s[vars->i] == c)
+		vars->i++;
+	vars->start = vars->i;
+	while (s[vars->i] && (inside_quotes || s[vars->i] != c))
 	{
-		if (s[*i] == quote)
+		if (s[vars->i] == quote)
 			inside_quotes = !inside_quotes;
-		(*i)++;
+		vars->i++;
 	}
 }
 
 void	arg_allocation(char **buffer, char const *s, char c, size_t len_s)
 {
-	size_t	i;
-	size_t	j;
-	size_t	start;
-	size_t	len;
-	int		inside_quotes;
+	t_arg_split	vars;
 
-	i = 0;
-	j = 0;
-	start = 0;
-	inside_quotes = 0;
+	vars.i = 0;
+	vars.j = 0;
+	vars.start = 0;
+	vars.inside_quotes = 0;
 	if (!s)
 		return ;
-	while (s[i])
+	while (s[vars.i])
 	{
-		arg_sub_check(s, c, &i, &start);
-		if (j < len_s)
+		arg_sub_check(s, c, &vars);
+		if (vars.j < len_s)
 		{
-			len = i - start;
-			if (s[start] == 39)
+			vars.len = vars.i - vars.start;
+			if (s[vars.start] == 39)
 			{
-				start++;
-				len--;
-				inside_quotes = 1;
+				vars.start++;
+				vars.len--;
+				vars.inside_quotes = 1;
 			}
-			if (inside_quotes && s[i - 1] == 39)
+			if (vars.inside_quotes && s[vars.i - 1] == 39)
 			{
-				len--;
-				inside_quotes = 0;
+				vars.len--;
+				vars.inside_quotes = 0;
 			}
-			buffer[j] = ft_calloc(sizeof(char), (len + 1));
-			if (!buffer[j])
+			buffer[vars.j] = ft_calloc(sizeof(char), (vars.len + 1));
+			if (!buffer[vars.j])
 				return ;
-			ft_strncpy(buffer[j], &s[start], len);
-			j++;
+			ft_strncpy(buffer[vars.j], &s[vars.start], vars.len);
+			vars.j++;
 		}
-		i++;
+		vars.i++;
 	}
 }
 
