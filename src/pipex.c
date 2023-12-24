@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 17:12:36 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/23 17:23:42 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/24 20:50:40 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,12 @@
 static void	check_args_mandatory(char **av, int *fd, t_vars *vars)
 {
 	fd[0] = open(av[1], O_RDONLY);
-	if (fd[0] == -1) // if the file doesn't exist
+	if (fd[0] == -1)
 	{
 		free_vars(vars);
 		error_quit("Opening infile failed");
 	}
-	// ! check if outfile is writable
-	if (access(av[4], F_OK) == 0) // if the file exists
+	if (access(av[4], F_OK) == 0)
 	{
 		if (access(av[4], W_OK) == -1)
 		{
@@ -30,11 +29,9 @@ static void	check_args_mandatory(char **av, int *fd, t_vars *vars)
 		}
 		else
 			fd[1] = open(av[4], O_WRONLY | O_TRUNC);
-
 	}
-	else // if the file doesn't exist, create it
+	else
 		fd[1] = open(av[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	
 	if (fd[1] == -1)
 	{
 		free_vars(vars);
@@ -52,7 +49,6 @@ void	pipex_mandatory(char **av, t_vars *vars)
 	// joined_path = NULL;
 	
 	// ! 1 - parsing 
-	check_args_mandatory(av, vars->fd, vars);
 	if (pipe(vars->pipe_fd) == -1) // 0 = ok, -1 = error
 		error_quit("Piping failure");
 	
@@ -72,7 +68,7 @@ void	pipex_mandatory(char **av, t_vars *vars)
 		// char *args[] = {"cat", NULL};
 		// * if execve fails, return value == -1
 		i = 0;
-		while(*vars->parsing.path[i])
+		while(vars->parsing.path[i] != NULL)
 		{
 			joined_path = ft_strjoin(vars->parsing.path[i], *vars->parsing.args[0]);
 			// printf("Joined path = %s\n", joined_path);
@@ -116,7 +112,7 @@ void	pipex_mandatory(char **av, t_vars *vars)
 		// joined_path  = ft_strjoin(*vars->parsing.path, *vars->parsing.args[1]);
 		// printf("Joined path = %s\n", joined_path);
 		i = 0;
-		while(vars->parsing.path[i])
+		while(vars->parsing.path[i] != NULL)
 		{
 			joined_path = ft_strjoin(vars->parsing.path[i], *vars->parsing.args[1]);
 			// printf("Joined path = %s\n", joined_path);
@@ -180,9 +176,8 @@ void	print_arg(t_vars *vars, int ac)
 
 void	free_vars(t_vars *vars)
 {
-	// ! free paths
-	int i;
-	int k;
+	int	i;
+	int	k;
 
 	i = 0;
 	while (vars->parsing.path[i] != NULL)
@@ -191,8 +186,6 @@ void	free_vars(t_vars *vars)
 		i++;
 	}
 	free(vars->parsing.path);
-	
-	// ! Free args
 	i = 0;
 	k = 0;
 	while (vars->parsing.args[i] != NULL)
@@ -206,7 +199,6 @@ void	free_vars(t_vars *vars)
 		free(vars->parsing.args[i]);
 		i++;
 	}
-	// free(vars->parsing.args[i]);
 	free(vars->parsing.args);
 }
 
@@ -217,6 +209,7 @@ int	main(int ac, char **av, char **envp)
 	if (ac >= 5)
 	{
 		vars = init_struct(ac, av, envp, &vars);
+		check_args_mandatory(av, vars->fd, vars);
 		// print_arg(&vars, ac);
 		pipex_mandatory(av, &vars);
 		free_vars(&vars);
