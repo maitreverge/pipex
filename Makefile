@@ -6,7 +6,7 @@
 #    By: flverge <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/18 17:11:27 by flverge           #+#    #+#              #
-#    Updated: 2023/12/24 21:08:39 by flverge          ###   ########.fr        #
+#    Updated: 2023/12/24 23:58:23 by flverge          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ CFLAGS = -Wall -Wextra -Werror -fsanitize=address
 
 # libft
 LIBFT_NAME = libmaster.a
-LIBFT_PATH = libft/
+LIBFT_PATH = my_42_libft/
 LIBFT = $(LIBFT_PATH)$(LIBFT_NAME)
 
 # pipex files
