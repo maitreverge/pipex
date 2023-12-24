@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 14:41:08 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/24 21:57:41 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/24 22:05:33 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ typedef struct s_arg_split
 	size_t	start;
 	size_t	len;
 	int		inside_quotes;
+	char quote;
+	size_t result;
 }				t_arg_split;
 
 // pipex.c

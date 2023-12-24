@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 11:15:17 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/24 21:55:55 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/24 22:10:09 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,22 @@ void	arg_sub_check(char const *s, char c, t_arg_split *vars)
 	}
 }
 
+void	arg_sub_check2(t_arg_split *vars, char const *s)
+{
+	vars->len = vars->i - vars->start;
+	if (s[vars->start] == 39)
+	{
+		vars->start++;
+		vars->len--;
+		vars->inside_quotes = 1;
+	}
+	if (vars->inside_quotes && s[vars->i - 1] == 39)
+	{
+		vars->len--;
+		vars->inside_quotes = 0;
+	}
+}
+
 void	arg_allocation(char **buffer, char const *s, char c, size_t len_s)
 {
 	t_arg_split	vars;
@@ -63,18 +79,7 @@ void	arg_allocation(char **buffer, char const *s, char c, size_t len_s)
 		arg_sub_check(s, c, &vars);
 		if (vars.j < len_s)
 		{
-			vars.len = vars.i - vars.start;
-			if (s[vars.start] == 39)
-			{
-				vars.start++;
-				vars.len--;
-				vars.inside_quotes = 1;
-			}
-			if (vars.inside_quotes && s[vars.i - 1] == 39)
-			{
-				vars.len--;
-				vars.inside_quotes = 0;
-			}
+			arg_sub_check2(&vars, s);
 			buffer[vars.j] = ft_calloc(sizeof(char), (vars.len + 1));
 			if (!buffer[vars.j])
 				return ;
@@ -87,52 +92,53 @@ void	arg_allocation(char **buffer, char const *s, char c, size_t len_s)
 
 size_t	ft_arg_ctw(char const *str, char space)
 {
-	size_t	result;
-	int		i;
-	char	quote;
+	t_arg_split	vars;
+	// size_t	result;
+	// int		i;
+	// char	quote;
 
-	result = 0;
-	quote = 39;
-	i = 0;
+	vars.result = 0;
+	vars.quote = 39;
+	vars.i = 0;
 	if (!str)
 		return (0);
-	while (str[i])
+	while (str[vars.i])
 	{
-		while (str[i] == space && str[i])
-			i++;
-		if (str[i] == quote)
+		while (str[vars.i] == space && str[vars.i])
+			vars.i++;
+		if (str[vars.i] == vars.quote)
 		{
-			i++;
-			while (str[i] != quote && str[i])
-				i++;
-			if (str[i] == quote)
+			vars.i++;
+			while (str[vars.i] != vars.quote && str[vars.i])
+				vars.i++;
+			if (str[vars.i] == vars.quote)
 			{
-				result++;
-				i++;
+				vars.result++;
+				vars.i++;
 			}
 			else
 				exit (-1);
 		}
-		else if (str[i] != space && str[i])
+		else if (str[vars.i] != space && str[vars.i])
 		{
-			while (str[i])
+			while (str[vars.i])
 			{
-				if (str[i] == space)
+				if (str[vars.i] == space)
 					break ;
-				else if (str[i] == quote)
+				else if (str[vars.i] == vars.quote)
 				{
-					i++;
-					while (str[i] != quote && str[i])
-						i++;
-					i++;
+					vars.i++;
+					while (str[vars.i] != vars.quote && str[vars.i])
+						vars.i++;
+					vars.i++;
 					break ;
 				}
-				i++;
+				vars.i++;
 			}
-			result++;
+			vars.result++;
 		}
 	}
-	return (result);
+	return (vars.result);
 }
 
 char	**ft_arg_split(char const *s, char space)
