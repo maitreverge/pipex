@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 10:31:16 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/24 22:34:34 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/24 23:33:00 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,3 @@ t_vars	init_struct(int ac, char **av, char **envp, t_vars *vars)
 	init.parsing.args = args_parsing(ac, av);
 	return (init);
 }
-
