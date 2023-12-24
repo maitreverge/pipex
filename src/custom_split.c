@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 14:15:06 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/24 21:34:58 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/24 22:30:42 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static char	*pipex_ft_strncpy(char *dest, char const *src, size_t n)
 	return (dest);
 }
 
-static void	pipex_sub_check(char const *s, char c, size_t *i, size_t *start)
+static void	p_sub_check(char const *s, char c, size_t *i, size_t *start)
 {
 	while (s[*i] == c)
 		(*i)++;
@@ -42,7 +42,7 @@ static void	pipex_sub_check(char const *s, char c, size_t *i, size_t *start)
 	}
 }
 
-static void	pipex_allocation(char **buffer, char const *s, char c, size_t len_s)
+static void	p_alloc(char **buffer, char const *s, char c, size_t len_s)
 {
 	size_t	i;
 	size_t	j;
@@ -55,7 +55,7 @@ static void	pipex_allocation(char **buffer, char const *s, char c, size_t len_s)
 		return ;
 	while (s[i])
 	{
-		pipex_sub_check(s, c, &i, &start);
+		p_sub_check(s, c, &i, &start);
 		if (j < len_s)
 		{
 			buffer[j] = ft_calloc(sizeof(char), (i - start + 2));
@@ -102,6 +102,6 @@ char	**ft_pipex_split(char const *s, char c)
 	buffer = (char **)ft_calloc(sizeof(char *), (len_s + 1));
 	if (!buffer)
 		return (NULL);
-	pipex_allocation(buffer, s, c, len_s);
+	p_alloc(buffer, s, c, len_s);
 	return (buffer);
 }

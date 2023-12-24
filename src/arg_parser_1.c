@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 11:15:17 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/24 22:21:30 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/24 22:31:31 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*ft_strncpy(char *dest, char const *src, size_t n)
 	return (dest);
 }
 
-void	arg_allocation(char **buffer, char const *s, char c, size_t len_s)
+void	arg_alloc(char **buffer, char const *s, char c, size_t len_s)
 {
 	t_arg_split	vars;
 
@@ -86,6 +86,6 @@ char	**ft_arg_split(char const *s, char space)
 	buffer = (char **)ft_calloc(sizeof(char *), (len_s + 1));
 	if (!buffer)
 		return (NULL);
-	arg_allocation(buffer, s, space, len_s);
+	arg_alloc(buffer, s, space, len_s);
 	return (buffer);
 }

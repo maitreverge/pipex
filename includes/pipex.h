@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 14:41:08 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/24 22:05:33 by flverge          ###   ########.fr       */
+/*   Updated: 2023/12/24 22:34:39 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,49 +46,42 @@ typedef struct s_arg_split
 	size_t	start;
 	size_t	len;
 	int		inside_quotes;
-	char quote;
-	size_t result;
+	char	quote;
+	size_t	result;
 }				t_arg_split;
 
-// pipex.c
-void	check_args_mandatory(char **av, int *fd, t_vars *vars);
 
-void	pipex_mandatory(char **av, t_vars *vars);
-t_vars	init_struct(int ac, char **av, char **envp, t_vars *vars);
-void	print_arg(t_vars *vars, int ac);
-void	free_vars(t_vars *vars);
+// arg_parser_1
+char			*ft_strncpy(char *dest, char const *src, size_t n);
+void			arg_alloc(char **buffer, char const *s, char c, size_t len_s);
+size_t			ft_arg_ctw(char const *str, char space);
+char			**ft_arg_split(char const *s, char space);
 
+// arg_parser_2
+void			arg_sub_check(char const *s, char c, t_arg_split *vars);
+void			arg_sub_check2(t_arg_split *vars, char const *s);
+void			sub_ctw1(t_arg_split *vars, char const *str);
+void			sub_ctw2(t_arg_split *vars, char const *str, char space);
 
-
-
-
-// pipex_bonus.c
-void	pipex_bonus(int ac, char **av, char **env);
-
-// utils.c
-int		ft_strcmp(char *s1, char *s2);
-void	error_quit(char *str);
-
-// parsing_1.c
-char	***args_parsing(int ac, char **av);
-char	**path_parsing(char **av, char **envp);
-
-
-// parsing_2.c
-char	*ft_strncpy(char *dest, char const *src, size_t n);
-void	arg_sub_check(char const *s, char c, t_arg_split *vars);
-void	arg_allocation(char **buffer, char const *s, char c, size_t len_s);
-
-size_t	ft_arg_ctw(char const *str, char space);
-char	**ft_arg_split(char const *s, char space);
-
-// custom_split.c
-static char	*pipex_ft_strncpy(char *dest, char const *src, size_t n);
-static void	pipex_sub_check(char const *s, char c, size_t *i, size_t *start);
-static void	pipex_allocation(char **buffer, char const *s, char c, size_t len_s);
+// custom_split
+static char		*pipex_ft_strncpy(char *dest, char const *src, size_t n);
+static void		p_sub_check(char const *s, char c, size_t *i, size_t *start);
+static void		p_alloc(char **buffer, char const *s, char c, size_t len_s);
 static size_t	ft_pipex_countwords(char const *str, char c);
+char			**ft_pipex_split(char const *s, char c);
 
-char	**ft_pipex_split(char const *s, char c);
+// parsing4struct
+char			***args_parsing(int ac, char **av);
+char			**path_parsing(char **av, char **envp);
+void			check_args_mandatory(char **av, int *fd, t_vars *vars);
 
+// utils
+int				ft_strcmp(char *s1, char *s2);
+void			error_quit(char *str);
+void			free_vars(t_vars *vars);
+t_vars			init_struct(int ac, char **av, char **envp, t_vars *vars);
+
+// pipex
+void			pipex_mandatory(char **av, t_vars *vars);
 
 #endif
