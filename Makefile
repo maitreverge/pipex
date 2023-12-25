@@ -6,7 +6,7 @@
 #    By: flverge <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/18 17:11:27 by flverge           #+#    #+#              #
-#    Updated: 2023/12/24 23:58:23 by flverge          ###   ########.fr        #
+#    Updated: 2023/12/25 12:09:06 by flverge          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,7 +71,7 @@ clean:
 	@echo "$(BOLD)$(ORANGE)🌀     Cleaned .o pipex's files   🌀$(RESET)"
 
 fclean: clean
-	@make fclean -sC libft/
+	@make fclean -sC $(LIBFT_PATH)
 	@rm -f $(NAME)
 	@echo "$(BOLD)$(ORANGE)🌀     Cleaned pipex exec       🌀$(RESET)"
 
