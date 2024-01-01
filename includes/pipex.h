@@ -6,16 +6,16 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 14:41:08 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/24 23:59:09 by flverge          ###   ########.fr       */
+/*   Updated: 2024/01/01 10:53:20 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H 
 
-# include "../my_42_libft/libft/libft.h"
-# include "../my_42_libft/ft_printf/ft_printf.h"
-# include "../my_42_libft/get_next_line/get_next_line_bonus.h"
+# include "../libft/libft/libft.h"
+# include "../libft/ft_printf/ft_printf.h"
+# include "../libft/get_next_line/get_next_line_bonus.h"
 # include <unistd.h> // write, close, access, dup, dup2, execve
 # include <fcntl.h> // open and options
 # include <stdlib.h> // malloc and free and EXIT_SUCCESS / EXIT_FAILURE
@@ -66,27 +66,23 @@ void			sub_ctw1(t_arg_split *vars, char const *str);
 void			sub_ctw2(t_arg_split *vars, char const *str, char space);
 
 // custom_split
-static char		*pipex_ft_strncpy(char *dest, char const *src, size_t n);
-static void		p_sub_check(char const *s, char c, size_t *i, size_t *start);
-static void		p_alloc(char **buffer, char const *s, char c, size_t len_s);
-static size_t	ft_pipex_countwords(char const *str, char c);
 char			**ft_pipex_split(char const *s, char c);
 
 // parsing4struct
 char			***args_parsing(int ac, char **av);
-char			**path_parsing(char **av, char **envp);
+char			**path_parsing(char **envp);
 void			check_args_mandatory(char **av, int *fd, t_vars *vars);
 
 // utils
 int				ft_strcmp(char *s1, char *s2);
 void			error_quit(char *str);
 void			free_vars(t_vars *vars);
-t_vars			init_struct(int ac, char **av, char **envp, t_vars *vars);
+t_vars			init_struct(int ac, char **av, char **envp);
 
 // pipex
 void			ft_execve(t_vars *vars, int arg, int i);
 void			child_process(t_vars *vars);
 void			parent_process(t_vars *vars);
-void			pipex(char **av, t_vars *vars);
+void			pipex(t_vars *vars);
 
 #endif

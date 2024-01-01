@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 13:00:02 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/24 22:22:22 by flverge          ###   ########.fr       */
+/*   Updated: 2024/01/01 10:47:39 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,14 @@ char	***args_parsing(int ac, char **av)
 	return (buffer);
 }
 
-char	**path_parsing(char **av, char **envp)
+char	**path_parsing(char **envp)
 {
 	char	**env;
 	char	**result;
 	char	*path;
 
 	env = envp;
+	path = NULL;
 	while (*env != NULL)
 	{
 		if (ft_strncmp(*env, "PATH=", 5) == 0)

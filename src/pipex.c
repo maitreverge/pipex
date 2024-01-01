@@ -6,7 +6,7 @@
 /*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 17:12:36 by flverge           #+#    #+#             */
-/*   Updated: 2023/12/24 23:33:19 by flverge          ###   ########.fr       */
+/*   Updated: 2024/01/01 10:53:30 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	parent_process(t_vars *vars)
 	ft_execve(vars, 1, 0);
 }
 
-void	pipex(char **av, t_vars *vars)
+void	pipex(t_vars *vars)
 {
 	if (pipe(vars->pipe_fd) == -1)
 		error_quit("Piping failure");
@@ -70,9 +70,9 @@ int	main(int ac, char **av, char **envp)
 
 	if (ac >= 5)
 	{
-		vars = init_struct(ac, av, envp, &vars);
+		vars = init_struct(ac, av, envp);
 		check_args_mandatory(av, vars.fd, &vars);
-		pipex(av, &vars);
+		pipex(&vars);
 		free_vars(&vars);
 	}
 	else
