@@ -1,3 +1,0 @@
-Program needs to output Command not found When it is the case
-when access function keeps getting wrong paths
-
