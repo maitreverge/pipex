@@ -6,55 +6,71 @@
 #    By: flverge <flverge@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/18 17:11:27 by flverge           #+#    #+#              #
-#    Updated: 2024/09/15 12:54:52 by flverge          ###   ########.fr        #
+#    Updated: 2024/09/15 13:10:09 by flverge          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Program names
-NAME		:= pipex
-NAME_BONUS	:= pipex_bonus
+NAME				:= pipex
+NAME_BONUS			:= pipex_bonus
 
 # Compiler options
-CC := cc
+CC 					:= cc
 
 # Flags
-CFLAGS := -Wall -Wextra -Werror
+CFLAGS 				:= -Wall -Wextra -Werror
+# CFLAGS 				:= -Wall -Wextra -Werror -g  # debug
 
-# libft
-LIBFT_NAME	:= libmaster.a
-LIBFT_PATH	:= libft/
-LIBFT		:= $(LIBFT_PATH)$(LIBFT_NAME)
+# Libft
+LIBFT_NAME			:= libmaster.a
+LIBFT_PATH			:= libft/
+LIBFT				:= $(LIBFT_PATH)$(LIBFT_NAME)
 
 # Mandatory Source Files
 DIR_SRC_MANDATORY	:= mandatory/src
 SRC_MANDATORY		:= $(wildcard $(DIR_SRC_MANDATORY)/*.c)
 
-# Bonus Source Files
-DIR_SRC_BONUS	:= bonus/src
-SRC_BONUS		:= $(wildcard $(DIR_SRC_BONUS)/*.c)
-
-# Objects Files
+# Mandatory Objects
 DIR_OBJ_MANDATORY	:= ./mandatory/obj
-DIR_OBJ_BONUS		:= ./bonus/obj
-OBJ_MANDATORY		:= ${SRC_MANDATORY:.c=.o}
+OBJ_MANDATORY		:= $(SRC_MANDATORY:$(DIR_SRC_MANDATORY)/%.c=$(DIR_OBJ_MANDATORY)/%.o)
+
+# Bonus Source Files
+DIR_SRC_BONUS		:= bonus/src
+SRC_BONUS			:= $(wildcard $(DIR_SRC_BONUS)/*.c)
+
+# Bonus Objects
+DIR_OBJ_BONUS	:= ./bonus/obj
+OBJ_BONUS		:= $(SRC_BONUS:$(DIR_SRC_BONUS)/%.c=$(DIR_OBJ_BONUS)/%.o)
 
 # Includes
-INC_MANDATORY	:=	-I ./mandatory/includes
-INC_BONUS		:=	-I ./bonus/includes
+INC_MANDATORY		:=	-I ./mandatory/includes
+INC_BONUS			:=	-I ./bonus/includes
 
 # Colors
-RESET := \033[0m
-BOLD := \033[1m
-RED := \033[91m
-GREEN := \033[92m
-YELLOW := \033[33m
-ORANGE := \033[93m
-BLUE := \033[94m
+RESET				:= \033[0m
+BOLD				:= \033[1m
+RED					:= \033[91m
+GREEN				:= \033[92m
+YELLOW				:= \033[33m
+ORANGE				:= \033[93m
+BLUE				:= \033[94m
 
 
 all: $(LIBFT) $(NAME)
 
-%.o: %.c
+# Create object directories if they don't exist
+$(DIR_OBJ_MANDATORY):
+	@mkdir -p $(DIR_OBJ_MANDATORY)
+
+$(DIR_OBJ_BONUS):
+	@mkdir -p $(DIR_OBJ_BONUS)
+
+# Compile mandatory object files
+$(DIR_OBJ_MANDATORY)/%.o: $(DIR_SRC_MANDATORY)/%.c | $(DIR_OBJ_MANDATORY)
+	@$(CC) $(CFLAGS) -c $< -o $@
+
+# Compile bonus object files
+$(DIR_OBJ_BONUS)/%.o: $(DIR_SRC_BONUS)/%.c | $(DIR_OBJ_BONUS)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(LIBFT):
@@ -68,15 +84,15 @@ $(NAME): $(OBJ_MANDATORY)
 	@echo "$(BOLD)$(RED)🛠️      Compiling pipex    🛠️$(RESET)"
 	@echo "\n"
 	@$(CC) $(CFLAGS) $(OBJ_MANDATORY) $(LIBFT) $(INC_MANDATORY) -o $(NAME)
-	@echo "$(BOLD)$(GREEN)✅✅      Pipex fully compiled, ready to use       ✅✅$(RESET)"
+	@echo "$(BOLD)$(GREEN)🚀      Pipex fully compiled, ready to use       🚀$(RESET)"
 	@echo "\n"
 
-# Exec Bonus
+# Bonus rule
 $(NAME_BONUS): $(OBJ_BONUS)
-	@echo "$(BOLD)$(RED)🛠️      Compiling pipex bonus    🛠️$(RESET)"
+	@echo "$(BOLD)$(RED)🛠️      Compiling pipex $(YELLOW)✨ BONUS ✨    🛠️$(RESET)"
 	@echo "\n"
 	@$(CC) $(CFLAGS) $(OBJ_BONUS) $(LIBFT) $(INC_BONUS) -o $(NAME_BONUS)
-	@echo "$(BOLD)$(GREEN)✅✅      Pipex fully compiled, ready to use       ✅✅$(RESET)"
+	@echo "$(BOLD)🚀      $(GREEN)Pipex $(YELLOW)✨ BONUS ✨ $(GREEN)fully compiled, ready to use       🚀$(RESET)"
 	@echo "\n"
 
 clean:
