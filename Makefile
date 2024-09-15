@@ -3,51 +3,57 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: flverge <marvin@42.fr>                     +#+  +:+       +#+         #
+#    By: flverge <flverge@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/18 17:11:27 by flverge           #+#    #+#              #
-#    Updated: 2024/01/01 11:04:39 by flverge          ###   ########.fr        #
+#    Updated: 2024/09/15 12:54:52 by flverge          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# Program name
-NAME = pipex
+# Program names
+NAME		:= pipex
+NAME_BONUS	:= pipex_bonus
 
 # Compiler options
-CC = cc
+CC := cc
 
-# Valgrind flag
-CFLAGS = -Wall -Wextra -Werror -g
-
-# Asan flag
-# CFLAGS = -Wall -Wextra -Werror -fsanitize=address
+# Flags
+CFLAGS := -Wall -Wextra -Werror
 
 # libft
-LIBFT_NAME = libmaster.a
-LIBFT_PATH = libft/
-LIBFT = $(LIBFT_PATH)$(LIBFT_NAME)
+LIBFT_NAME	:= libmaster.a
+LIBFT_PATH	:= libft/
+LIBFT		:= $(LIBFT_PATH)$(LIBFT_NAME)
 
-# pipex files
-SRC_DIR := src
-SRC := $(wildcard $(SRC_DIR)/*.c)
-OBJ := ${SRC:.c=.o}
+# Mandatory Source Files
+DIR_SRC_MANDATORY	:= mandatory/src
+SRC_MANDATORY		:= $(wildcard $(DIR_SRC_MANDATORY)/*.c)
+
+# Bonus Source Files
+DIR_SRC_BONUS	:= bonus/src
+SRC_BONUS		:= $(wildcard $(DIR_SRC_BONUS)/*.c)
+
+# Objects Files
+DIR_OBJ_MANDATORY	:= ./mandatory/obj
+DIR_OBJ_BONUS		:= ./bonus/obj
+OBJ_MANDATORY		:= ${SRC_MANDATORY:.c=.o}
 
 # Includes
-INC =	-I ./includes/
+INC_MANDATORY	:=	-I ./mandatory/includes
+INC_BONUS		:=	-I ./bonus/includes
 
 # Colors
-RESET = \033[0m
-BOLD = \033[1m
-RED = \033[91m
-GREEN = \033[92m
-YELLOW = \033[33m
-ORANGE = \033[93m
-BLUE = \033[94m
+RESET := \033[0m
+BOLD := \033[1m
+RED := \033[91m
+GREEN := \033[92m
+YELLOW := \033[33m
+ORANGE := \033[93m
+BLUE := \033[94m
 
 
 all: $(LIBFT) $(NAME)
 
-# remettre les flags
 %.o: %.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 
@@ -57,24 +63,38 @@ $(LIBFT):
 	@echo "$(BOLD)$(BLUE)-----------------------$(RESET)"
 	@echo "\n"	
 
-# remettre flags
-$(NAME): $(OBJ)
+# Madatory Rule
+$(NAME): $(OBJ_MANDATORY)
 	@echo "$(BOLD)$(RED)🛠️      Compiling pipex    🛠️$(RESET)"
 	@echo "\n"
-	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(INC) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJ_MANDATORY) $(LIBFT) $(INC_MANDATORY) -o $(NAME)
+	@echo "$(BOLD)$(GREEN)✅✅      Pipex fully compiled, ready to use       ✅✅$(RESET)"
+	@echo "\n"
+
+# Exec Bonus
+$(NAME_BONUS): $(OBJ_BONUS)
+	@echo "$(BOLD)$(RED)🛠️      Compiling pipex bonus    🛠️$(RESET)"
+	@echo "\n"
+	@$(CC) $(CFLAGS) $(OBJ_BONUS) $(LIBFT) $(INC_BONUS) -o $(NAME_BONUS)
 	@echo "$(BOLD)$(GREEN)✅✅      Pipex fully compiled, ready to use       ✅✅$(RESET)"
 	@echo "\n"
 
 clean:
 	@make clean -sC $(LIBFT_PATH)
-	@rm -f $(OBJ)
+	@rm -rf $(DIR_OBJ_MANDATORY)
+	@rm -rf $(DIR_OBJ_BONUS)
 	@echo "$(BOLD)$(ORANGE)🌀     Cleaned .o pipex's files   🌀$(RESET)"
 
 fclean: clean
 	@make fclean -sC $(LIBFT_PATH)
 	@rm -f $(NAME)
+	@rm -f $(NAME_BONUS)
 	@echo "$(BOLD)$(ORANGE)🌀     Cleaned pipex exec       🌀$(RESET)"
 
-bonus: all
+bonus: $(LIBFT) $(NAME_BONUS)
 
 re: fclean all
+
+rebonus: fclean bonus
+
+# Rajouter .PHONY
