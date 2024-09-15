@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flverge <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: flverge <flverge@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 14:41:08 by flverge           #+#    #+#             */
-/*   Updated: 2024/01/01 10:53:20 by flverge          ###   ########.fr       */
+/*   Updated: 2024/09/15 12:27:02 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,65 +24,6 @@
 # include <string.h>
 # include <sys/wait.h>
 
-# define EX execve
 
-typedef struct s_parsing
-{
-	char	**path;
-	char	***args;
-}			t_parsing;
-
-typedef struct s_vars
-{
-	t_parsing	parsing;
-	int			fd[2];
-	int			pipe_fd[2];
-	int			status;
-	pid_t		pid;
-}				t_vars;
-
-typedef struct s_arg_split
-{
-	size_t	i;
-	size_t	j;
-	size_t	start;
-	size_t	len;
-	int		inside_quotes;
-	char	quote;
-	size_t	result;
-}				t_arg_split;
-
-
-// arg_parser_1
-char			*ft_strncpy(char *dest, char const *src, size_t n);
-void			arg_alloc(char **buffer, char const *s, char c, size_t len_s);
-size_t			ft_arg_ctw(char const *str, char space);
-char			**ft_arg_split(char const *s, char space);
-
-// arg_parser_2
-void			arg_sub_check(char const *s, char c, t_arg_split *vars);
-void			arg_sub_check2(t_arg_split *vars, char const *s);
-void			sub_ctw1(t_arg_split *vars, char const *str);
-void			sub_ctw2(t_arg_split *vars, char const *str, char space);
-
-// custom_split
-char			**ft_pipex_split(char const *s, char c);
-
-// parsing4struct
-char			***args_parsing(int ac, char **av);
-char			**path_parsing(char **envp);
-void			check_args_mandatory(char **av, int *fd, t_vars *vars);
-
-// utils
-int				ft_strcmp(char *s1, char *s2);
-void			error_quit(char *str);
-void			free_vars(t_vars *vars);
-t_vars			init_struct(int ac, char **av, char **envp);
-
-// pipex
-void			ft_execve(t_vars *vars, int arg, int i);
-void			child_process(t_vars *vars);
-void			parent_process(t_vars *vars);
-void			pipex(t_vars *vars);
 
 #endif
