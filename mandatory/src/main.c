@@ -6,7 +6,7 @@
 /*   By: flverge <flverge@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 12:27:16 by flverge           #+#    #+#             */
-/*   Updated: 2024/09/16 20:10:39 by flverge          ###   ########.fr       */
+/*   Updated: 2024/09/16 21:13:38 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@ bool file_rights(const char* file1, const char *file2)
         if (open(file2, O_RDWR | O_CREAT | 0644) == -1)
             return false; // failed creating the file
     }
+    // ? really usefull ??
+    // close(fd_file1);
+    // close(fd_file2);
     return true;
 }
 
@@ -58,6 +61,7 @@ void    init_checks(int ac, char** av, char **envp, t_paths **paths)
 
 }
 
+// ./pipex file1 cmd1 cmd2 file2
 int main(int ac, char **av, char **envp)
 {
     t_paths *paths;
@@ -66,7 +70,8 @@ int main(int ac, char **av, char **envp)
 
     init_checks(ac, av, envp, &paths);
 
-    
+    while (*av )
+    pipex(av, envp, &paths);
     // print_paths(paths, "debug main");
 
 
