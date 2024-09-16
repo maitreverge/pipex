@@ -6,7 +6,7 @@
 /*   By: flverge <flverge@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 09:40:04 by flverge           #+#    #+#             */
-/*   Updated: 2024/09/16 10:04:03 by flverge          ###   ########.fr       */
+/*   Updated: 2024/09/16 13:45:34 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_paths	*path_lstnew(char *content)
 	new_element = (t_paths *)malloc(sizeof(t_paths));
 	if (!new_element)
 		return (NULL);
-	new_element->path = content;
+	new_element->path = ft_strdup(content);
 	new_element->next = NULL;
 	return (new_element);
 }
@@ -41,7 +41,7 @@ t_paths	*path_lstlast(t_paths *lst)
 {
 	while (lst)
 	{
-		if (!lst->next)
+		if (!lst->next) // segfault ??
 			return (lst);
 		lst = lst->next;
 	}
