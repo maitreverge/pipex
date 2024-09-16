@@ -6,7 +6,7 @@
 /*   By: flverge <flverge@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 12:27:16 by flverge           #+#    #+#             */
-/*   Updated: 2024/09/16 14:12:23 by flverge          ###   ########.fr       */
+/*   Updated: 2024/09/16 20:10:39 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,12 @@ bool file_rights(const char* file1, const char *file2)
     return true;
 }
 
-void    init_checks(int ac, char** av, char **envp, t_paths *paths)
+void    init_checks(int ac, char** av, char **envp, t_paths **paths)
 {
-    printf("DEBUG1 = %p\n", paths);
-
     const char *file1;
     const char *file2;
 
-    paths = NULL;
+    // paths = NULL;
     if (ac != 5)
         exit_and_message("Error\nPipex require 5 arguments", 1);
     file1 = av[1];
@@ -55,19 +53,22 @@ void    init_checks(int ac, char** av, char **envp, t_paths *paths)
         exit_and_message("Error\nFile1 or File2 has not correct authorizations", 1);
     if (not check_paths(envp, paths)) // if there is errors
         exit_and_message("PATH env variable not found", 1);
+
+    // print_paths(paths, "debug init_check");
+
 }
 
 int main(int ac, char **av, char **envp)
 {
-    t_paths paths; // need to free every buffer and node
-
-    printf("DEBUG0 = %p\n", &paths);
-
-    // paths.path = 0;
-    // paths.next = 0;
-    // t_vars vars;
+    t_paths *paths;
     
+    paths = NULL;
+
     init_checks(ac, av, envp, &paths);
+
     
-    free_paths(&paths);
+    // print_paths(paths, "debug main");
+
+
+    free_paths(paths);
 }
