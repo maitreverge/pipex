@@ -6,11 +6,11 @@
 /*   By: flverge <flverge@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 09:50:09 by flverge           #+#    #+#             */
-/*   Updated: 2024/09/16 10:07:49 by flverge          ###   ########.fr       */
+/*   Updated: 2024/09/16 10:56:25 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include <pipex.h>
 
 void    free_split(char **to_free)
 {

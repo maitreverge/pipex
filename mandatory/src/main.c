@@ -6,7 +6,7 @@
 /*   By: flverge <flverge@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 12:27:16 by flverge           #+#    #+#             */
-/*   Updated: 2024/09/16 10:09:55 by flverge          ###   ########.fr       */
+/*   Updated: 2024/09/16 10:58:00 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void    init_checks(int ac, char** av, char **envp, t_paths *paths)
 int main(int ac, char **av, char **envp)
 {
     t_paths paths; // need to free every buffer and node
-    t_vars vars;
+    // t_vars vars;
     
     init_checks(ac, av, envp, &paths);
     

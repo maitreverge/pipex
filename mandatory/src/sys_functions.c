@@ -6,7 +6,7 @@
 /*   By: flverge <flverge@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 08:15:34 by flverge           #+#    #+#             */
-/*   Updated: 2024/09/16 08:18:00 by flverge          ###   ########.fr       */
+/*   Updated: 2024/09/16 10:58:21 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 
 void    exit_and_message(const char *message, const int exit_code)
 {
-    ft_printf("%s\n");
+    ft_printf("%s\n", message);
     exit(exit_code);
 }

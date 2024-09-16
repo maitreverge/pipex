@@ -6,16 +6,16 @@
 /*   By: flverge <flverge@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 14:41:08 by flverge           #+#    #+#             */
-/*   Updated: 2024/09/16 10:09:17 by flverge          ###   ########.fr       */
+/*   Updated: 2024/09/16 10:57:45 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H 
 
-# include "../libft/libft/libft.h"
-# include "../libft/ft_printf/ft_printf.h"
-# include "../libft/get_next_line/get_next_line_bonus.h"
+# include "../../libft/libft/libft.h"
+# include "../../libft/ft_printf/ft_printf.h"
+# include "../../libft/get_next_line/get_next_line_bonus.h"
 # include <unistd.h> // write, close, access, dup, dup2, execve
 # include <fcntl.h> // open and options
 # include <stdlib.h> // malloc and free and EXIT_SUCCESS / EXIT_FAILURE
@@ -29,7 +29,7 @@
 typedef struct s_paths 
 {
     char    *path;
-    t_paths *next;
+    struct s_paths *next;
     
 }   t_paths;
 

@@ -6,7 +6,7 @@
 #    By: flverge <flverge@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/18 17:11:27 by flverge           #+#    #+#              #
-#    Updated: 2024/09/15 13:16:56 by flverge          ###   ########.fr        #
+#    Updated: 2024/09/16 10:55:26 by flverge          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,8 +43,8 @@ DIR_OBJ_BONUS	:= ./bonus/obj
 OBJ_BONUS		:= $(SRC_BONUS:$(DIR_SRC_BONUS)/%.c=$(DIR_OBJ_BONUS)/%.o)
 
 # Includes
-INC_MANDATORY		:=	-I ./mandatory/includes
-INC_BONUS			:=	-I ./bonus/includes
+INC_MANDATORY		=	-I ./mandatory/includes
+INC_BONUS			=	-I ./bonus/includes
 
 # Colors
 RESET				:= \033[0m
@@ -69,11 +69,11 @@ $(DIR_OBJ_BONUS):
 
 # Compile mandatory object files
 $(DIR_OBJ_MANDATORY)/%.o: $(DIR_SRC_MANDATORY)/%.c | $(DIR_OBJ_MANDATORY)
-	@$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) $(INC_MANDATORY) -c $< -o $@
 
 # Compile bonus object files
 $(DIR_OBJ_BONUS)/%.o: $(DIR_SRC_BONUS)/%.c | $(DIR_OBJ_BONUS)
-	@$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) $(INC_BONUS) -c $< -o $@
 
 $(LIBFT):
 	@make -sC $(LIBFT_PATH)
