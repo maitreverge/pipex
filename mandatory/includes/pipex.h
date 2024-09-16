@@ -6,7 +6,7 @@
 /*   By: flverge <flverge@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 14:41:08 by flverge           #+#    #+#             */
-/*   Updated: 2024/09/16 08:26:00 by flverge          ###   ########.fr       */
+/*   Updated: 2024/09/16 09:02:44 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <stdio.h> // perror
 # include <errno.h> // makes errno a global variable usable with strerror(errno)
 # include <string.h>
+# include <stdbool.h>
 # include <sys/wait.h>
 # include "operators.h"
 
