@@ -6,7 +6,7 @@
 /*   By: flverge <flverge@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 12:27:16 by flverge           #+#    #+#             */
-/*   Updated: 2024/09/16 09:08:35 by flverge          ###   ########.fr       */
+/*   Updated: 2024/09/16 10:09:55 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,15 +50,16 @@ void    init_checks(int ac, char** av, char **envp, t_paths *paths)
     // ! to do
     if (not file_rights(file1, file2)) 
         exit_and_message("Error\nFile1 or File2 has not correct authorizations", 1);
-    if (parse_paths(envp, paths) == 1) // if there is errors
+    if (not check_paths(envp, paths)) // if there is errors
         exit_and_message("PATH env variable not found", 1);
 }
 
 int main(int ac, char **av, char **envp)
 {
-    t_paths s_paths;
+    t_paths paths; // need to free every buffer and node
     t_vars vars;
     
-    init_checks(ac, av, envp, &s_paths);
+    init_checks(ac, av, envp, &paths);
     
+    free_paths(&paths);
 }

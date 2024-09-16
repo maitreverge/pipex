@@ -6,7 +6,7 @@
 /*   By: flverge <flverge@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 14:41:08 by flverge           #+#    #+#             */
-/*   Updated: 2024/09/16 09:02:44 by flverge          ###   ########.fr       */
+/*   Updated: 2024/09/16 10:09:17 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,21 @@ typedef struct s_vars
 
 
 void    exit_and_message(const char *message, const int exit_code);
+
+bool check_paths(char **envp, t_paths *paths);
+
+t_paths	*path_lstnew(char *content);
+t_paths	*path_lstlast(t_paths *lst);
+void	path_add_back(t_paths **lst, t_paths *new);
+int	path_lstsize(t_paths *lst);
+
+
+void    free_split(char **to_free);
+
+void    free_paths(t_paths *paths);
+
+
+
 
 
 #endif

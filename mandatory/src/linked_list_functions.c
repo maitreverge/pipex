@@ -6,11 +6,24 @@
 /*   By: flverge <flverge@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 09:40:04 by flverge           #+#    #+#             */
-/*   Updated: 2024/09/16 09:46:30 by flverge          ###   ########.fr       */
+/*   Updated: 2024/09/16 10:04:03 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+int	path_lstsize(t_paths *lst)
+{
+	int	i;
+
+	i = 0;
+	while (lst != NULL)
+	{
+		i++;
+		lst = lst->next;
+	}
+	return (i);
+}
 
 t_paths	*path_lstnew(char *content)
 {
