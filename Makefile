@@ -6,7 +6,7 @@
 #    By: flverge <flverge@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/18 17:11:27 by flverge           #+#    #+#              #
-#    Updated: 2024/09/16 10:55:26 by flverge          ###   ########.fr        #
+#    Updated: 2024/09/16 12:45:54 by flverge          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,8 +18,8 @@ NAME_BONUS			:= pipex_bonus
 CC 					:= cc
 
 # Flags
-CFLAGS 				:= -Wall -Wextra -Werror
-# CFLAGS 				:= -Wall -Wextra -Werror -g  # debug
+# CFLAGS 				:= -Wall -Wextra -Werror
+CFLAGS 				:= -Wall -Wextra -Werror -g  # debug
 
 # Libft
 LIBFT_NAME			:= libmaster.a
