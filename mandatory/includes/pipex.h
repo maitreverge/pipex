@@ -6,7 +6,7 @@
 /*   By: flverge <flverge@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 14:41:08 by flverge           #+#    #+#             */
-/*   Updated: 2024/09/15 12:27:02 by flverge          ###   ########.fr       */
+/*   Updated: 2024/09/16 08:26:00 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,31 @@
 # include <errno.h> // makes errno a global variable usable with strerror(errno)
 # include <string.h>
 # include <sys/wait.h>
+# include "operators.h"
 
+typedef struct s_paths 
+{
+    char    *path;
+    t_paths *next;
+    
+}   t_paths;
+
+typedef struct s_vars 
+{
+    char *temp_buf;
+    size_t i;
+    size_t j;
+    size_t k;
+    size_t l;
+    long l_i;
+    long l_j;
+    long l_k;
+    long l_l;
+    
+}   t_vars;
+
+
+void    exit_and_message(const char *message, const int exit_code);
 
 
 #endif

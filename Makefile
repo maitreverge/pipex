@@ -6,7 +6,7 @@
 #    By: flverge <flverge@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/18 17:11:27 by flverge           #+#    #+#              #
-#    Updated: 2024/09/15 13:10:09 by flverge          ###   ########.fr        #
+#    Updated: 2024/09/15 13:16:56 by flverge          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,6 +58,8 @@ BLUE				:= \033[94m
 
 all: $(LIBFT) $(NAME)
 
+bonus: $(LIBFT) $(NAME_BONUS)
+
 # Create object directories if they don't exist
 $(DIR_OBJ_MANDATORY):
 	@mkdir -p $(DIR_OBJ_MANDATORY)
@@ -106,8 +108,6 @@ fclean: clean
 	@rm -f $(NAME)
 	@rm -f $(NAME_BONUS)
 	@echo "$(BOLD)$(ORANGE)🌀     Cleaned pipex exec       🌀$(RESET)"
-
-bonus: $(LIBFT) $(NAME_BONUS)
 
 re: fclean all
 
