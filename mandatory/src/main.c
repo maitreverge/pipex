@@ -6,7 +6,7 @@
 /*   By: flverge <flverge@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 12:27:16 by flverge           #+#    #+#             */
-/*   Updated: 2024/09/24 21:07:39 by flverge          ###   ########.fr       */
+/*   Updated: 2024/09/24 21:23:55 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ void    init_checks(int ac, char** av, char **envp, t_paths **paths)
     file1 = av[1];
     file2 = av[4];
     // ! to do
-    if (not file_rights(file1, file2)) 
+    if (!file_rights(file1, file2)) 
         exit_and_message("Error\nFile1 or File2 has not correct authorizations", 1);
-    if (not check_paths(envp, paths)) // if there is errors
+    if (!check_paths(envp, paths)) // if there is errors
         exit_and_message("PATH env variable not found", 1);
 
     // print_paths(paths, "debug init_check");

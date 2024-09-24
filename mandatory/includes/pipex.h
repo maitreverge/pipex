@@ -6,7 +6,7 @@
 /*   By: flverge <flverge@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 14:41:08 by flverge           #+#    #+#             */
-/*   Updated: 2024/09/24 18:40:53 by flverge          ###   ########.fr       */
+/*   Updated: 2024/09/24 21:23:27 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 # include <stdbool.h>
 # include <sys/wait.h>
 # include <time.h>
-# include "operators.h"
 
 typedef struct s_paths 
 {
