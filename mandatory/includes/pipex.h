@@ -6,7 +6,7 @@
 /*   By: flverge <flverge@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 14:41:08 by flverge           #+#    #+#             */
-/*   Updated: 2024/09/16 17:54:52 by flverge          ###   ########.fr       */
+/*   Updated: 2024/09/24 09:43:40 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <string.h>
 # include <stdbool.h>
 # include <sys/wait.h>
+# include <time.h>
 # include "operators.h"
 
 typedef struct s_paths 
@@ -33,6 +34,7 @@ typedef struct s_paths
     
 }   t_paths;
 
+// ! For variables declarations
 typedef struct s_vars 
 {
     char *temp_buf;
@@ -64,6 +66,7 @@ void    free_paths(t_paths *paths);
 
 void print_paths(t_paths *paths, const char* str);
 
+void    pipex(char **av, char **envp, t_paths **paths);
 
 
 

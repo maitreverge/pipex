@@ -6,7 +6,7 @@
 /*   By: flverge <flverge@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 09:09:52 by flverge           #+#    #+#             */
-/*   Updated: 2024/09/16 20:09:47 by flverge          ###   ########.fr       */
+/*   Updated: 2024/09/24 09:46:44 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ bool check_paths(char **envp, t_paths **paths)
         return false;
     parse_paths(*temp_envp, paths);
 
-    print_paths(*paths, "debug check_paths");
+    // print_paths(*paths, "debug check_paths");
     
     return true;
 }

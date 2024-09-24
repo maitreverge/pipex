@@ -6,7 +6,7 @@
 /*   By: flverge <flverge@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 12:27:16 by flverge           #+#    #+#             */
-/*   Updated: 2024/09/16 21:13:38 by flverge          ###   ########.fr       */
+/*   Updated: 2024/09/24 11:39:17 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,9 @@ int main(int ac, char **av, char **envp)
     paths = NULL;
 
     init_checks(ac, av, envp, &paths);
-
-    while (*av )
+    
+    ++av; // points to the very first argument
+    // while (*av )
     pipex(av, envp, &paths);
     // print_paths(paths, "debug main");
 
