@@ -6,7 +6,7 @@
 /*   By: flverge <flverge@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 14:41:08 by flverge           #+#    #+#             */
-/*   Updated: 2024/09/24 09:43:40 by flverge          ###   ########.fr       */
+/*   Updated: 2024/09/24 18:40:53 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void    free_paths(t_paths *paths);
 void print_paths(t_paths *paths, const char* str);
 
 void    pipex(char **av, char **envp, t_paths **paths);
+
 
 
 
