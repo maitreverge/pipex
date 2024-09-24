@@ -6,7 +6,7 @@
 /*   By: flverge <flverge@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 20:23:55 by flverge           #+#    #+#             */
-/*   Updated: 2024/09/24 21:06:02 by flverge          ###   ########.fr       */
+/*   Updated: 2024/09/24 21:17:55 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void    ft_exec(char *command, char **envp, t_paths **paths)
         if (access(join_buff, F_OK) == 0)
         {
             if (execve(join_buff, splitted_command, envp) == -1)
-                perror(errno);
+                printf("%s Failed To Execute\n", join_buff);
             free(join_buff);
             break;
         }
@@ -41,7 +41,8 @@ void    ft_exec(char *command, char **envp, t_paths **paths)
     if (!temp_paths->next && join_buff) // last node AND still not found because of the join_buff still up
     {
         execve(join_buff, splitted_command, envp);
-        perror(errno);
+        printf("Pipex could not found the path to execute %s\n", join_buff);
+        perror(strerror(errno));
         free(join_buff);
     }
     free_split(splitted_command);
@@ -78,7 +79,10 @@ void    parent_process(char **av, char**envp, t_paths **paths, int* fd)
     char *file2;
     
     file2 = av[3];
-    dup2(file2, STDOUT_FILENO);
+
+    int fd_file = open(file2, F_OK);
+    
+    dup2(fd_file, STDOUT_FILENO);
     dup2(fd[0], STDIN_FILENO);
     close(fd[1]);
     ft_exec(av[2], envp, paths);
