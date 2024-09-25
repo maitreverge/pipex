@@ -6,7 +6,7 @@
 /*   By: flverge <flverge@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 20:23:55 by flverge           #+#    #+#             */
-/*   Updated: 2024/09/25 09:48:52 by flverge          ###   ########.fr       */
+/*   Updated: 2024/09/25 09:56:05 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void    parent_process(char **av, char**envp, t_paths **paths, int* fd)
     
     output_file = av[3];
 
-    int fd_file = open(output_file, O_RDWR | O_CREAT | 0644);
+    int fd_file = open(output_file, O_RDWR | O_CREAT, 0664);
 
     if (fd_file == -1){
         free_paths(*paths);
