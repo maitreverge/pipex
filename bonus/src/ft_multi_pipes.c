@@ -1,41 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_functions_bonus.c                             :+:      :+:    :+:   */
+/*   ft_multi_pipes.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: flverge <flverge@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/16 09:50:09 by flverge           #+#    #+#             */
-/*   Updated: 2024/09/25 12:08:34 by flverge          ###   ########.fr       */
+/*   Created: 2024/09/25 12:08:28 by flverge           #+#    #+#             */
+/*   Updated: 2024/09/25 12:11:15 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-void	free_split(char **to_free)
+void	ft_multi_pipes(char **av, char **envp, t_paths **paths)
 {
-	char	**original;
-
-	original = to_free;
-	while (*to_free != 0)
-	{
-		free(*to_free);
-		to_free++;
-	}
-	free(original);
-}
-
-void	free_paths(t_paths *paths)
-{
-	t_paths	*current;
-	t_paths	*next_path;
-
-	current = paths;
-	while (current != NULL)
-	{
-		next_path = current->next;
-		free(current->path);
-		free(current);
-		current = next_path;
-	}
+	
 }

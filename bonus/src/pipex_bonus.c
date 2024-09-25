@@ -1,14 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   pipex_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: flverge <flverge@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 20:23:55 by flverge           #+#    #+#             */
-/*   Updated: 2024/09/25 11:41:45 by flverge          ###   ########.fr       */
+/*   Updated: 2024/09/25 12:09:19 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+/*
+! DEPRECIATED FILE, USE IT AS A BLUEPRINT
+! DEPRECIATED FILE, USE IT AS A BLUEPRINT
+! DEPRECIATED FILE, USE IT AS A BLUEPRINT
+! DEPRECIATED FILE, USE IT AS A BLUEPRINT
+! DEPRECIATED FILE, USE IT AS A BLUEPRINT
+! DEPRECIATED FILE, USE IT AS A BLUEPRINT
+! DEPRECIATED FILE, USE IT AS A BLUEPRINT
+! DEPRECIATED FILE, USE IT AS A BLUEPRINT
+*/
+
 
 #include "pipex_bonus.h"
 

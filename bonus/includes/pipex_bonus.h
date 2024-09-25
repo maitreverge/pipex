@@ -6,7 +6,7 @@
 /*   By: flverge <flverge@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 14:41:08 by flverge           #+#    #+#             */
-/*   Updated: 2024/09/25 11:40:02 by flverge          ###   ########.fr       */
+/*   Updated: 2024/09/25 12:12:34 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,18 @@ void	path_add_back(t_paths **lst, t_paths *new);
 bool	check_paths(char **envp, t_paths **paths);
 
 // pipex.c
-void	pipex(char **av, char **envp, t_paths **paths);
+// ! DEPRECIATED FUNCTION
+// void	pipex(char **av, char **envp, t_paths **paths);
 
 // sys_functions.c
 void	exit_and_message(const char *message, const int exit_code);
+int		ft_strcmp(const char *s1, const char *s2);
+
+// ft_here_doc.c
+void	ft_here_doc(char **av, char **envp, t_paths **paths);
+
+// ft_multi_pipes.c
+void	ft_multi_pipes(char **av, char **envp, t_paths **paths);
+
+
 #endif
