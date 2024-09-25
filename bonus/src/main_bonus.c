@@ -6,7 +6,7 @@
 /*   By: flverge <flverge@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 12:27:16 by flverge           #+#    #+#             */
-/*   Updated: 2024/09/25 11:41:41 by flverge          ###   ########.fr       */
+/*   Updated: 2024/09/25 11:45:17 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static void	init_checks(int ac, char **envp, t_paths **paths)
 {
-	if (ac != 5)
-		exit_and_message("Error\nPipex require 5 arguments", 1);
+	if (ac < 5) 
+		exit_and_message("Error\nPipex Bonus requires 5 arguments", 1);
 	if (!check_paths(envp, paths))
 		exit_and_message("PATH env variable not found", 1);
 }
