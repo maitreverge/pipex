@@ -6,12 +6,13 @@
 /*   By: flverge <flverge@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 12:27:16 by flverge           #+#    #+#             */
-/*   Updated: 2024/09/24 21:23:55 by flverge          ###   ########.fr       */
+/*   Updated: 2024/09/25 09:47:22 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
+// ! Useless function
 bool file_rights(const char* file1, const char *file2)
 {
     // if open fails == -1. IF success, return positive value
@@ -41,19 +42,20 @@ bool file_rights(const char* file1, const char *file2)
     return true;
 }
 
-void    init_checks(int ac, char** av, char **envp, t_paths **paths)
+void    init_checks(int ac, char **envp, t_paths **paths)
 {
-    const char *file1;
-    const char *file2;
+    // const char *file1;
+    // const char *file2;
 
     // paths = NULL;
     if (ac != 5)
         exit_and_message("Error\nPipex require 5 arguments", 1);
-    file1 = av[1];
-    file2 = av[4];
-    // ! to do
-    if (!file_rights(file1, file2)) 
-        exit_and_message("Error\nFile1 or File2 has not correct authorizations", 1);
+    // file1 = av[1];
+    // file2 = av[4];
+    
+    // ! USELESS FUNCTION, better to check for this within the processes
+    // if (!file_rights(file1, file2)) 
+    //     exit_and_message("Error\nFile1 or File2 has not correct authorizations", 1);
     if (!check_paths(envp, paths)) // if there is errors
         exit_and_message("PATH env variable not found", 1);
 
@@ -68,7 +70,7 @@ int main(int ac, char **av, char **envp)
     
     paths = NULL;
 
-    init_checks(ac, av, envp, &paths);
+    init_checks(ac, envp, &paths);
     
     ++av; // points to the very first argument
     // while (*av )

@@ -6,7 +6,7 @@
 /*   By: flverge <flverge@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 20:23:55 by flverge           #+#    #+#             */
-/*   Updated: 2024/09/24 21:17:55 by flverge          ###   ########.fr       */
+/*   Updated: 2024/09/25 09:48:52 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,16 @@ void    ft_exec(char *command, char **envp, t_paths **paths)
 
 void    child_process(char **av, char **envp, t_paths **paths, int* fd)
 {
-    char *file1;
+    char *input_file;
 
-    file1 = av[0];
+    input_file = av[0];
 
-    int fd_file = open(file1, F_OK);
+    int fd_file = open(input_file, O_RDONLY);
+    
+    if (fd_file == -1){
+        free_paths(*paths);
+        exit_and_message("Input file can't be openned\nAborting pipex", 1);
+    }
 
     dup2(fd_file, STDIN_FILENO); // met le fichier1 sur stdin
     dup2(fd[1], STDOUT_FILENO); // met la sortie standart sur fd[1]
@@ -76,11 +81,16 @@ void    child_process(char **av, char **envp, t_paths **paths, int* fd)
 }
 void    parent_process(char **av, char**envp, t_paths **paths, int* fd)
 {
-    char *file2;
+    char *output_file;
     
-    file2 = av[3];
+    output_file = av[3];
 
-    int fd_file = open(file2, F_OK);
+    int fd_file = open(output_file, O_RDWR | O_CREAT | 0644);
+
+    if (fd_file == -1){
+        free_paths(*paths);
+        exit_and_message("Output file can't be openned\nAborting pipex", 1);
+    }
     
     dup2(fd_file, STDOUT_FILENO);
     dup2(fd[0], STDIN_FILENO);
