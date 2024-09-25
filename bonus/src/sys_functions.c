@@ -1,41 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_functions.c                                   :+:      :+:    :+:   */
+/*   sys_functions.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: flverge <flverge@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/16 09:50:09 by flverge           #+#    #+#             */
-/*   Updated: 2024/09/25 11:40:55 by flverge          ###   ########.fr       */
+/*   Created: 2024/09/16 08:15:34 by flverge           #+#    #+#             */
+/*   Updated: 2024/09/25 11:41:48 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
-void	free_split(char **to_free)
+void	exit_and_message(const char *message, const int exit_code)
 {
-	char	**original;
-
-	original = to_free;
-	while (*to_free != 0)
-	{
-		free(*to_free);
-		to_free++;
-	}
-	free(original);
-}
-
-void	free_paths(t_paths *paths)
-{
-	t_paths	*current;
-	t_paths	*next_path;
-
-	current = paths;
-	while (current != NULL)
-	{
-		next_path = current->next;
-		free(current->path);
-		free(current);
-		current = next_path;
-	}
+	ft_printf("%s\n", message);
+	exit(exit_code);
 }

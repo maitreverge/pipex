@@ -1,41 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_functions.c                                   :+:      :+:    :+:   */
+/*   main copy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: flverge <flverge@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/16 09:50:09 by flverge           #+#    #+#             */
-/*   Updated: 2024/09/25 11:40:55 by flverge          ###   ########.fr       */
+/*   Created: 2024/09/15 12:27:16 by flverge           #+#    #+#             */
+/*   Updated: 2024/09/25 11:41:39 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
-void	free_split(char **to_free)
+static void	init_checks(int ac, char **envp, t_paths **paths)
 {
-	char	**original;
-
-	original = to_free;
-	while (*to_free != 0)
-	{
-		free(*to_free);
-		to_free++;
-	}
-	free(original);
+	if (ac != 5)
+		exit_and_message("Error\nPipex require 5 arguments", 1);
+	if (!check_paths(envp, paths))
+		exit_and_message("PATH env variable not found", 1);
 }
 
-void	free_paths(t_paths *paths)
+int	main(int ac, char **av, char **envp)
 {
-	t_paths	*current;
-	t_paths	*next_path;
+	t_paths	*paths;
 
-	current = paths;
-	while (current != NULL)
-	{
-		next_path = current->next;
-		free(current->path);
-		free(current);
-		current = next_path;
-	}
+	paths = NULL;
+	init_checks(ac, envp, &paths);
+	++av;
+	pipex(av, envp, &paths);
+	free_paths(paths);
 }
