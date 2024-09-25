@@ -6,7 +6,7 @@
 /*   By: flverge <flverge@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 09:40:04 by flverge           #+#    #+#             */
-/*   Updated: 2024/09/16 18:53:47 by flverge          ###   ########.fr       */
+/*   Updated: 2024/09/25 10:14:53 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_paths	*path_lstlast(t_paths *lst)
 {
 	while (lst)
 	{
-		if (!lst->next) // segfault ??
+		if (!lst->next)
 			return (lst);
 		lst = lst->next;
 	}

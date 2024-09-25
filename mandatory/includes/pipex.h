@@ -6,7 +6,7 @@
 /*   By: flverge <flverge@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 14:41:08 by flverge           #+#    #+#             */
-/*   Updated: 2024/09/24 21:23:27 by flverge          ###   ########.fr       */
+/*   Updated: 2024/09/25 10:39:25 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,48 +26,28 @@
 # include <sys/wait.h>
 # include <time.h>
 
-typedef struct s_paths 
+typedef struct s_paths
 {
-    char    *path;
-    struct s_paths *next;
-    
-}   t_paths;
+	char			*path;
+	struct s_paths	*next;
+}				t_paths;
 
-// ! For variables declarations
-typedef struct s_vars 
-{
-    char *temp_buf;
-    size_t i;
-    size_t j;
-    size_t k;
-    size_t l;
-    long l_i;
-    long l_j;
-    long l_k;
-    long l_l;
-    
-}   t_vars;
+// free_functions.c
+void	free_split(char **to_free);
+void	free_paths(t_paths *paths);
 
-
-void    exit_and_message(const char *message, const int exit_code);
-
-bool check_paths(char **envp, t_paths **paths);
-
+// linked_list_functions.c
+int		path_lstsize(t_paths *lst);
 t_paths	*path_lstnew(char *content);
 t_paths	*path_lstlast(t_paths *lst);
 void	path_add_back(t_paths **lst, t_paths *new);
-int	path_lstsize(t_paths *lst);
 
+// parse_paths.c
+bool	check_paths(char **envp, t_paths **paths);
 
-void    free_split(char **to_free);
+// pipex.c
+void	pipex(char **av, char **envp, t_paths **paths);
 
-void    free_paths(t_paths *paths);
-
-void print_paths(t_paths *paths, const char* str);
-
-void    pipex(char **av, char **envp, t_paths **paths);
-
-
-
-
+// sys_functions.c
+void	exit_and_message(const char *message, const int exit_code);
 #endif
