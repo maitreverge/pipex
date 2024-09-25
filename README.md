@@ -70,7 +70,7 @@ Let's make a basic example.
 You'll need to create an `infile.txt` from which `pipex` will read in *`STD_IN`* :
 
 ```bash
-touch infile.txt && echo "Hello, World\!" > infile.txt
+echo "Hello, World\!" > infile.txt
 ```
 
 ### Step 4 :
