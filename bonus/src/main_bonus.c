@@ -6,7 +6,7 @@
 /*   By: flverge <flverge@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 12:27:16 by flverge           #+#    #+#             */
-/*   Updated: 2024/09/25 12:12:58 by flverge          ###   ########.fr       */
+/*   Updated: 2024/09/26 12:28:27 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ int	main(int ac, char **av, char **envp)
 	++av;
 	
 	if (ft_strcmp("here_doc", which_bonus) == 0)
-		ft_here_doc(av, envp, paths);
+		ft_here_doc(av, envp, &paths);
 	else if (ft_strcmp("multi_pipes", which_bonus) == 0)
-		ft_multi_pipes(av, envp, paths);
+		ft_multi_pipes(av, envp, &paths);
 	else
 		ft_printf("Error:\nWrong arguments");
 	// ! OLD EXEC FUNCTION FROM MANDATORY

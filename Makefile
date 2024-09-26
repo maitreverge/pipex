@@ -6,7 +6,7 @@
 #    By: flverge <flverge@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/18 17:11:27 by flverge           #+#    #+#              #
-#    Updated: 2024/09/16 12:45:54 by flverge          ###   ########.fr        #
+#    Updated: 2024/09/26 13:28:33 by flverge          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -95,7 +95,11 @@ $(NAME_BONUS): $(OBJ_BONUS)
 	@echo "\n"
 	@$(CC) $(CFLAGS) $(OBJ_BONUS) $(LIBFT) $(INC_BONUS) -o $(NAME_BONUS)
 	@echo "$(BOLD)🚀      $(GREEN)Pipex $(YELLOW)✨ BONUS ✨ $(GREEN)fully compiled, ready to use       🚀$(RESET)"
-	@echo "\n"
+	@echo ""
+	@echo "$(BOLD)		Usage Bonus : $(RESET)"
+	@echo ""
+	@echo "$(BOLD) $(YELLOW) ✨ BONUS 1 ✨ $(RESET) ./pipex_bonus  file1 cmd1 cmd2 cmd3 ... cmdn file2 $(RESET)"
+	@echo "$(BOLD) $(ORANGE) ✨ BONUS 2 ✨ $(RESET) ./pipex_bonus  here_doc LIMITER cmd cmd1 file $(RESET)"
 
 clean:
 	@make clean -sC $(LIBFT_PATH)

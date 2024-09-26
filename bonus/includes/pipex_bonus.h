@@ -6,7 +6,7 @@
 /*   By: flverge <flverge@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 14:41:08 by flverge           #+#    #+#             */
-/*   Updated: 2024/09/25 12:12:34 by flverge          ###   ########.fr       */
+/*   Updated: 2024/09/26 12:23:09 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <stdbool.h>
 # include <sys/wait.h>
 # include <time.h>
+# include <stdint.h> // for random char* generator
 
 typedef struct s_paths
 {
@@ -58,6 +59,8 @@ void	ft_here_doc(char **av, char **envp, t_paths **paths);
 
 // ft_multi_pipes.c
 void	ft_multi_pipes(char **av, char **envp, t_paths **paths);
+
+char *generate_random_string(size_t length);
 
 
 #endif
