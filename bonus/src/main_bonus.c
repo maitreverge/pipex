@@ -6,7 +6,7 @@
 /*   By: flverge <flverge@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 12:27:16 by flverge           #+#    #+#             */
-/*   Updated: 2024/09/26 12:28:27 by flverge          ###   ########.fr       */
+/*   Updated: 2024/09/27 06:52:53 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static char	*init_checks(int ac, char **av, char **envp, t_paths **paths)
 		exit_and_message("PATH env variable not found", 1);
 	
 	// ! BONUS 1 CONDITION = HERE DOC, 
-	if (ac == 6 && ft_strcmp("here_doc", av[1]))
+	if (ac == 6 && !ft_strcmp("here_doc", av[1]))
 		return ("here_doc");
 	else if (ac >= 5)
 		return ("multi_pipes");

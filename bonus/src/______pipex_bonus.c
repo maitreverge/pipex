@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_bonus.c                                      :+:      :+:    :+:   */
+/*   ______pipex_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: flverge <flverge@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 20:23:55 by flverge           #+#    #+#             */
-/*   Updated: 2024/09/25 12:09:19 by flverge          ###   ########.fr       */
+/*   Updated: 2024/09/27 06:45:01 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	voluntary_failing(char *join_buff,
 	free(join_buff);
 }
 
-static void	ft_exec(char *command, char **envp, t_paths **paths)
+void	ft_exec(char *command, char **envp, t_paths **paths)
 {
 	t_paths	*temp_paths;
 	char	**splitted_command;
@@ -60,54 +60,54 @@ static void	ft_exec(char *command, char **envp, t_paths **paths)
 	free_split(splitted_command);
 }
 
-static void	child_process(char **av, char **envp, t_paths **paths, int *fd)
-{
-	char	*input_file;
-	int		fd_file;
+// static void	child_process(char **av, char **envp, t_paths **paths, int *fd)
+// {
+// 	char	*input_file;
+// 	int		fd_file;
 
-	input_file = av[0];
-	fd_file = open(input_file, O_RDONLY);
-	if (fd_file == -1)
-	{
-		free_paths(*paths);
-		exit_and_message("Input file can't be openned\nAborting pipex", 1);
-	}
-	dup2(fd_file, STDIN_FILENO);
-	dup2(fd[1], STDOUT_FILENO);
-	close(fd[0]);
-	ft_exec(av[1], envp, paths);
-}
+// 	input_file = av[0];
+// 	fd_file = open(input_file, O_RDONLY);
+// 	if (fd_file == -1)
+// 	{
+// 		free_paths(*paths);
+// 		exit_and_message("Input file can't be openned\nAborting pipex", 1);
+// 	}
+// 	dup2(fd_file, STDIN_FILENO);
+// 	dup2(fd[1], STDOUT_FILENO);
+// 	close(fd[0]);
+// 	ft_exec(av[1], envp, paths);
+// }
 
-static void	parent_process(char **av, char**envp, t_paths **paths, int *fd)
-{
-	char	*output_file;
-	int		fd_file;
+// static void	parent_process(char **av, char**envp, t_paths **paths, int *fd)
+// {
+// 	char	*output_file;
+// 	int		fd_file;
 
-	output_file = av[3];
-	fd_file = open(output_file, O_RDWR | O_CREAT, 0664);
-	if (fd_file == -1)
-	{
-		free_paths(*paths);
-		exit_and_message("Output file can't be openned\nAborting pipex", 1);
-	}
-	dup2(fd_file, STDOUT_FILENO);
-	dup2(fd[0], STDIN_FILENO);
-	close(fd[1]);
-	ft_exec(av[2], envp, paths);
-}
+// 	output_file = av[3];
+// 	fd_file = open(output_file, O_RDWR | O_CREAT, 0664);
+// 	if (fd_file == -1)
+// 	{
+// 		free_paths(*paths);
+// 		exit_and_message("Output file can't be openned\nAborting pipex", 1);
+// 	}
+// 	dup2(fd_file, STDOUT_FILENO);
+// 	dup2(fd[0], STDIN_FILENO);
+// 	close(fd[1]);
+// 	ft_exec(av[2], envp, paths);
+// }
 
-void	pipex(char **av, char **envp, t_paths **paths)
-{
-	int	fd[2];
-	int	fork_pid;
+// void	pipex(char **av, char **envp, t_paths **paths)
+// {
+// 	int	fd[2];
+// 	int	fork_pid;
 
-	if (pipe(fd) == -1)
-		exit_and_message("Pipe Failed", 1);
-	fork_pid = fork();
-	if (fork_pid == -1)
-		exit_and_message("Fork failed", 1);
-	if (fork_pid == 0)
-		child_process(av, envp, paths, fd);
-	waitpid(fork_pid, 0, 0);
-	parent_process(av, envp, paths, fd);
-}
+// 	if (pipe(fd) == -1)
+// 		exit_and_message("Pipe Failed", 1);
+// 	fork_pid = fork();
+// 	if (fork_pid == -1)
+// 		exit_and_message("Fork failed", 1);
+// 	if (fork_pid == 0)
+// 		child_process(av, envp, paths, fd);
+// 	waitpid(fork_pid, 0, 0);
+// 	parent_process(av, envp, paths, fd);
+// }

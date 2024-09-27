@@ -7,7 +7,7 @@
 		"program": "${workspaceFolder}/pipex_bonus",
 		"args": ["here_doc", "EOF", "cat", "rev", "file2"],
 		"stopAtEntry": false,
-		"cwd": "${workspaceFolder}",
+		"cwd": "${fileDirname}",
 		"environment": [],
 		"externalConsole": false,
 		"MIMode": "gdb",
