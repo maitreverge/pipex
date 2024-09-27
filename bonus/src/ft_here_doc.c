@@ -6,7 +6,7 @@
 /*   By: flverge <flverge@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 12:08:15 by flverge           #+#    #+#             */
-/*   Updated: 2024/09/27 07:58:35 by flverge          ###   ########.fr       */
+/*   Updated: 2024/09/27 08:20:34 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	failed_io(char *buffer, int fd_here_doc, char *message)
 // 		cmd << LIMITER | cmd1 >> file
 void	ft_here_doc(char **av, char **envp, t_paths **paths)
 {
-	(void)(envp);
+	// (void)(envp);
 	int fd_here_doc;
 	char *here_doc_file_name;
 	char *buffer;
@@ -44,9 +44,9 @@ void	ft_here_doc(char **av, char **envp, t_paths **paths)
 	// a file random of size 10 is 35^10 possibilities
 	here_doc_file_name = generate_random_string(10);
 
-	pid_t pid = fork();
+	int fork_pid = fork();
 	
-	if (pid == 0)
+	if (fork_pid == 0)
 	{
 
 		
@@ -80,9 +80,10 @@ void	ft_here_doc(char **av, char **envp, t_paths **paths)
 		close(fd_here_doc);
 		ft_exec(av[2], envp, paths);
 		// unlink(here_doc_file_name);
+		
 	} // end child process
 
-	waitpid(pid, 0, 0);
+	waitpid(fork_pid, 0, 0);
 	
 	/*
 	! ./pipex_bonus  here_doc LIMITER cmd cmd1 file
