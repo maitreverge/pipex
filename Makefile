@@ -6,7 +6,7 @@
 #    By: flverge <flverge@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/18 17:11:27 by flverge           #+#    #+#              #
-#    Updated: 2024/09/26 13:28:33 by flverge          ###   ########.fr        #
+#    Updated: 2024/09/29 12:22:03 by flverge          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME				:= pipex
 NAME_BONUS			:= pipex_bonus
 
 # Compiler options
-CC 					:= cc
+CC 					:= gcc
 
 # Flags
 # CFLAGS 				:= -Wall -Wextra -Werror
@@ -117,4 +117,4 @@ re: fclean all
 
 rebonus: fclean bonus
 
-# Rajouter .PHONY
+.PHONY: all bonus clean fclean re rebonus

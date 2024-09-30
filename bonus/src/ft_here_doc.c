@@ -6,7 +6,7 @@
 /*   By: flverge <flverge@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 12:08:15 by flverge           #+#    #+#             */
-/*   Updated: 2024/09/27 08:20:34 by flverge          ###   ########.fr       */
+/*   Updated: 2024/09/29 12:57:06 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,15 @@ void	ft_here_doc(char **av, char **envp, t_paths **paths)
 	
 	// int is_heredoc_exists;
 
+	// TODO : Free eof
 	char *eof = ft_strjoin(av[1], "\n\0");
 	
 	// ! gestion erreur malloc
 	buffer = malloc(sizeof(char) * 1024);
 
 	// a file random of size 10 is 35^10 possibilities
-	here_doc_file_name = generate_random_string(10);
+	here_doc_file_name = "INPUT_FILE";
+	// here_doc_file_name = generate_random_string(10);
 
 	int fork_pid = fork();
 	
@@ -50,7 +52,7 @@ void	ft_here_doc(char **av, char **envp, t_paths **paths)
 	{
 
 		
-		fd_here_doc = open(here_doc_file_name, O_RDWR | O_CREAT, 0664);
+		fd_here_doc = open(here_doc_file_name, O_RDWR | O_CREAT | O_TRUNC, 0664);
 		if (fd_here_doc == -1)
 		{
 			free_paths(*paths);
@@ -79,11 +81,12 @@ void	ft_here_doc(char **av, char **envp, t_paths **paths)
 		close(fd[0]);
 		close(fd_here_doc);
 		ft_exec(av[2], envp, paths);
+		exit(0);
 		// unlink(here_doc_file_name);
 		
 	} // end child process
 
-	waitpid(fork_pid, 0, 0);
+	waitpid(fork_pid, NULL, 0);
 	
 	/*
 	! ./pipex_bonus  here_doc LIMITER cmd cmd1 file
@@ -102,6 +105,7 @@ void	ft_here_doc(char **av, char **envp, t_paths **paths)
 		free_paths(*paths);
 		exit_and_message("Output file can't be openned\nAborting pipex", 1);
 	}
+	dup2(fd[0], STDIN_FILENO);
 	dup2(fd_output_file, STDOUT_FILENO);
 	dup2(fd[0], STDIN_FILENO);
 	close(fd[1]);
