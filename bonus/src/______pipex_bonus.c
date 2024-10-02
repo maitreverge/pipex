@@ -6,7 +6,7 @@
 /*   By: flverge <flverge@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 20:23:55 by flverge           #+#    #+#             */
-/*   Updated: 2024/09/29 13:00:27 by flverge          ###   ########.fr       */
+/*   Updated: 2024/10/02 11:29:10 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ static void	voluntary_failing(char *join_buff,
 {
 	execve(join_buff, splitted_command, envp);
 	perror("EXECVE FAILED FROM VOLUNTARY FAILING\n");
-	// printf("EXECVE FAILED FROM FAILED IO\n");
-	// printf("Pipex could not found the path to execute %s\n", join_buff);
 	free(join_buff);
 }
 
@@ -50,15 +48,8 @@ void	ft_exec(char *command, char **envp, t_paths **paths)
 		join_buff = ft_strjoin(temp_paths->path, splitted_command[0]);
 		if (access(join_buff, F_OK) == 0)
 		{
-			int ex_ve = execve(join_buff, splitted_command, envp);
-			// execve(join_buff, splitted_command, envp);
-			if (ex_ve == -1)
-				perror("EXECVE FAILED\n");
-			else
-				perror("EXECVE SUCCED\n");
-			
-			// if (execve(join_buff, splitted_command, envp) == -1)
-				// printf("%s Failed To Execute\n", join_buff);
+			if (execve(join_buff, splitted_command, envp) == -1)
+				printf("%s Failed To Execute\n", join_buff);
 			free(join_buff);
 			break ;
 		}

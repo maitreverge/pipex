@@ -6,7 +6,7 @@
 /*   By: flverge <flverge@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 12:08:15 by flverge           #+#    #+#             */
-/*   Updated: 2024/09/30 18:47:59 by flverge          ###   ########.fr       */
+/*   Updated: 2024/10/02 12:10:10 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,27 +45,19 @@ void	failed_io(char *buffer, int fd_here_doc, char *message)
 	close(fd_here_doc);
 	exit_and_message(message, 1);
 }
-// ./pipex here_doc LIMITER cmd cmd1 file 
-// 					==
-// 		cmd << LIMITER | cmd1 >> file
-void	ft_here_doc(char **av, char **envp, t_paths **paths)
+
+void	read_here_doc(char **av, int* fd)
 {
-    int fd[2];
+	int fork_1;
     char *main_buf;
-    int fork_pid;
-    char* eof = av[1];
-    
-    if (pipe(fd) == -1)
-        exit_and_message("Pipe failed", 1);
-    fork_pid = fork();
-    
-    if (fork_pid == 0) // child
+
+	fork_1 = fork();
+	if (fork_1 == 0) // child
     {
-        // child process
         close(fd[0]);
 		while (custom_get_next_line(&main_buf))
 		{
-			if (ft_strncmp(main_buf, eof, ft_strlen(eof)) == 0)
+			if (ft_strncmp(main_buf, av[1], ft_strlen(av[1])) == 0)
 			{
 				free(main_buf);
 				exit(0);
@@ -80,11 +72,12 @@ void	ft_here_doc(char **av, char **envp, t_paths **paths)
 		dup2(fd[0], STDIN_FILENO);
 		wait(NULL);
 	}
-    
-    waitpid(fork_pid, 0, 0);
+	// ft_exec(av[2], envp, paths);
+}
 
-    // Parent process
-    char	*output_file;
+void	parent_process_here_doc(char **av, t_paths **paths, int* fd, char **envp)
+{
+	char	*output_file;
     int		fd_output_file;
 
     output_file = av[4]; // last arg for 
@@ -99,6 +92,47 @@ void	ft_here_doc(char **av, char **envp, t_paths **paths)
     close(fd[1]);
     close(fd_output_file);
     ft_exec(av[3], envp, paths);
+}
 
-    // Cleanup
+void	child_process(char **av, char **envp, t_paths **paths)
+{
+	pid_t	pid;
+	int		fd[2];
+
+	if (pipe(fd) == -1)
+        exit_and_message("Pipe failed", 1);
+	pid = fork();
+	if (pid == -1)
+        exit_and_message("Fork failed", 1);
+	if (pid == 0)
+	{
+		close(fd[0]);
+		dup2(fd[1], STDOUT_FILENO);
+		ft_exec(av[3], envp, paths);
+	}
+	else
+	{
+		close(fd[1]);
+		dup2(fd[0], STDIN_FILENO);
+		waitpid(pid, NULL, 0);
+	}
+}
+
+void	ft_here_doc(char **av, char **envp, t_paths **paths)
+{
+    int fd[2];
+    int fork_pid;
+    // char* eof = av[1];
+    
+    if (pipe(fd) == -1)
+        exit_and_message("Pipe failed", 1);
+    fork_pid = fork();
+    
+    if (fork_pid == 0) // child
+	{
+		read_here_doc(av, fd);
+		child_process(av,envp, paths);
+	}
+    waitpid(fork_pid, 0, 0);
+    parent_process_here_doc(av, paths, fd, envp);
 }
