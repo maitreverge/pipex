@@ -22,12 +22,12 @@
                     "description": "Set Disassembly Flavor to Intel",
                     "text": "-gdb-set disassembly-flavor intel",
                     "ignoreFailures": true
-                },
-                {
-                    "description": "Set GDB to follow child process on fork",
-                    "text": "set follow-fork-mode parent",
-                    "ignoreFailures": true
                 }
+                // {
+                //     "description": "Set GDB to follow child process on fork",
+                //     "text": "set follow-fork-mode parent",
+                //     "ignoreFailures": true
+                // }
             ],
             "miDebuggerPath": "/usr/bin/gdb"
         }

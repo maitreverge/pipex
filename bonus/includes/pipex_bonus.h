@@ -6,14 +6,14 @@
 /*   By: flverge <flverge@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 14:41:08 by flverge           #+#    #+#             */
-/*   Updated: 2024/10/05 15:15:42 by flverge          ###   ########.fr       */
+/*   Updated: 2024/10/05 16:21:05 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H 
 
-# define HERE_DOC_NAME "here_doc.txt"
+# define HERE_DOC_NAME "here_doc"
 
 # include "../../libft/libft/libft.h"
 # include "../../libft/ft_printf/ft_printf.h"

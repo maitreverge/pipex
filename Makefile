@@ -6,7 +6,7 @@
 #    By: flverge <flverge@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/18 17:11:27 by flverge           #+#    #+#              #
-#    Updated: 2024/09/29 12:22:03 by flverge          ###   ########.fr        #
+#    Updated: 2024/10/05 16:37:43 by flverge          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME				:= pipex
 NAME_BONUS			:= pipex_bonus
 
 # Compiler options
-CC 					:= gcc
+CC 					:= cc
 
 # Flags
 # CFLAGS 				:= -Wall -Wextra -Werror
