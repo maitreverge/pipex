@@ -6,7 +6,7 @@
 /*   By: flverge <flverge@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 14:41:08 by flverge           #+#    #+#             */
-/*   Updated: 2024/10/05 16:21:05 by flverge          ###   ########.fr       */
+/*   Updated: 2024/10/06 10:02:36 by flverge          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int		ft_strcmp(const char *s1, const char *s2);
 void	ft_here_doc(char **av, char **envp, t_paths **paths);
 
 // ft_multi_pipes.c
-void	ft_multi_pipes(char **av, char **envp, t_paths **paths);
+void	ft_multi_pipes(char **av, int ac, char **envp, t_paths **paths);
 
 // char *generate_random_string(size_t length);
 

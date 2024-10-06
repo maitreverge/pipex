@@ -1,0 +1,53 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_exec.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: flverge <flverge@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/16 20:23:55 by flverge           #+#    #+#             */
+/*   Updated: 2024/10/06 10:31:39 by flverge          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "pipex_bonus.h"
+
+static void	voluntary_failing(char *join_buff,
+	char **splitted_command, char **envp)
+{
+	perror(join_buff);
+	execve(join_buff, splitted_command, envp);
+	perror("EXECVE FAILED FROM VOLUNTARY FAILING\n");
+	free(join_buff);
+}
+
+void	ft_exec(char *command, char **envp, t_paths **paths)
+{
+	t_paths	*temp_paths;
+	char	**splitted_command;
+	char	*join_buff;
+
+	printf("Current argument = %s\n", command);
+	
+
+	temp_paths = *paths;
+	join_buff = 0;
+	splitted_command = ft_split(command, ' ');
+	while (temp_paths->next != 0)
+	{
+		if (join_buff)
+			free(join_buff);
+		join_buff = ft_strjoin(temp_paths->path, splitted_command[0]);
+		if (access(join_buff, F_OK) == 0)
+		{
+			if (execve(join_buff, splitted_command, envp) == -1)
+				printf("%s Failed To Execute\n", join_buff);
+			free(join_buff);
+			break ;
+		}
+		temp_paths = temp_paths->next;
+	}
+	if (!temp_paths->next && join_buff)
+		voluntary_failing(join_buff, splitted_command, envp);
+	free_split(splitted_command);
+}

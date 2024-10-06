@@ -6,7 +6,7 @@
 #    By: flverge <flverge@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/18 17:11:27 by flverge           #+#    #+#              #
-#    Updated: 2024/10/05 16:37:43 by flverge          ###   ########.fr        #
+#    Updated: 2024/10/06 10:16:29 by flverge          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ CC 					:= cc
 
 # Flags
 # CFLAGS 				:= -Wall -Wextra -Werror
-CFLAGS 				:= -Wall -Wextra -Werror -g  # debug
+CFLAGS 				:= -Wall -Wextra -g  # debug
 
 # Libft
 LIBFT_NAME			:= libmaster.a
