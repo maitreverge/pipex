@@ -17,15 +17,11 @@ static void	child_process_mp(char **av, char **envp, t_paths **paths, int *fd)
 	close(fd[0]);
 	dup2(fd[1], STDOUT_FILENO);
 	close(fd[1]);
-	// dup2(fd[0], STDIN_FILENO);
 	ft_exec(av[0], envp, paths);
 }
 
-static void	parent_process_mp(char **av, char**envp, t_paths **paths, int *fd)
+static void	parent_process_mp(char **av, char **envp, t_paths **paths, int *fd)
 {
-	// perror("Hello parent process");
-	// perror("Current av[0] ==");
-	// perror(av[0]);
 	char	*output_file;
 	int		fd_file;
 
@@ -33,45 +29,36 @@ static void	parent_process_mp(char **av, char**envp, t_paths **paths, int *fd)
 	fd_file = open(output_file, O_RDWR | O_CREAT | O_TRUNC, 0664);
 	if (fd_file == -1)
 	{
-		free_paths(*paths);
-		exit_and_message("Output file can't be openned\nAborting pipex", 1);
+	    free_paths(*paths);
+	    exit_and_message("Output file can't be opened\nAborting pipex", 1);
 	}
 	dup2(fd[0], STDIN_FILENO);
 	close(fd[0]);
 	close(fd[1]);
 	dup2(fd_file, STDOUT_FILENO);
-	// close(fd_file);
+	close(fd_file);
 	ft_exec(av[0], envp, paths); // ! FIRST ARGUMENT AFTER LOOPING
 }
 
-// 			av[0]
-// ./pipex file1 cmd1 cmd2 cmd3 ... cmdn file2
 void	ft_multi_pipes(char **av, int ac, char **envp, t_paths **paths)
 {
-	int	fd[2];
-	int	fork_pid;
-	char	*input_file;
-	int		fd_file;
-	int i = 0;
+    int	fd[2];
+    int	fork_pid;
+    char	*input_file;
+    int		fd_file;
+    int		i = 0;
 
-	input_file = av[0];
-	
-	/////////////////////
-	fd_file = open(input_file, O_RDONLY);
-	if (fd_file == -1)
-	{
-		free_paths(*paths);
-		exit_and_message("Input file can't be openned\nAborting pipex", 1);
-	}
+    input_file = av[0];
+    fd_file = open(input_file, O_RDONLY);
+    if (fd_file == -1)
+    {
+        free_paths(*paths);
+        exit_and_message("Input file can't be opened\nAborting pipex", 1);
+    }
+    dup2(fd_file, STDIN_FILENO);
+    close(fd_file);
 
-
-	// dup2(fd[1], STDOUT_FILENO);
-
-	/////////////////////
-		
-	dup2(fd_file, STDIN_FILENO);
-	close(fd_file);
-	while (i++ < ac - 4)
+    while (i++ < ac - 4)
     {
         av++;
         if (pipe(fd) == -1)
@@ -91,5 +78,5 @@ void	ft_multi_pipes(char **av, int ac, char **envp, t_paths **paths)
             close(fd[0]); // Close the read end of the pipe after duplicating
         }
     }
-	parent_process_mp(++av, envp, paths, fd);
+    parent_process_mp(++av, envp, paths, fd);
 }

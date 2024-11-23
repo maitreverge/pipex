@@ -31,6 +31,7 @@ void	read_here_doc(char *eof)
 	fd_here_doc = open(HERE_DOC_NAME, O_RDWR | O_CREAT | O_TRUNC, 0664);
 	while (true)
 	{
+		write(STDOUT_FILENO, "here_doc$ ", 10); // Print the prompt
 		bytes_read = read(STDIN_FILENO, buffer, 1024 -1);
 		if (bytes_read == -1)
 			failed_io(buffer, fd_here_doc, eof, "Error reading STDIN");

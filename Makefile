@@ -87,7 +87,10 @@ $(NAME): $(OBJ_MANDATORY)
 	@echo "\n"
 	@$(CC) $(CFLAGS) $(OBJ_MANDATORY) $(LIBFT) $(INC_MANDATORY) -o $(NAME)
 	@echo "$(BOLD)$(GREEN)🚀      Pipex fully compiled, ready to use       🚀$(RESET)"
-	@echo "\n"
+	@echo ""
+	@echo "$(BOLD)		Usage : $(RESET)"
+	@echo ""
+	@echo "$(BOLD) ./pipex  file1 cmd1 cmd2 file2 $(RESET)"
 
 # Bonus rule
 $(NAME_BONUS): $(OBJ_BONUS)
