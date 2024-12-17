@@ -3,21 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flverge <flverge@student.42.fr>            +#+  +:+       +#+        */
+/*   By: TryHardTeam <TryHardTeam@123.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 20:23:55 by flverge           #+#    #+#             */
-/*   Updated: 2024/09/25 10:40:39 by flverge          ###   ########.fr       */
+/*   Updated: 2024/12/17 16:41:06 by TryHardTeam      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static void	voluntary_failing(char *join_buff,
-	char **splitted_command, char **envp)
+static void voluntary_failing(char *join_buff, char **splitted_command, char **envp)
 {
-	execve(join_buff, splitted_command, envp);
-	printf("Pipex could not found the path to execute %s\n", join_buff);
-	free(join_buff);
+    execve(join_buff, splitted_command, envp);
+    perror("execve");
+    free(join_buff);
+    free_split(splitted_command);
+    exit(EXIT_FAILURE);
 }
 
 static void	ft_exec(char *command, char **envp, t_paths **paths)
@@ -37,7 +38,7 @@ static void	ft_exec(char *command, char **envp, t_paths **paths)
 		if (access(join_buff, F_OK) == 0)
 		{
 			if (execve(join_buff, splitted_command, envp) == -1)
-				printf("%s Failed To Execute\n", join_buff);
+				perror("execve");
 			free(join_buff);
 			break ;
 		}
