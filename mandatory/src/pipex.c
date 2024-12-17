@@ -6,7 +6,7 @@
 /*   By: TryHardTeam <TryHardTeam@123.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 20:23:55 by flverge           #+#    #+#             */
-/*   Updated: 2024/12/17 16:41:06 by TryHardTeam      ###   ########.fr       */
+/*   Updated: 2024/12/17 16:51:10 by TryHardTeam      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ static void voluntary_failing(char *join_buff, char **splitted_command, char **e
     execve(join_buff, splitted_command, envp);
     perror("execve");
     free(join_buff);
-    free_split(splitted_command);
-    exit(EXIT_FAILURE);
+    // free_split(splitted_command);
+    // exit(EXIT_FAILURE);
 }
 
 static void	ft_exec(char *command, char **envp, t_paths **paths)

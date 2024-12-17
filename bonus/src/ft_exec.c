@@ -6,22 +6,22 @@
 /*   By: TryHardTeam <TryHardTeam@123.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 20:23:55 by flverge           #+#    #+#             */
-/*   Updated: 2024/12/17 15:41:32 by TryHardTeam      ###   ########.fr       */
+/*   Updated: 2024/12/17 16:46:17 by TryHardTeam      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-static void	voluntary_failing(char *join_buff,
-	char **splitted_command, char **envp)
+static void voluntary_failing(char *join_buff, char **splitted_command, char **envp)
 {
-	perror(join_buff);
-	execve(join_buff, splitted_command, envp);
-	perror("EXECVE FAILED FROM VOLUNTARY FAILING\n");
-	free(join_buff);
+    execve(join_buff, splitted_command, envp);
+    perror("execve");
+    free(join_buff);
+    free_split(splitted_command);
+    exit(EXIT_FAILURE);
 }
 
-void	ft_exec(char *command, char **envp, t_paths **paths)
+static void	ft_exec(char *command, char **envp, t_paths **paths)
 {
 	t_paths	*temp_paths;
 	char	**splitted_command;
@@ -38,7 +38,7 @@ void	ft_exec(char *command, char **envp, t_paths **paths)
 		if (access(join_buff, F_OK) == 0)
 		{
 			if (execve(join_buff, splitted_command, envp) == -1)
-				printf("%s Failed To Execute\n", join_buff);
+				return (perror("execve"), exit_and_message("", 127));
 			free(join_buff);
 			break ;
 		}
