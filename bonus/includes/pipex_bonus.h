@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flverge <flverge@student.42.fr>            +#+  +:+       +#+        */
+/*   By: TryHardTeam <TryHardTeam@123.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 14:41:08 by flverge           #+#    #+#             */
-/*   Updated: 2024/10/06 10:02:36 by flverge          ###   ########.fr       */
+/*   Updated: 2024/12/17 15:41:13 by TryHardTeam      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H 
+#ifndef PIPEX_BONUS_H
+# define PIPEX_BONUS_H 
 
 # define HERE_DOC_NAME "here_doc"
 
@@ -65,9 +65,5 @@ void	ft_multi_pipes(char **av, int ac, char **envp, t_paths **paths);
 // char *generate_random_string(size_t length);
 
 void	ft_exec(char *command, char **envp, t_paths **paths);
-
-int	custom_get_next_line(char **line);
-
-
 
 #endif

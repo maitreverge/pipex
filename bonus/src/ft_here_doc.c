@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_here_doc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flverge <flverge@student.42.fr>            +#+  +:+       +#+        */
+/*   By: TryHardTeam <TryHardTeam@123.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 12:08:15 by flverge           #+#    #+#             */
-/*   Updated: 2024/10/05 17:02:59 by flverge          ###   ########.fr       */
+/*   Updated: 2024/12/17 15:41:55 by TryHardTeam      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	read_here_doc(char *eof)
 	fd_here_doc = open(HERE_DOC_NAME, O_RDWR | O_CREAT | O_TRUNC, 0664);
 	while (true)
 	{
-		write(STDOUT_FILENO, "here_doc$ ", 10); // Print the prompt
+		write(STDOUT_FILENO, "here_doc$ ", 10);
 		bytes_read = read(STDIN_FILENO, buffer, 1024 -1);
 		if (bytes_read == -1)
 			failed_io(buffer, fd_here_doc, eof, "Error reading STDIN");

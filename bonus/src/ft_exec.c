@@ -6,7 +6,7 @@
 /*   By: TryHardTeam <TryHardTeam@123.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 20:23:55 by flverge           #+#    #+#             */
-/*   Updated: 2024/12/17 14:54:57 by TryHardTeam      ###   ########.fr       */
+/*   Updated: 2024/12/17 15:41:32 by TryHardTeam      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,6 @@ void	ft_exec(char *command, char **envp, t_paths **paths)
 	t_paths	*temp_paths;
 	char	**splitted_command;
 	char	*join_buff;
-
-	// printf("Current argument = %s\n", command);
-	
 
 	temp_paths = *paths;
 	join_buff = 0;
