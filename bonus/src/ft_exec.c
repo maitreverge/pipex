@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flverge <flverge@student.42.fr>            +#+  +:+       +#+        */
+/*   By: TryHardTeam <TryHardTeam@123.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 20:23:55 by flverge           #+#    #+#             */
-/*   Updated: 2024/10/06 10:31:39 by flverge          ###   ########.fr       */
+/*   Updated: 2024/12/17 14:54:57 by TryHardTeam      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_exec(char *command, char **envp, t_paths **paths)
 	char	**splitted_command;
 	char	*join_buff;
 
-	printf("Current argument = %s\n", command);
+	// printf("Current argument = %s\n", command);
 	
 
 	temp_paths = *paths;
