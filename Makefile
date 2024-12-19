@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: TryHardTeam <TryHardTeam@123.com>          +#+  +:+       +#+         #
+#    By: flverge <flverge@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/18 17:11:27 by flverge           #+#    #+#              #
-#    Updated: 2024/12/17 15:36:55 by TryHardTeam      ###   ########.fr        #
+#    Updated: 2024/12/19 12:38:30 by flverge          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ LIBFT				:= $(LIBFT_PATH)$(LIBFT_NAME)
 
 # Mandatory Source Files
 DIR_SRC_MANDATORY	:= mandatory/src
-SRC_MANDATORY		:= $(wildcard $(DIR_SRC_MANDATORY)/*.c)
+SRC_MANDATORY		:= $(shell find $(DIR_SRC_MANDATORY) -name '*.c')
 
 # Mandatory Objects
 DIR_OBJ_MANDATORY	:= ./mandatory/obj
@@ -36,7 +36,7 @@ OBJ_MANDATORY		:= $(SRC_MANDATORY:$(DIR_SRC_MANDATORY)/%.c=$(DIR_OBJ_MANDATORY)/
 
 # Bonus Source Files
 DIR_SRC_BONUS		:= bonus/src
-SRC_BONUS			:= $(wildcard $(DIR_SRC_BONUS)/*.c)
+SRC_BONUS			:= $(shell find $(DIR_SRC_BONUS) -name '*.c')
 
 # Bonus Objects
 DIR_OBJ_BONUS	:= ./bonus/obj
