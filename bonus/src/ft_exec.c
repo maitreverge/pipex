@@ -12,16 +12,14 @@
 
 #include "pipex_bonus.h"
 
-static void voluntary_failing(char *join_buff, char **splitted_command, char **envp)
+void	voluntary_failing(char *join_buff, char **splitted_command, char **envp)
 {
-    execve(join_buff, splitted_command, envp);
-    perror("execve");
-    free(join_buff);
-    free_split(splitted_command);
-    exit(EXIT_FAILURE);
+	execve(join_buff, splitted_command, envp);
+	perror("execve");
+	free(join_buff);
 }
 
-static void	ft_exec(char *command, char **envp, t_paths **paths)
+void	ft_exec(char *command, char **envp, t_paths **paths)
 {
 	t_paths	*temp_paths;
 	char	**splitted_command;
