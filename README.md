@@ -14,7 +14,24 @@ Successfully completing `pipex` showcases a mastery of process manipulation and 
 
 ## 🛠️ PROGRAM SPECIFICITIES AND CONSIDERATIONS
 
-The program behaves like this :
+Clone the project :
+
+```bash
+git clone git@github.com:maitreverge/pipex.git && cd pipex
+```
+
+> [!IMPORTANT]
+> The Makefile within this repo can produce 2 different binaries, which behaves differently.
+
+### PIPEX MANDATORY
+
+The first binary is called `pipex`, and will be produced after executing :
+
+```bash
+make
+````
+
+The first binary behaves like this :
 
 ```
 ./pipex file1 cmd1 cmd2 file2
@@ -32,7 +49,7 @@ Examples :
 ./pipex infile.txt "ls -l" "wc -l" outfile.txt
 ```
 
-> [!IMPORTANT]
+> [!WARNING]
 > The way the project is built means that `pipex` is expecting **COMMANDS AND OPTIONS** grouped in a single argument, surrounded with _"double-quotes"_.
 
 The command :
@@ -43,16 +60,11 @@ will actually fail.
  
  
  
+## PIPEX BONUS
 
 ## ⚙️ USAGE
 
-### Step 1 :
 
-Clone the project :
-
-```bash
-git clone https://github.com/maitreverge/pipex.git && cd pipex
-```
 
 ### Step 2 :
 
