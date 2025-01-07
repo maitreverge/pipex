@@ -54,7 +54,7 @@ make
 ````
 
 <p align="center">
-  <img src="img/scr_1.png" width="35%"/>
+  <img src="img/scr_1.png" width="75%"/>
 </p>
 
 The first binary behaves like this :
@@ -111,7 +111,7 @@ make bonus
 ````
 
 <p align="center">
-  <img src="img/scr_2.png" width="35%"/>
+  <img src="img/scr_2.png" width="75%"/>
 </p>
 
 The second binary behaves in two different ways :
