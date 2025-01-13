@@ -163,4 +163,4 @@ cmd << LIMITER | cmd1 >> file2
 ```
 
 ## 🤝 CONTRIBUTION
-Contributions are open, make a pull request or open an issue 🚀
+Contributions are open, open a Github Issue or submit a PR 🚀
